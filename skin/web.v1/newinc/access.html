@@ -1,0 +1,9 @@
+<!--{* 权限js控制 *}-->
+<script src="<!--{$staticUrl}-->js/access.js"></script>
+<script>
+$.fn.checkAccess.defaults.functionids = <!--{$roles.roleids}-->;
+$.fn.checkAccess.defaults.excluded = true;
+$(function(){
+	$('.accesscheck').checkAccess();
+})
+</script>

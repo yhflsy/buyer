@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>保险快捷购买页</title>
+<!--{include file="./inc/header.css.html"}-->
+</head>
+<body>
+<!--{include file="./inc/header.html"}-->
+<!--{include file="./inc/order/booktop.html"}-->
+<div class="main mt20 clearfix">        
+	<div class="container select-wrap">
+            <!--{if $act == 'book'}-->
+            <div class="prompt-box  p20">
+                <span class="gray-color font-s20 ">
+                    新订单预定成功！订单编号【<!--{$order.orderid}-->】，请等待供应商确认！
+                </span>
+            </div>
+             <!--{/if}-->
+        <div class="board-wrap mb20">
+            
+            <div class="board-title-wrap font-s16"><a title="<!--{$details.title}-->">此订单可快捷购买保险哦！</a></div>
+            
+            <div class="board-content-wrap">
+                <div class="insurance-icons">
+                    <ul class="insurance-icons-list">
+                        <!--{foreach $list1 as $k =>$v}-->
+                        <li><a href="line.booksuccess.html?orderid=<!--{$order.id}-->&companytype=<!--{$v.companyType}-->" title="<!--{$v.companyName}-->"><img class="insurance-pic" src="<!--{$imghost}--><!--{$v.companyLogo}-->" alt="" /></a></li>
+                         <!--{/foreach}-->
+                    </ul>
+                </div>
+                <table class="table-v1 tl board-table insurance-fast-table font-s14" border="0">
+                    <colgroup>
+                        <col width="140">
+                        <col width="140">
+                        <col>
+                        <col width="120">                        
+                        <col width="120">
+                        <col width="100">
+                    </colgroup>
+                    <tr>
+                        <th>保险类型</th>
+                        <th>保险公司</th>
+                        <th>保险产品名称</th>
+                        <th>单价</th>
+                        <th>够买返积分</th>
+                        <th></th>
+                    </tr>
+                    <!--{foreach $list as $k => $v}-->
+                    <tr align="center">
+                        <td><!--{$category[$v.category]}--></td>
+                        <td><!--{$v.insuranceCompanyName}--></td>
+                        <td><!--{$v.groupName}--></td>
+                        <td><span class="orange">￥<!--{$v.premium}--></span>/人</td>
+                        <td><!--{$v.backIntegral}--></td>       
+                        <td><input type="radio" class="score-label" name="score" value="<!--{$v.id}-->"  <!--{if $k==0}-->checked<!--{/if}-->/></td>
+                    </tr>
+                   <!--{/foreach}-->
+                </table>
+            </div>
+        </div>
+        
+        <div class="clearfix tc mt20"> 
+            <a class="button-middle button-bg-cyan button-font-white action-show-reserved"  href="http://<!--{$webhost['index'][$platform]}-->/ilist.html?days=<!--{$line.days}-->" target="_blank">选择其他保险</a>
+            <a class="button-middle button-bg-blue button-font-white search-spaceing" href="order.html">返回订单列表</a> 
+           <!--{if $list}--> <a class="button-middle button-bg-blue button-font-white search-spaceing order-check" >立即购买</a><!--{/if}--> 
+        </div>
+     </div>
+</div>
+<!--{include file="./inc/footer.html"}-->
+<!--{include file="./inc/footer.js.html"}-->
+<script>
+$(function(){
+	$('.order-check').click(function(){
+            var type = $('.score-label:checked').val();
+            $(this).attr('href',"http://<!--{$webhost['index'][$platform]}-->/ibook.html?orderid="+<!--{$order.id}-->+"&id="+type);
+        });
+
+    $(document).ready(function(){
+        $('.insurance-icons-list li').each(function(){            
+            var h = $(this).find("img").height();   
+            var liH=80;
+            var marginTop = (liH-h)/2;
+            $(this).find("img").css("margin-top",marginTop);
+        });
+    });  
+});
+</script>
+</body>
+</html>

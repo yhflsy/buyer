@@ -1,0 +1,743 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>用户注册 - 馨途旅游网 - 中国旅游云平台 400-900-3996 http://www.tripb2b.com</title>
+    <!--{include file="newinc/header.js.html"}-->
+    <link rel="stylesheet" type="text/css" href="<!--{$staticUrl}-->css/stylev1.css" />
+</head>
+<body>
+<div class="index-header">
+    <div class="container clearfix">
+        <div class="logo"><img src="<!--{$staticUrl}-->images/tripb2b.png" /></div>
+        <div class="tit">提供线上、线下的全方位一站式服务。</div>
+        <div class="reg-link"><a href="registers.html?choose=wholesaler" class="blue-btn">供应商入驻</a><a href="/groupclub.html" class="orange-btn">分销商注册</a></div>
+    </div>
+</div>
+
+<div class="content">
+    <!--{if $isSeller == "0"}-->
+    <div class="regist-tit"><p>欢迎注册组团社</p></div>
+    <!--{/if}-->
+    <!--{if $isSeller == "5"}-->
+    <div class="regist-tit"><p>欢迎注册车队</p></div>
+    <!--{/if}-->
+    <!--{if $isSeller == "6"}-->
+    <div class="regist-tit"><p>欢迎注册地接社</p></div>
+    <!--{/if}-->
+    <!--{if $isSeller == "1"}-->
+    <div class="regist-tit"><p>欢迎注册批发商</p></div>
+    <!--{/if}-->
+    <div class="regist contentmain">
+        <form action="" method="post" id="checkform" enctype="multipart/form-data">
+            <h3><span>公司信息</span></h3>
+            <table class="company-table">
+                <tbody>
+                <tr class="companyName">
+                    <th><em>*</em>公司名称：</th>
+                    <td><input type="text" id="companyName" value="<!--{if $registers.companyName}--><!--{$registers.companyName}--><!--{/if}-->" name="companyName" datatype="*" placeholder="需和您的营业执照上名称一致" nullmsg="不能为空"  ajaxurl="registers.checkCompanyname.html?type=1"><span class="red">注意：若您是公司分部，请在公司名称中注明,例：××××旅行社有限公司（××门市部）</span><span class="Validform_checktip"></span></td>
+                </tr>
+
+                <!--{if $isSeller != "0" && $isSeller != "5"}-->
+                <tr>
+                    <th>公司品牌：</th>
+                    <td><input type=" text" id="companyBrand" value="<!--{if $registers.companyBrand}--><!--{$registers.companyBrand}--><!--{/if}-->" name="companyBrand" ><input type="checkbox" class="wid14 companyBrand" value="1" name="brandIsStop"/><span>勾选后将给组团社展示公司品牌而非公司名称</span></td>
+                </tr>
+                <!--{/if}-->
+
+                <!--{if $isSeller == "1"}-->
+                <tr>
+                    <th><em>*</em>经营类型：</th>
+                    <td class="lineType_td" style="width: 315px">
+                        <input type="checkbox" class="wid14"  name="lineTypes[]" value="0" datatype="*"/>周边短线
+                        <input type="checkbox" class="wid14"  name="lineTypes[]" value="1" datatype="*"/>国内长线
+                        <input type="checkbox" class="wid14"  name="lineTypes[]" value="2" datatype="*"/>境外线
+                    </td>
+                </tr>
+                <!--{/if}-->
+                <!--{if $isSeller == "6"}-->
+                <tr>
+                    <th><em>*</em>经营类型：</th>
+                    <td class="lineType_td">
+                        <input type="checkbox" class="wid14"  name="lineTypes[]" value="4" datatype="*"/>当地参团
+                        <input type="checkbox" class="wid14"  name="lineTypes[]" value="5" datatype="*"/>酒店
+                        <input type="checkbox" class="wid14"  name="lineTypes[]" value="6" datatype="*"/>门票
+                    </td>
+                </tr>
+                <!--{/if}-->
+
+
+                <!--省份先不操作-->
+                <tr>
+                    <th><em>*</em>所在城市：</th>
+                    <td><div id="region"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><em>*</em>公司地址：</th>
+                    <td><input type="text" datatype="*"  placeholder="公司详细地址" nullmsg="请填写公司地址!" errormsg="" id="detail" value="<!--{if $registers.detail}--><!--{$registers.detail}--><!--{/if}-->" name="detail" /><span class="Validform_checktip"></span></td>
+                </tr>
+                <tr>
+                    <th><em>*</em>公司电话：</th>
+                    <td><input type="text" class="tel" value="<!--{if $registers.tel}--><!--{$registers.tel}--><!--{/if}-->" name="tel" datatype="tel" placeholder="电话格式为：400-9003-996" nullmsg="请输入公司电话" errormsg="电话号码格式错误"><span class="Validform_checktip"></span></td>
+                </tr>
+
+                <tr>
+                    <th>公司传真：</th>
+                    <td><input type="text" placeholder="传真格式：021-56632569" value="<!--{if $registers.responsibleFax}--><!--{$registers.responsibleFax}--><!--{/if}-->" name="responsibleFax"></td>
+                </tr>
+
+                <!--{if $isSeller == "1" || $isSeller == "6" || $isSeller == "5"}-->
+                <tr>
+                    <th valign="top" style="line-height:40px;"><em>*</em>公司LOGO：</th>
+                    <td style="line-height:40px;padding-top: 8px">
+                        <div id="logoPath"></div>
+                        <span class="pic-describe">建议尺寸是 400*240，支持jpg\gif\png格式</span>
+                        <div id="logoPath-preview">
+                            <!--{if $registers.logoPath}-->
+                            <img width="160" height="120" src="<!--{$imghost}--><!--{$registers.logoPath}-->">
+                            <input name="logoPath" type="hidden" value="<!--{$registers.logoPath}-->" />
+                            <!--{else}-->
+                            <img width="160" height="120" style="display: none;"data-upload="true">
+                            <!--{/if}-->
+                        </div>
+                    </td>
+                </tr>
+                <!--{/if}-->
+                <tr>
+                    <th valign="top" style="line-height:40px;"><em>*</em>营业执照：</th>
+                    <td style="line-height:40px;padding-top: 8px">
+                        <div id="businessLicensePath"></div>
+                        <input type="text" readonly placeholder="有效期" id="a1" class="import datepicker calendar-length" datatype="compareDate" name="businessLicenseStart" /><span>到</span>
+                        <input type="text" readonly placeholder="有效期" id="a2" class="import datepicker calendar-length" datatype="compareDate" name="businessLicenseEnd" />
+                        <span class="Validform_checktip"></span>
+                        <div id="businessLicensePath-preview">
+                            <!--{if $registers.businessLicensePath}-->
+                            <img width="160" height="120" src="<!--{$imghost}--><!--{$registers.businessLicensePath}-->">
+                            <input name="businessLicensePath" type="hidden" value="<!--{$registers.businessLicensePath}-->" />
+                            <!--{else}-->
+                            <img width="160" height="120" style="display: none;" data-upload="true">
+                            <!--{/if}-->
+                        </div>
+                    </td>
+                </tr>
+                <!--{if $isSeller == "5"}-->
+                <tr>
+                    <th valign="top" style="line-height:40px;"><em>*</em>交通运输许可证：</th>
+                    <td style="line-height:40px;padding-top: 8px">
+                        <div id="transportationPermitPath"></div>
+                        <span class="pic-describe">省际交通，需上传省际运营证</span>
+                        <div id="transportationPermitPath-preview">
+                            <!--{if $registers.transportationPermitPath}-->
+                            <img width="160" height="120" src="<!--{$imghost}--><!--{$registers.transportationPermitPath}-->">
+                                <input name="transportationPermitPath" type="hidden" value="<!--{$registers.transportationPermitPath}-->" />
+                            <!--{else}-->
+                            <img width="160" height="120" style="display: none;"data-upload="true">
+                            <!--{/if}-->
+                        </div>
+                    </td>
+                </tr>
+                <!--{/if}-->
+                <!--{if $isSeller == "1" || $isSeller == "6"}-->
+                <tr>
+                    <th valign="top" style="line-height:40px;"><em>*</em>责任保险单：</th>
+                    <td style="line-height:40px;padding-top: 8px">
+                        <div id="dutyInsurancePolicyPath"></div>
+                        <input type="text" readonly placeholder="有效期" class="import datepicker calendar-length" datatype="bx_comparedate"  name="dutyInsurancePolicyStart" value=""/>到
+                        <input type="text" readonly placeholder="有效期" class="import datepicker calendar-length" datatype="bx_comparedate"  name="dutyInsurancePolicyEnd" value=""/>
+                        <span class="Validform_checktip"></span>
+                        <div id="dutyInsurancePolicyPath-preview">
+                            <!--{if $registers.dutyInsurancePolicyPath}-->
+                            <img width="160" height="120" src="<!--{$imghost}--><!--{$registers.dutyInsurancePolicyPath}-->">
+                                <input name="dutyInsurancePolicyPath" type="hidden" value="<!--{$registers.dutyInsurancePolicyPath}-->" />
+                            <!--{else}-->
+                            <img width="160" height="120" style="display: none;"data-upload="true">
+                            <!--{/if}-->
+                        </div>
+                    </td>
+                </tr>
+                <!--{/if}-->
+                <tr>
+                    <th valign="top" style="line-height:40px;"><em>*</em>经营许可证：</th>
+                    <td style="line-height:40px;padding-top: 8px">
+                        <div id="travelpath"></div>
+                        <span class="pic-describe">门市、营业部或分社可上传备案登记证</span>
+                        <div id="travelpath-preview">
+                            <!--{if $registers.travelPath}-->
+                            <input name="travelPath" type="hidden" value="<!--{$registers.travelPath}-->" />
+                            <img width="160" height="120" src="<!--{$imghost}--><!--{$registers.travelPath}-->">
+                            <!--{else}-->
+                            <img width="160" height="120" style="display: none;" data-upload="true">
+                            <!--{/if}-->
+                        </div>
+                    </td>
+                </tr>
+                <!--{if $isSeller == "1" || $isSeller == "6"}-->
+                <tr>
+                    <th valign="top" style="line-height:40px;"><em>*</em>业务确认章：</th>
+                    <td style="line-height:40px;padding-top: 8px">
+                        <div id="sealPath"></div>
+                        <div id="sealPath-preview">
+                            <!--{if $registers.sealPath}-->
+                            <img width="160" height="120" src="<!--{$imghost}--><!--{$registers.sealPath}-->">
+                            <input name="sealPath" type="hidden" value="<!--{$registers.sealPath}-->" />
+                            <!--{else}-->
+                            <img width="160" height="120" style="display: none;"data-upload="true">
+                            <!--{/if}-->
+                        </div>
+                    </td>
+                </tr>
+                <!--{/if}-->
+                </tbody>
+            </table>
+
+            <h3><span>个人信息</span></h3>
+            <table class="person-table">
+                <tbody><tr>
+                    <th><em>*</em>用户名：</th>
+                    <td><input type="text" value="<!--{if $registers.userName}--><!--{$registers.userName}--><!--{/if}-->" name="userName" datatype="/(^[a-zA-Z][a-zA-Z0-9]{3,20}$)|(^1[0-9]{10}$)/i" placeholder="以此用户名登录平台，慎重填写，不可修改" nullmsg="请填写用户名" errormsg="英文字母、数字,手机号码；长度4-20！" ajaxurl="registers.checkUsername.html"><span>可输入英文字母、数字，需以字母开头；长度4-20！</span><span class="Validform_checktip"></span></td>
+                </tr>
+                <tr>
+                    <th><em>*</em>真实姓名：</th>
+                    <td><input type="text" value="<!--{if $registers.realname}--><!--{$registers.realname}--><!--{/if}-->" name="realname" datatype="*" placeholder="请输入真实姓名" nullmsg="请填写真实姓名" errormsg=" "><span class="Validform_checktip"></span></td>
+                </tr>
+                <tr>
+                    <th>QQ号码：</th>
+                    <td><input type="text" placeholder="请输入QQ号码" value="<!--{if $registers.qq}--><!--{$registers.qq}--><!--{/if}-->" name="qq"><span class="Validform_checktip"></span></td>
+                </tr>
+                <tr class="div-phone">
+                    <th><em>*</em>手机号码：</th>
+                    <td class="qrcode_td" style="position: relative;">
+                        <div>
+                            <input type="text" id="phone" class="mobile infos" placeholder="可用于登录和找回密码" class=""  value="<!--{if $registers.mobile}--><!--{$registers.mobile}--><!--{/if}-->"  name="mobile" datatype="customTel" nullmsg="请输入手机号码" errormsg="" >
+                            <button type="button" class="send send1" >获取短信验证码</button>
+                            <div class="num-pop"></div>
+                        </div>
+                    </td>
+                </tr>      
+                <tr>
+                    <th><em>*</em>短信验证码：</th>
+                    <td>
+                        <input type="text" placeholder="输入短信验证码" value="" name="vCode" nullmsg="请输入验证码" datatype="*,verifycode" class="verifycode"><span class="Validform_checktip"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th><em>*</em>密码：</th>
+                    <td><input type="password" name="userPassword" datatype="*6-16" placeholder="设置登录密码" nullmsg="密码不能为空" errormsg="密码不符合要求" sucmsg=" "><span class="Validform_checktip"></span></td>
+                </tr>
+                <tr>
+                    <th><em>*</em>确认密码：</th>
+                    <td><input type="password" name="userConfirmPassword" datatype="*6-16" placeholder="再一次输入密码" recheck="userPassword" sucmsg=""><span class="Validform_checktip"></span></td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><input type="checkbox" class="agrees" /> 同意<a class="blue agreement" href="javascript:;">《馨途平台注册协议》</a>和<a class="blue tradeRule" href="javascript:;">《馨途平台交易规则》</a></td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><input type="submit" value="提交审核"  class="sub sub-change"></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+<!--{include file="registers-rules.html"}-->
+<!--{include file="registers-agreement.html"}-->
+<div id="validcodediv">
+    <div>
+        <table>
+              <tr>
+                    <td><input type="text" name="validcode" placeholder="输入右侧字符" sucmsg="" style="float: left">
+                        <img src="registers.getvalidatecode.html" id="getvalidatecode" title="看不清，点击换一张"  style="float: left;margin-top:4px">
+                                <button id="validbutton">发送验证码</button>
+                                </td>
+                </tr>
+        </table>
+    </div>
+</div>
+
+
+<!--{include file="newinc/footer.html"}-->
+<!--{include file="newinc/footer.js.html"}-->
+
+<link rel="stylesheet" type="text/css" href="<!--{$staticUrl}-->js/date-picker/datepicker.min.css" />
+<link rel="stylesheet" type="text/css" href="<!--{$staticUrl}-->js/date-picker/datepicker.calendar.css" />
+<script src="<!--{$staticUrl}-->js/validform_v5.3.2_min.js"></script>
+<script src="<!--{$staticUrl}-->js/date-picker/datepicker.js"></script>
+<script src="<!--{$staticUrl}-->js/base.js"></script>
+<!--{include file="newinc/upload.html"}-->
+<script src="<!--{Common::staticUrl()}-->region.js"></script>
+<script>$.fn.region.defaults.script = "<!--{Common::staticUrl()}-->area.js?<!--{date('Y-m-d')}-->";</script>
+<script>
+
+    $(function(){
+        regObj.uploadInit();
+        regObj.dateselects();
+        regObj.setRegion();
+        regObj.setValidform();
+        regObj.testMobile();
+        regObj.sendQrcode();
+        regObj.showTradeRule();
+        // regObj.timeTest();
+    });
+    
+   
+
+    var regObj = regObj || {};
+    regObj = {
+        mob_isReg:false,
+        verifycodes:"",
+        //上传按钮初始化
+        uploadInit:function(){
+           this.setUpload();
+        },
+        setUpload:function(){
+            upload({// 组织机构代码证
+                el: '#orgcodepath',
+                name: 'orgcodepath',
+                buttontext: '上传',
+                file_size_limit: "1MB",
+                callback: function(obj, url){
+                    $('#orgcodepath-preview>img').css('display','inline');
+                    $('input[name="orgcodepath"]').remove();
+                    $('#orgcodepath-preview').append('<input name="orgcodepath" type="hidden" value="'+url+'" />');
+                }
+            });
+
+            upload({// 营业执照
+                el: '#businessLicensePath',
+                name: 'businessLicensePath',
+                buttontext: '上传',
+                file_size_limit: "1MB",
+                callback: function(obj, url){
+                    $('#businessLicensePath-preview>img').css('display','inline');
+                    $('input[name="businessLicensePath"]').remove();
+                    $('#businessLicensePath-preview').append('<input name="businessLicensePath" type="hidden" value="'+url+'" />');
+                }
+            });
+
+            upload({// 经营许可证
+                el: '#travelpath',
+                name: 'travelpath',
+                buttontext: '上传',
+                file_size_limit: "1MB",
+                callback: function(obj, url){
+                    $('#travelpath-preview>img').css('display','inline');
+                    $('input[name="travelPath"]').remove();
+                    $('#travelpath-preview').append('<input name="travelPath" type="hidden" value="'+url+'" />');
+                }
+            });
+
+            upload({// 责任保险单：
+                el: '#dutyInsurancePolicyPath',
+                name: 'dutyInsurancePolicyPath',
+                buttontext: '上传',
+                file_size_limit: "1MB",
+                callback: function(obj, url){
+                    $('#dutyInsurancePolicyPath-preview>img').css('display','inline');
+                    $('input[name="dutyInsurancePolicyPath"]').remove();
+                    $('#dutyInsurancePolicyPath-preview').append('<input name="dutyInsurancePolicyPath" type="hidden" value="'+url+'" />');
+                }
+            });
+            upload({// 业务确认章
+                el: '#sealPath',
+                name: 'sealPath',
+                buttontext: '上传',
+                file_size_limit: "1MB",
+                callback: function(obj, url){
+                    $('#sealPath-preview>img').css('display','inline');
+                    $('input[name="sealPath"]').remove();
+                    $('#sealPath-preview').append('<input name="sealPath" type="hidden" value="'+url+'" />');
+                }
+            });
+            upload({// 交通运输许可证
+                el: '#transportationPermitPath',
+                name: 'transportationPermitPath',
+                buttontext: '上传',
+                file_size_limit: "1MB",
+                callback: function(obj, url){
+                    $('#transportationPermitPath-preview>img').css('display','inline');
+                    $('input[name="transportationPermitPath"]').remove();
+                    $('#transportationPermitPath-preview').append('<input name="transportationPermitPath" type="hidden" value="'+url+'" />');
+                }
+            });
+            upload({// 公司Logo
+                el: '#logoPath',
+                name: 'logoPath',
+                buttontext: '上传',
+                file_size_limit: "1MB",
+                callback: function(obj, url){
+                    $('#logoPath-preview>img').css('display','inline');
+                    $('input[name="logoPath"]').remove();
+                    $('#logoPath-preview').append('<input name="logoPath" type="hidden" value="'+url+'" />');
+                }
+            });
+        },
+        //日历初始化
+        dateselects:function(){
+            var name = "";
+            $('.datepicker').dateselect({
+                changeYear: true,
+                changeMonth: true,
+               beforeShow: function (input, obj) { 
+                    name = $(input).attr("name")
+                    $(obj.dpDiv).wrap($('<div class="calendar_custom_v2" style="top:0;left:0;">')); 
+                },
+               onClose:function(date, obj){
+                   regObj.testDate(name);
+                   var calendar = $(obj.dpDiv).closest(".calendar_custom_v2");
+                   $(obj.dpDiv).hide().appendTo($(document.body));
+                   calendar.remove();
+               }
+            });
+        },
+        testDate:function(name){
+            var type = "<!--{$isSeller}-->";
+            if(type == "1" || type == "6"){
+                var startdata_bool = false,bx_bool = false;
+                var validformtip = $("#businessLicensePath-preview").closest("td").find(".Validform_checktip");
+                var start_date = $("input[name='businessLicenseStart']").val();
+                var end_date = $("input[name='businessLicenseEnd']").val();
+
+                var bx_validformtip = $("#dutyInsurancePolicyPath-preview").closest("td").find(".Validform_checktip");
+                var bx_start_date = $("input[name='dutyInsurancePolicyStart']").val();
+                var bx_end_date = $("input[name='dutyInsurancePolicyEnd']").val();
+                if(name == "businessLicenseStart" || name == "businessLicenseEnd"){
+                    if (end_date == "" || start_date == "") {
+                        $(validformtip).hide().addClass("Validform_wrong").removeClass("Validform_right").html("有效期不能为空").show();
+                        startdata_bool = false;
+                    } else if (end_date && start_date && (end_date > start_date)) {
+                        $(validformtip).hide().removeClass("Validform_wrong").addClass("Validform_right").html("").show();
+                        startdata_bool = true;
+                    } else {
+                        $(validformtip).hide().addClass("Validform_wrong").removeClass("Validform_right").html("结束日期应大于开始日期").show();
+                        startdata_bool = false;
+                    }
+                }
+                if(name == "dutyInsurancePolicyStart" || name == "dutyInsurancePolicyEnd"){
+                    if (bx_end_date == "" || bx_start_date == "") {
+                        $(bx_validformtip).hide().addClass("Validform_wrong").removeClass("Validform_right").html("有效期不能为空").show();
+                        bx_bool = false;
+                    } else if (bx_end_date && bx_start_date && (bx_end_date > bx_start_date)) {
+                        $(bx_validformtip).hide().removeClass("Validform_wrong").addClass("Validform_right").html("").show();
+                        bx_bool = true;
+                    } else {
+                        $(bx_validformtip).hide().addClass("Validform_wrong").removeClass("Validform_right").html("结束日期应大于开始日期").show();
+                        bx_bool = false;
+                    }
+                }
+
+                if(!startdata_bool || !bx_bool){
+                    return false;
+                }else{
+                    return true;
+                }
+            }else {
+                var validformtip = $("#businessLicensePath-preview").closest("td").find(".Validform_checktip");
+                var start_date = $("input[name='businessLicenseStart']").val();
+                var end_date = $("input[name='businessLicenseEnd']").val();
+                if (end_date == "" || start_date == "") {
+                    $(validformtip).hide().addClass("Validform_wrong").removeClass("Validform_right").html("有效期不能为空").show();
+                    return false;
+                } else if (end_date && start_date && (end_date > start_date)) {
+                    $(validformtip).hide().removeClass("Validform_wrong").addClass("Validform_right").html("").show();
+                    return true;
+                } else {
+                    $(validformtip).hide().addClass("Validform_wrong").removeClass("Validform_right").html("结束日期应大于开始日期").show();
+                    return false;
+                }
+            }
+        },
+        //设置省市区
+        setRegion:function(){
+            $("#region").region({
+                depth : 4,
+                names: ['regionId','provinceId', 'cityId', 'areaId'],
+                values : ['','','',''],
+                attrs : [{datatype:'*'}, {datatype:'*'},{datatype:'*'},{datatype:'*'}]
+            });
+        },
+        //表单初始化
+        setValidform:function(){
+            $('#checkform').Validform({
+                tiptype:3,
+                postonce:true,
+                datatype:{
+                    'compareDate':function(gets,obj,curform,regxp){
+                         var start_date = $("input[name='businessLicenseStart']").val();
+                         var end_date = $("input[name='businessLicenseEnd']").val();
+                         if(start_date == "" || end_date == ""){return "有效期不能为空";}
+                         if(start_date > end_date){
+                            return "结束日期应大于开始日期";
+                         }
+                    },
+                    'bx_comparedate':function(gets,obj,curform,regxp){
+                        var bx_start_date = $("input[name='dutyInsurancePolicyStart']").val();
+                        var bx_end_date = $("input[name='dutyInsurancePolicyEnd']").val();
+                        if(bx_start_date == "" || bx_end_date == ""){return "有效期不能为空";}
+                        if(bx_start_date > bx_end_date){
+                            return "结束日期应大于开始日期";
+                         }
+                    },
+                    'customTel':function(gets,obj,curform,regxp){
+                        if(gets == ""){
+                            return false;
+                        }
+                         if(!regObj.mob_isReg){
+                            return "请填写正确信息";
+                         }
+                    },
+                    'verifycode':function (gets,obj,curform,regxp) {
+                        if(gets != regObj.verifycodes){
+                            return "验证码输入错误";
+                        }
+                        return true;
+                    }
+                },
+                beforeSubmit:function(curform){
+                    var status1 = regObj.setPicupload();
+                    if(!regObj.mob_isReg){
+                         var bc=$("#phone").siblings(".Validform_checktip");
+                         bc.removeClass("Validform_right").addClass("Validform_wrong").html("请填写正确信息");
+                    }
+                    if(!regObj.showAgreement() || !status1 || !regObj.mob_isReg){
+                        return false;
+                    }else{
+                        return true;
+                    };
+                }
+            });
+        },
+        //验证手机号码是否已注册
+        testMobile:function(){
+            $(document).on("input propertychange","#phone",function(){
+                var reg = /^1[3|4|5|7|8]\d{9}$/;
+                var mobile = $(this).val();
+                mobile=$.trim(mobile);
+                var bc=$(this).siblings(".Validform_checktip");
+                var mobile_tips_txt= '<span>该手机号已被绑定，请更换或<a class="blue" href="<!--{$webs}-->">立即登录</a></span>';
+                if(mobile && reg.test(mobile)){
+                    $.post("registers.ajaxCheckMobile.html",{tels:mobile},function(resp){
+                        if(resp.status == "y"){
+                            $(".num-pop").hide().html(mobile_tips_txt);
+                            $(".send").attr("disabled",false);
+                            $(".send").css({
+                                "color":"#666",
+                                "border":"1px solid #0068b7",
+                                "background":"#fff"
+                            });
+                            regObj.mob_isReg = true;
+                            bc.removeClass("Validform_wrong").addClass("Validform_right").html("");
+                            $("#phone").removeClass("Validform_error");
+                            bc.css({
+                                "position":"absolute",
+                                "left":"400px",
+                                "top":"7px"
+                            })
+                        }else{
+                            $(".num-pop").show().html(mobile_tips_txt);
+                            $(".send").attr("disabled",true)
+                             $(".send").css({
+                                "color":"#666",
+                                "border":"1px solid #ccc",
+                                "background":"#eee"
+                            });
+                            regObj.mob_isReg = false;
+                            bc.removeClass("Validform_right").addClass("Validform_wrong").html("请填写正确信息");
+                            bc.css({
+                                "position":"absolute",
+                                "left":"400px",
+                                "top":"7px"
+                            })
+                        }
+                    },'json')
+                }else{
+                    $(".num-pop").hide();
+                    bc.removeClass("Validform_right").addClass("Validform_wrong").html("请填写正确信息");;
+                    regObj.mob_isReg = false;
+                }
+            })
+        },
+        //设定图片上传
+        setPicupload:function(){
+            var type = "<!--{$isSeller}-->";
+            if(type == '0'){//组团社
+                var businessLicensePath_path=$("#businessLicensePath-preview").find("img").attr('src');//false
+                var travel_path=$("#travelpath-preview").find("img").attr('src');//false
+                var business_bool = true,travel_bool = true;
+                business_bool = testPicupload(businessLicensePath_path,'businessLicensePath-preview');
+                travel_bool = testPicupload(travel_path,'travelpath-preview');
+                if(!business_bool || !travel_bool){
+                    return false;
+                }else{
+                    return true;
+                }
+            }else if(type == '1' || type == '6'){//分销商
+                var businessLicensePath_path=$("#businessLicensePath-preview").find("img").attr('src');//false
+                var travel_path=$("#travelpath-preview").find("img").attr('src');//false
+                var logo_path = $("#logoPath-preview").find("img").attr('src');
+                var dutyInsurance_path = $("#dutyInsurancePolicyPath-preview").find("img").attr('src');
+                var seal_path = $("#sealPath-preview").find("img").attr('src');
+
+                business_bool = testPicupload(businessLicensePath_path,'businessLicensePath-preview');
+                travel_bool = testPicupload(travel_path,'travelpath-preview');
+                logo_bool  = testPicupload(logo_path,'logoPath-preview');
+                dutyInsurance_bool  = testPicupload(dutyInsurance_path,'dutyInsurancePolicyPath-preview');
+                seal_bool  = testPicupload(seal_path,'sealPath-preview');
+                if(!business_bool || !travel_bool || !dutyInsurance_bool || !logo_bool || !seal_bool){
+                    return false;
+                }else{
+                    return true;
+                }
+            }else if(type=='5'){//车队
+                var businessLicensePath_path=$("#businessLicensePath-preview").find("img").attr('src');//false
+                var travel_path=$("#travelpath-preview").find("img").attr('src');//false
+                var transportation_path = $("#transportationPermitPath-preview").find("img").attr('src');
+                var logo_path = $("#logoPath-preview").find("img").attr('src');
+
+                business_bool = testPicupload(businessLicensePath_path,'businessLicensePath-preview');
+                travel_bool = testPicupload(travel_path,'travelpath-preview');
+                transportation_bool  = testPicupload(transportation_path,'transportationPermitPath-preview');
+                logo_bool  = testPicupload(logo_path,'logoPath-preview');
+                if(!business_bool || !travel_bool || !transportation_bool || !logo_bool){
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+            //验证图片是否上传
+            function testPicupload(pathObj,previewObj){
+                if(!pathObj){
+                    if(!$("#"+previewObj).find('.photo-upload').length){
+                        $("#"+previewObj).append("<div class='photo-upload' style='color:red;padding-top:5px;font-size:12px'>请上传图片</div>");
+                    }
+                    return false;
+                }else{
+                    if($("#"+previewObj).find('.photo-upload').length > 0){$("#"+previewObj).find('.photo-upload').remove();}
+                    return true;
+                }
+            }
+        },
+         
+                    
+        //发送短信验证码
+        sendQrcode:function(){
+            $('.send').on('click',function(){
+                if(regObj.mob_isReg == true){
+                    $("#getvalidatecode").click();
+                    $.layer({
+                        type: 1,
+                        title: " ", //不显示默认标题栏
+                        shade: [0.5, '#000'], //不显示遮罩
+                        shadeClose: false,
+                        area: ['500px', '100px'],
+                        border: [0],
+                        closeBtn: [0, true],
+                        page:{dom: '#validcodediv'}
+                    });
+                     $("#getvalidatecode").click(function(){ 
+                        $(this).attr("src",'registers.getvalidatecode.html?' + Math.random());
+                    }); 
+                }else{
+                    layer.msg("请输入有效手机号码",2,8);
+                }
+            });
+            $('#validbutton').on('click',function(){
+                var mobile = $('.mobile').val() || "";
+                var check = $("input[name='validcode']").val() || "";
+                if(check == ''){
+                    layer.msg('请输入 4 位字符',2,8);
+                    return;
+                }
+                $.ajax({
+                    url: "registers.sendvcode.html",
+                    data: {mobile:mobile, validatecode:check},
+                    dataType: "json",
+                    success: function (resp) {
+                        $(".num-pop").hide();
+                        if (resp.state == "1") {
+                            layer.msg("发送验证码成功",2,9);
+                            regObj.verifycodes = resp.verifycode;
+                            regObj.setDaojishi();
+                            setTimeout(function(){layer.closeAll()},2000)
+                        }else{
+                            $("#getvalidatecode").attr("src",'registers.getvalidatecode.html?' + Math.random());
+                            layer.msg(resp.info,2,8);
+                        }
+                        $("input[name='validcode']").val('');
+                    }
+                })
+            });
+        },
+        //用户注册协议
+        showAgreement:function(){
+            if(!$(".agrees").is(":checked")){
+                layer.msg("您还没有勾选同意协议内容",2,8);
+                return false;
+            }
+            return true;
+        },
+
+        //馨途平台交易规则
+        showTradeRule:function(){
+            $(document).on('click','.tradeRule',function(){
+             var ptjygz = $.layer({
+                    type: 1,
+                    title: "馨途旅游在线交易规则", //不显示默认标题栏
+                    shade: [0.5, '#000'], //不显示遮罩
+                    shadeClose: false,
+                    area: ['800px', '800px'],
+                    border: [0],
+                    closeBtn: [0, true],
+                    fix: true,
+                    page:{dom:$(".ptjygz-cont")}
+                })
+                $(".agreement-btn").click(function() {
+                 layer.close(ptjygz);
+                 $(".agrees").prop({"checked":true});
+                 });
+            }); 
+            $(document).on('click','.agreement',function(){
+              var yhzcxy = $.layer({
+                    type: 1,
+                    title: "用户注册协议", //不显示默认标题栏
+                    shade: [0.5, '#000'], //不显示遮罩
+                    shadeClose: false,
+                    area: ['800px', '800px'],
+                    border: [0],
+                    closeBtn: [0, true],
+                    fix: true,
+                    page:{dom:$(".yhzcxy-cont")}
+                })
+               $(".agreement-btn").click(function() {
+                  layer.close(yhzcxy);
+                  $(".agrees").prop({"checked":true});
+               });
+            });
+        },
+        //设置倒计时
+        setDaojishi:function(){
+            var time = 60;
+            $('.div-phone span').remove();
+            function timeCountDown(){
+                if(time==0){
+                    $('.div-phone button').removeAttr("disabled");
+                    clearInterval(timer);
+                    $('.div-phone button').addClass('send1').removeClass('send0').html("发送验证码");
+                    //sends.checked = 1;
+                    return true;
+                }
+                $('.div-phone button').attr("disabled","disabled");
+                $('.div-phone button').html(time+"秒后再次发送");
+                time--;
+                return false;
+            }
+            $('.div-phone button').addClass('send0').removeClass('send1');
+            timeCountDown();
+            var timer = setInterval(timeCountDown,1000);
+        },
+
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!-- 修改发票信息弹窗 -->
+<div class="msk">
+    <div class="contentBox xy_center">
+        <div class="contentHeader">
+            <span>发票信息</span>
+            <i id="closeInvoice">X</i>
+        </div>
+        <div class="contentBody">
+            <p>
+                <i>发票种类:</i>
+                <em>普通发票</em>
+            </p>
+            <p class="invoice">
+                <i>发票抬头:</i>
+                <em><!--{$other.invoice.info.enterpriseName}--></em>
+                <span>※ 若名称有误或需开其他公司名称，请联系客服电话：400-900-3996</span>
+            </p>
+            <p class="taxPayers">
+                <i>
+                    <em>*</em>
+                    纳税人识别号:
+                </i>
+                <input type="text" value="<!--{$other.invoice.info.taxNo}-->" disabled="disabled">
+            </p>
+            <p>
+                <i>
+                    <em>*</em>
+                    发票内容:
+                </i>
+                <button class="active" data-val="1">旅游费</button>
+                <button data-val="2">团费</button>
+            </p>
+        </div>
+        <div class="billAddress ">
+            <div class="rel">
+                <span class="x_center">收票地址</span>
+                <p class="detailAddress">
+                    <i>
+                        <em>*</em>
+                        详细地址:
+                    </i>
+                    <input type="text" id="hyaddr" value="<!--{$other.hyinvoiceaddr[0].address}-->">
+                </p>
+                <p class="contact">
+                    <i>
+                        <em>*</em>
+                        联系人:
+                    </i>
+                    <input type="text" id="hyname" value="<!--{$other.hyinvoiceaddr[0].name}-->">
+                </p>
+                <p class="contact">
+                    <i>
+                        <em>*</em>
+                        联系电话:
+                    </i>
+                    <input type="text" id="hytell" value="<!--{$other.hyinvoiceaddr[0].mobile}-->">
+                </p>
+                <p class="contact">
+                    <i>
+                        邮编:
+                    </i>
+                    <input type="text" id="hynum" value="<!--{$other.hyinvoiceaddr[0].zipCode}-->">
+                </p>
+            </div>
+        </div>
+        <div class="contentFooter">
+            <div class="saveOrCan">
+                <button  class="fl"  id="cancelEdit" <!--{if !$other.hyinvoiceaddr}-->style="display:none;"<!--{/if}-->>取消修改</button>
+                <button class="save fl">保存</button>
+                <!--{if $aorder.isinvoice}-->
+                <button class="fl invoice_cancel">取消开票</button>
+                <!--{/if}-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 修改发票信息弹窗 -->
+
+<!-- 客服qq 联系方式弹窗 -->
+<div class=" contact_msk">
+    <div class="contact_msk_content xy_center">
+        <div class="content_header">
+            <span>供应商联系方式</span>
+            <i class="fr close_contact_msk">X</i>
+        </div>
+        <div class="content_middle rel">
+            <div class="y_center imgBox">
+                <img src="<!--{if $sellerinfo.logopath}--><!--{$imghost}--><!--{$sellerinfo.logopath}--><!--{else}--><!--{$skinPath}-->/images/order_logo.png<!--{/if}-->" alt="" >
+            </div>
+            <div class="y_center txt">
+                <p>
+                    电话：
+                    <span><!--{$sellerinfo.tel}--></span>
+                </p>
+                <p>
+                    传真：
+                    <span><!--{$sellerinfo.responsiblefax}--></span>
+                </p>
+            </div>
+        </div>
+        <div class="content_footer_box">
+            <ul class="clearfix">
+                <!--{foreach $customerinfo as $key => $value}-->
+                <li>
+                    <p>
+                        <span>联系人：</span>
+                        <i><!--{$value.contactname}--></i>
+                    </p>
+                    <p>
+                        <span>手机：</span>
+                        <i><!--{$value.mobile}--></i>
+                    </p>
+                    <p>
+                        <a href="http://wpa.qq.com/msgrd?v=3&uin=<!--{$value.qq}-->&site=qq&menu=yes" class="db" target="_blank" >
+                            <img src="<!--{$skinPath}-->/images/qqco.jpg" alt="">
+                        </a>
+                    </p>
+                </li>
+                <!--{/foreach}-->
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- 客服qq 联系方式弹窗 -->
+
+<!-- 选择红包弹窗 -->
+<div class="redMon_msk ">
+    <div class="redMon_msk_content xy_center">
+        <div class="content_header">
+            <span>选择红包</span>
+            <i class="fr close_contact_msk">X</i>
+        </div>
+        <div class="content_title">
+            <span>选择</span>
+            <span>红包有效期</span>
+            <i>抵扣红包金额(元)</i>
+        </div>
+        <div  class="tableBox">
+            <table border="1">
+                <!--{if $hongbao}-->
+                <!--{foreach $hongbao as $v}-->
+                <tr>
+                    <td class="rel">
+                        <label for="<!--{$v.id}-->"></label>
+                        <input type="checkbox" name="hongbaoorderid[]" id="<!--{$v.id}-->" data-price="<!--{$v.price}-->" data-id="<!--{$v.id}-->" class="xy_center" >
+                        <img src="<!--{$skinPath}-->images/common_btn_2_d.png" alt="" class="xy_center">
+                    </td>
+                    <td><!--{if $v.endtime}--><!--{$v.endtime|date_format:'%Y-%m-%d %H:%m'}--><!--{else}-->永久有效<!--{/if}--></td>
+                    <td><!--{$v.price}--></td>
+                </tr>
+                <!--{/foreach}-->
+                <!--{else}-->
+                <tr>
+                    <td class="rel">
+                    </td>
+                    <td> &nbsp;&nbsp;&nbsp;&nbsp; 暂无可用红包</td>
+                    <td></td>
+                </tr>
+                <!--{/if}-->
+            </table>
+        </div>
+        <p class="remark">备注：如果选择红包金额大于线路抵扣金额,则按线路金额抵扣,</br>  
+                         &nbsp;&nbsp;&nbsp;&nbsp;多余红包金额自动作废。</p>
+        <div class="tipBox">
+            <p class="checkedTips">请先选择红包</p>
+        </div>
+        <div class="content_footer rel">
+            <button class="xy_center">确定</button>
+        </div>
+    </div>
+</div>
+<!-- 选择红包弹窗 -->
+<!-- 弹窗背景/ -->
+<div class="o-black-bg"></div>
+<!-- 修改接送弹框 -->
+<div class="o-box-area">
+    <div class="o-box-tit">
+        <em></em>选择接送
+    </div>
+    <div class="o-table-parent">
+        <table class="o-shuttle-table" cellpadding="0" cellspacing="0">
+            <tr>
+                <th width="80">序号</th>
+                <th>区域</th>
+                <th>站点</th>
+                <th width="80">价格</th>
+                <th>类型</th>
+            </tr>
+            <!--{if $aline.tianchi!=1}-->
+            <!--{foreach $other.takes as $key => $value}-->
+            <tr data-take="<!--{$value.id}-->,<!--{$value.tag}-->,<!--{$value.goprice+$value.backprice}-->" data-tianchi="<!--{$value.tianchi}-->" <!--{if $aorder.takeid==$value.id|| $other.takeinfo.id==$value.id }-->class="o-tr-val"<!--{/if}-->>
+                <td>
+                    <label class="o-ck-box <!--{if $aorder.takeid==$value.id || $other.takeinfo.id==$value.id }-->on<!--{/if}-->">
+                        <input class="o-ckb" type="checkbox" name="ckbox">
+                    </label>
+                    <em><!--{$key+1}--></em>
+                 </td>
+                <td> <p class="o-p-area" title="<!--{$value.setoff.0}-->-<!--{$value.setoff.1}-->-<!--{$value.setoff.2}-->"><span><!--{$value.setoff.0}-->-<!--{$value.setoff.1}--></span> - <i><!--{$value.setoff.2}--></i></p> </td>
+                <td> <p class="o-p-site" title="<!--{$value.dest.0}-->-<!--{$value.dest.1}-->-<!--{$value.dest.2}-->"><span><!--{$value.dest.0}-->-<!--{$value.dest.1}--></span> - <i> <!--{$value.dest.2}--></i></p> </td>
+                <td>￥<span class="o-sprice"><!--{$value.goprice+$value.backprice}--></span>/人</td>
+                <td><!--{if $value.tag==1}--><span class="o-sp-danjie">单接</span><!--{elseif $value.tag==2}--><span class="o-sp-dansong">单送</span><!--{else}--><span class="o-sp-jiesong">接送</span><!--{/if}--></td>
+            </tr>
+            <!--{/foreach}-->
+            <!--{else}-->
+            <!--{foreach $other.takes as $key => $value}-->
+            <tr data-take="<!--{$value.productId}-->,<!--{$value.tag}-->" data-amt="<!--{$value.amt}-->" data-tianchi="<!--{$value.tianchi}-->" <!--{if $aorder.takeid==$value.productId|| $other.takeinfo.id==$value.productId }-->class="o-tr-val"<!--{/if}-->>
+                <td>
+                    <label class="o-ck-box <!--{if $aorder.takeid==$value.productId|| $other.takeinfo.id==$value.productId }-->on<!--{/if}-->">
+                        <input class="o-ckb" type="checkbox" name="ckbox">
+                    </label>
+                    <em><!--{$key+1}--></em>
+                 </td>
+                <td> <p class="o-p-area" title="<!--{$value.product.townName}-->-<!--{$value.product.locationAddress}-->"><span><!--{$value.product.townName}--></span> - <i><!--{$value.product.locationAddress}--></i></p> </td>
+                <td> <p class="o-p-site"  title="<!--{$value.product.stationName}-->"><span><!--{$value.product.stationName}--></span></p> </td>
+                <td>￥<span class="o-sprice"><!--{$value.amtArr.0}--></span>/人</td>
+                <td><!--{if $value.tag==1}--><span class="o-sp-danjie">单接</span><!--{elseif $value.tag==2}--><span class="o-sp-dansong">单送</span><!--{else}--><span class="o-sp-jiesong">接送</span><!--{/if}--></td>
+            </tr>
+            <!--{/foreach}-->
+            <!--{/if}-->
+        </table>
+    </div>
+    <div class="o-chose-qus"><a href="javascript:void(0);">确认选择</a></div>
+</div>
+<!-- /修改接送弹框 -->

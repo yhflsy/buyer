@@ -1,0 +1,45 @@
+<script id="each" type="text/x-jquery-tmpl"> 
+    <tr class="{{if trclass}}${trclass}{{else category=='成人'}}o-tr-person{{else category=='儿童'}}o-tr-children{{else category=='婴儿'}}o-tr-baby{{/if}} guest-list">
+        <td><span class="o-tb-xh index">1</span><input class="o-ipt-85" type="text"  name="title[]" value="${title}"><input type="hidden" name="guestid[]"></td>
+        <td>${category}
+        <input type="hidden"  value="{{if category=='成人'}}0{{/if}}{{if category=='儿童'}}1{{/if}}{{if category=='婴儿'}}2{{/if}}" name="category[]" /></td>
+        <td>
+        
+            <select class="o-t-paper" name="cardcategory[]">
+                <!--{foreach $cardcarr as $k=>$v}-->
+                    <option value="<!--{$k}-->" {{if cardcategory==<!--{$k}-->}} selected {{/if}}><!--{$v}--></option>
+                <!--{/foreach}-->
+            </select>
+            <input class="o-ipt-180" type="text"  name="idcard[]" datatype="{{if cardcategory==1}}idcard{{else cardcategory==2}}passport {{else}}*{{/if}}" ignore="ignore" value="${idcard}" >
+        </td>
+        <td class="o-td-sex">
+            <select name="gender[]">
+                <option value="1" {{if gender==1 || gender=='男'}} selected="selected"{{/if}}>男</option>
+                <option value="2" {{if gender==2 || gender=='女'}} selected="selected"{{/if}}>女</option>
+            </select>
+        </td>
+        <td><input class="o-ipt-130" type="text" name="guestmobile[]" ignore="ignore" datatype="m" value="${guestmobile}" errormsg="请正确填写手机号码"></td>
+        <!--{if $aline.linecategory==2}-->
+        <td>
+            <div class="idcardWrap">
+                     <a href="javascript:void(0)" onmouseenter="viewPic(this);" onmouseleave="hidePic(this);" class="viewpic" style="display: none">查看</a>
+                     <div id="idcardUpload"></div>
+                      <div id="idcardUpload-preview" class="idcardImgBox">
+                      </div>
+            </div>
+	</td>
+        <!--{/if}-->
+        <td><input class="o-ipt-180" type="text"  name="guestdetail[]" value="${guestdetail}"></td>
+        <td><a class="o-tb-del"  href="javascript:void(0);">删除</a></td>
+    </tr>
+</script>
+<script>
+    var supportsPointerEvents = (function(){   
+    var dummy = document.createElement('_');   
+    if(!('pointerEvents' in dummy.style)) return false;   
+    dummy.style.pointerEvents = 'auto';   
+    dummy.style.pointerEvents = 'x';   document.body.appendChild(dummy);   
+    var r = getComputedStyle(dummy).pointerEvents === 'auto';   
+    document.body.removeChild(dummy);   return r; 
+    });
+</script>

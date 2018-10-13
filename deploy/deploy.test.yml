@@ -1,0 +1,30 @@
+version: '3'
+services:  
+  php_buyer1:
+    privileged: true
+    image: git.we2tu.com:5000/$PROJECT_NAME:$CI_COMMIT_REF_NAME
+    volumes:
+      - /img.happytoo.cn:/img.happytoo.cn
+    environment:
+      - "DOMAIN_ENV=test"
+      - "PROJECTNAME=buyer1"
+      - "PLUGINNAME=plugins"
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "tcp://172.17.9.13:5514"
+        tag: $PROJECT_NAME
+    ports: 
+      - 9001:8888
+    deploy: 
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    networks:
+      - docker-cy-ceshi
+networks:
+  docker-cy-ceshi:
+    external: true

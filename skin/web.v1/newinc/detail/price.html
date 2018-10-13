@@ -1,0 +1,62 @@
+<script class="tmpl-price" type="text/x-jquery-tmpl">
+  {{if istakeadult>0}}
+  <tr>
+      <td>成人<b class="tdline-L"></b></td>
+      <td>￥<em class="red-light blod adultprice">${adultprice}</em>/人</td>
+      <td>
+          <span class="no-more red-light">库存不足</span>
+          <div class="btns">
+              <button type="button" class="btn reduce adult-reduce reduce-num"><i class="iconfont">&#xe664;</i></button>
+                <input type="text" readonly value="0" class="adultnum" />
+              <button class="btn add adult-add add-num"><i class="iconfont">&#xe665;</i></button>
+          </div>
+          <b class="tdline-R"></b>
+      </td>
+  </tr>
+  {{/if}}
+  {{if istakechild>0}}
+  <tr>
+      <td>儿童<b class="tdline-L"></b></td>
+      <td>￥<em class="red-light blod childrenprice">${childprice}</em>/人</td>
+      <td>
+          <span class="no-more red-light">库存不足</span>
+          <div class="btns">
+              <button type="button" class="btn reduce reduce-num"><i class="iconfont">&#xe664;</i></button>
+              <input type="text" readonly value="0"  class="childrennum"/>
+              <button class="btn add add-num"><i class="iconfont">&#xe665;</i></button>
+          </div>
+          <b class="tdline-R"></b>
+      </td>
+  </tr>
+  {{/if}}
+  {{if istakebaby>0}}
+  <tr>
+      <td>婴儿<span class="ml-20 color999">（不占位置）</span><b class="tdline-L"></b></td>
+      <td>￥<em class="red-light blod babyprice">${babyprice}</em>/人</td>
+      <td>
+          <div class="btns">
+             <button type="button" class="btn reduce baby-reduce"><i class="iconfont">&#xe664;</i></button>
+              <input type="text" readonly value="0" class="babynum" />
+              <button class="btn add baby-add"><i class="iconfont">&#xe665;</i></button>
+          </div>
+          <b class="tdline-R"></b>
+      </td>
+  </tr>
+  {{/if}}
+  {{if singleroom>0}}
+  <tr>
+      <td>单房差<b class="tdline-L"></b></td>
+      <td>￥<em class="red-light blod">${singleroom}</em>/人<b class="tdline-L"></b></td>
+      <td class="room-nums">
+          <!--<i class="iconfont room-more">&#xe611;</i>-->
+           <div class="room-tips">至少预定3间房哦！</div>
+          <div class="btns">
+              <button type="button" class="btn reduce single-reduce"><i class="iconfont">&#xe664;</i></button>
+              <input type="text" readonly value="0" class="singleroom" />
+              <button class="btn add single-add"><i class="iconfont">&#xe665;</i></button>
+          </div>
+          <b class="tdline-R"></b>
+      </td>
+  </tr>
+  {{/if}}
+</script>

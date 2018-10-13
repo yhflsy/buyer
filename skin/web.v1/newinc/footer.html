@@ -1,0 +1,74 @@
+
+<div class="clearfix"></div>
+
+<div id="copyright">
+	<div class="containermain">
+		<div class="" style="width: 1200px">
+			<!--<div class="center cr-top">-->
+				<!--<a href="/help.html" target="_blank" class="color_six"><i class="iconfont color-nine">&#xe611;</i> 帮助中心</a>-->
+				<!--<a href="/help.xieyi.html" target="_blank" class="color_six"><i class="iconfont color-nine">&#xe603;</i> 交易规则</a>-->
+				<!--<a href="/help.baozhang.html" target="_blank" class="color_six"><i class="iconfont color-nine">&#xe624;</i> 交易保障</a>-->
+				<!--<a href="/help.hezuo.html" target="_blank" class="color_six"><i class="iconfont color-nine">&#xe620;</i> 商务合作</a>-->
+				<!--<a href="/help.service.html" target="_blank" class="color_six"><i class="iconfont color-nine">&#xe621;</i> 平台服务</a>-->
+				<!--<a href="/help.xintu.html" target="_blank" class="color_six"><i class="iconfont color-nine">&#xe61f;</i> 关于馨途</a>-->
+				<!--<a href="/help.add.html" target="_blank" class="color_six"><i class="iconfont color-nine">&#xe61e;</i> 加入我们 </a>-->
+				<!--<a href="/help.feedback.html" target="_blank" class="color_six"><i class="iconfont color-nine">&#xe622;</i> 意见反馈</a>-->
+
+				<!--<i class="iconfont color-nine">&#xe61d;</i>-->
+				<!--&lt;!&ndash;{if $platform == 'tripb2b'}&ndash;&gt;-->
+				<!--<a class="zztj" style="margin-right: 0"><script src="https://s11.cnzz.com/z_stat.php?id=1261929877&web_id=1261929877" language="JavaScript"></script></a>-->
+				<!--&lt;!&ndash;{else}&ndash;&gt;-->
+				<!--<a class="zztj" style="margin-right: 0"><script src="https://s11.cnzz.com/z_stat.php?id=1261930638&web_id=1261930638" language="JavaScript"></script></a>-->
+				<!--&lt;!&ndash;{/if}&ndash;&gt;-->
+			<!--</div>-->
+			<div class="copyright">
+				<div class="center">
+					<span class="mr40">Copyright © 2008-2017 tripb2b.com, All Rights Reserved.</span>
+					沪ICP备17022850号-1 沪公网安备 31010402000945号
+				</div>
+
+				<!--<div class="linek">-->
+					<!--&lt;!&ndash;可信网站图片LOGO安装开始&ndash;&gt;-->
+					<!--<span id="kx_verify"></span><script type="text/javascript">(function (){var _kxs = document.createElement('script');_kxs.id = 'kx_script';_kxs.async = true;_kxs.setAttribute('cid', 'kx_verify');_kxs.src = ('https:' == document.location.protocol ? 'https://ss.knet.cn' : 'http://rr.knet.cn')+'/static/js/icon3.js?sn=e17080131010468475eetc000000&tp=icon3';_kxs.setAttribute('size', 0);var _kx = document.getElementById('kx_verify');_kx.parentNode.insertBefore(_kxs, _kx);})();</script>-->
+					<!--&lt;!&ndash;可信网站图片LOGO安装结束&ndash;&gt;-->
+					<!--<a target="_blank" href="https://v.pinpaibao.com.cn/cert/site/?site=www.tripb2b.com&at=realname" ><img src="https://static.anquan.org/static/outer/image/sm_124x47.png" /></a>-->
+					<!--&lt;!&ndash;<a href="https://v.anquan.org/cert/site/?site=www.tripb2b.com&at=business" target="_blank"><img  src="&lt;!&ndash;{$staticUrl}&ndash;&gt;images/hy_124x47.png"/></a>&ndash;&gt;-->
+					<!--<img  src="&lt;!&ndash;{$staticUrl}&ndash;&gt;images/footer1.png"/>-->
+					<!--<img  src="&lt;!&ndash;{$staticUrl}&ndash;&gt;images/footer2.png"/>-->
+					<!--&lt;!&ndash;<img  src="&lt;!&ndash;{$staticUrl}&ndash;&gt;images/footer3.png"/>&ndash;&gt;-->
+				<!--</div>-->
+			</div>
+		</div>
+	</div>
+</div>
+<div class="no-see-box">
+	<div class="user-login" id="user-login">
+		<div class="sdtop"><h3>登录中心</h3></div>
+		<div class="sdbottom">
+			<form class="frmlogin" method="post">
+				<dl>
+					<dd>
+						<input type="text" placeholder="请输入用户名/邮箱/手机号" errormsg="请填写用户名/邮箱/手机号" name="username" value="<!--{$rememberme['username']}-->" class="import txt dialog-username">
+					</dd>
+					<dd>
+						<input type="password" placeholder="请输入密码" errormsg="请填写密码" value="<!--{$rememberme['password']}-->" name="passwd" class="import password dialog-passwd">
+					</dd>
+					<dd class="clearfixs">
+						<label class="l"><input type="checkbox" name="rememberPass" class="radio" <!--{if $rememberme['rememberme']}-->checked<!--{/if}-->/> 记住密码</label>
+						<input type="hidden" id="service" name="service" user-defined="返回调用地址" value="<!--{$weburl}-->passport.html?refer=<!--{$callback}-->">
+						<input type="hidden" id="path" user-defined="passport地址" value="<!--{$passportlogin}-->remoteLogin">
+						<input type="hidden" id="loginUrl" name="loginUrl" user-defined="?地址" value="<!--{$weburl}-->passport.html?refer=<!--{$callback}-->"/>
+						<label class="cantlogin"><a href="resetpassword.html" target="_blank">忘记密码？</a></label>
+					</dd>
+					<dd class="subinput">
+						<input type="button" class="submit loginin" value="登  录">
+					</dd>
+					<dd class="rightnow tc">
+						还不是会员？<a target="_blank" href="/member.html" class="yellow">立刻注册</a>
+					</dd>
+				</dl>
+				<a href="javascript:;" class="close"><i class="iconfont font-s12 <!--{if !$user}-->user-login-pop <!--{/if}--> ">&#xe627;</i></a>
+			</form>
+		</div>
+	</div>
+</div>

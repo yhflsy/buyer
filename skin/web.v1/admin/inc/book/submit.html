@@ -1,0 +1,38 @@
+<!-- 提交订单 -->
+<!--{if $aorder.state !=2 && !$aorder.refundtype}-->
+<div class="o-section-box">
+    <div class="o-submit-div">
+        <!--{if $aorder.orderid}-->
+            <!--{if $aorder.state==1 && $aorder.category !=1 && $aorder.createtime >= 1489593600 && $aorder.ispay==0 && time()<$aorder.backtime+86400}-->
+            <!--{if is_array($insuranceInfo)}-->
+            <!--{if $isInsurancePay.completeStatus==1 && $isInsurancePay.freeStatus==2 }-->
+            <a class="o-ob-submit" href="order.orderPay.html?orderid=<!--{$aorder.id}-->&paytype=5">立即支付</a>
+            <!--{else if $isInsurancePay.completeStatus==1}-->
+            <a class="o-ob-submit" href="order.orderPay.html?orderid=<!--{$aorder.id}-->">立即支付</a>
+            <!--{else}-->
+            <span class='o-ft-14' style="left: 440px;color: #ee072b;">该订单含有保险，需要补充名单或者名单有误,请前往列表页点击支付查看</span>
+            <!--{/if}-->
+            <!--{else}-->
+            <a class="o-ob-submit" href="order.orderPay.html?orderid=<!--{$aorder.id}-->">立即支付</a>
+            <!--{/if}-->
+            <!--{/if}-->
+            <!--{if !in_array($aorder.state,[1,2,4]) && $aorder.category !=1 && $aorder.createtime >= 1489593600}-->
+            <a class="o-ob-submit ordersubmit" href="javascript:void(0);">提交订单</a>
+            <a class="o-ft-14 action-order-cancel" href="javascript:void(0);">取消订单</a>
+            <!--{/if}-->
+            <!--{if $aorder.ispay==1 && !$aorder.refundtype && time()<$aorder.backtime}-->
+              <a class="o-ft-14 action-order-tuikuan action-show-refund" href="javascript:void(0);" data-orderid="<!--{$aorder.id}-->">申请退款</a>
+            <!--{/if}-->
+        <!--{else}-->
+            <!--{if $aline.applicationnote}-->
+            <label>
+                <em class="o-ck-box on readBook"></em>
+                <span class="o-ft-14">我已阅读并同意预订须知。</span>
+            <label>
+            <!--{/if}-->
+            <a class="o-ob-submit ordersubmit" href="javascript:void(0);">提交订单</a>
+        <!--{/if}-->
+    </div>
+</div>
+<!--{/if}-->
+<!-- 提交订单 end-->

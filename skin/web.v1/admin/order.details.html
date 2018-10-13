@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>订单详情-<!--{$aorder.stateName}--></title>
+        <link rel="stylesheet" href="<!--{$skinPath}-->css/base.css">
+        <link rel="stylesheet" href="<!--{$skinPath}-->css/order.css">
+        <link rel="stylesheet" href="<!--{$skinPath}-->css/wmy_order.css">
+    </head>
+    <body>
+        <!-- 头部 -->
+        <!--{include file="./inc/book/bookHead.html"}-->
+        <!-- end 头部 -->
+        <div class="o-main o_finishi">
+            <form class=" checkform" method="post" action="">
+                <div class="o-mleft">
+                        <input type="hidden"  value="<!--{$aorder.integral|default:0}-->" name="integraladult"  class="integraladult"/> 
+                        <input type="hidden"  value="<!--{$aorder.integralchild|default:0}-->" name="integralchild"  class="integralchild"/>
+                        <input type="hidden"  value="<!--{$aorder.integralbaby|default:0}-->" name="integralbaby"  class="integralbaby"/>
+                        <input type="hidden"  value="<!--{$aorder.adult}-->" name="oadult"  />
+                        <input type="hidden"  value="<!--{$aorder.child}-->" name="ochild"  />
+                        <input type="hidden"  value="<!--{$aorder.baby}-->" name="obaby"  />
+                        <input type="hidden"  value="<!--{$aorder.state}-->" name="ostate"  />
+                        <input type="hidden"  value="<!--{$newtake}-->" name="newtake"  />
+                        <input type="hidden"  value="<!--{$aorder.linecategory}-->" name="linecategory"  />
+                        <!--状态,产品信息，联系人信息 -->
+                        <!--{include file="./inc/book/lineInfo.html"}-->
+                        <!-- end状态,产品信息，联系人信息 -->
+                        <!-- 游客信息填写 -->
+                        <!--{include file="./inc/book/guestInfo.html"}-->
+                        <!-- end游客信息填写 -->
+                        <!-- 签证信息填写 -->
+                         <!--{include file="./inc/book/visa.html"}-->
+                         <!-- end签证信息填写 -->
+                        <!-- 预定信息填写 -->
+                        <div class="o-section-box o-none-mgt">
+                            <!--游客-->
+                            <!--/{include file="./inc/book/bookInfo.html"}/-->
+                            <!--其他-->
+                            <!--{include file="./inc/book/otherInfo.html"}-->
+                        </div>
+                        <!-- end预定信息填写 -->
+                        <!-- 发票信息 -->
+                        <!--{include file="./inc/book/invoiceInfo.html"}-->
+                        <!--end 发票信息 -->
+                        <!--退款  操作日志 提交 -->
+                        <!--{include file="./inc/book/orderInfo.html"}-->
+                        <!-- end 退款  操作日志 -->
+                        <!--价格明细 -->
+                        <!--/{include file="./inc/book/priceInfo.html"}/-->
+                        <!-- end 价格明细 -->
+                        <!--{include file="./inc/book/submit.html"}-->
+                        <div class="o-footer">
+                            <p>Copyright © 2008-2020 tripb2b.com, All Rights Reserved. &nbsp;&nbsp;&nbsp;&nbsp;沪ICP备17022850号-1 沪公网安备 31010402000945号</p>
+                        </div>
+                </div>
+                <!--{include file="./inc/book/floatRight.html"}-->
+            </form>
+        </div>
+
+        <!--弹层-->
+        <!--{include file="./inc/book/bullet.html"}-->
+    </body>
+<style>
+	.viewpic{display: inline-block;width:auto;height:auto;color:#053a5b;margin-bottom: 10px}
+	.idcardWrap{position: relative;}
+	.idcardImgBox{border:1px solid #999;display:none;width: 180px;height: 120px;background: white;z-index: 5000;position: absolute;left: 100px;
+    top: -20px;}
+</style>
+<!--{include file="./inc/book/import.html"}-->
+<script src="<!--{$staticUrl}-->js/jquery-3.1.0.js"></script>
+<script src="<!--{$staticUrl}-->/js/tmpl/jquery.tmpl.js"></script>
+<script src="<!--{$staticUrl}-->js/validform_v5.3.2_min.js<!--{$versions}-->"></script>
+<!--{include file="./inc/upload.html"}-->
+<script src="<!--{$staticUrl}-->js/book.js"></script>
+<script src="<!--{$staticUrl}-->js/neworder.js"></script>
+<script src="<!--{$staticUrl}-->js/layer.js<!--{$versions}-->"></script>
+<!--{include file="./inc/book/tmpl.html"}-->
+<script>
+    var hyinvoiceaddr = "<!--{$other.hyinvoiceaddr[0].id}-->";
+    var istakeadult = "<!--{$aline.istakeadult}-->";
+    var istakechild = "<!--{$aline.istakechild}-->";
+    var istakebaby = "<!--{$aline.istakebaby}-->";
+    var orderid  = "<!--{$aorder.orderid}-->";
+    var isinvoice = "<!--{$aorder.isinvoice}-->";
+    var state = "<!--{$aorder.state}-->";
+    var booksingleSum = 0;
+    $(function () {
+        $(".checkform").Validform({
+            btnSubmit: ".ordersubmit",
+            tiptype:function(msg,o,cssctl){
+                var objtip=$("#msgdemo");
+                cssctl(objtip,o.type);
+                objtip.text(msg);
+            },
+            postonce:true,
+            beforeSubmit:function(){
+                var contactname = $("input[name='contactname']").val();
+                var mobile = $("input[name='mobile']").val();
+                var tel = $("input[name='tel']").val();
+                var regex = /^1[0-9]{10}$/;
+                if(contactname=="") {layer.msg("请填写您的姓名！"); return  false;}
+                if(!regex.test(mobile)){
+                    layer.msg('请正确填写您的手机号码！');
+                    return false;
+                }
+                if(tel=="") {layer.msg("请填写您的电话！"); return  false;}
+                var personnum = parseInt($("input[name='adult']").val())||0 + parseInt($("input[name='child']").val())||0 ;
+                if(!personnum){
+                    layer.msg('游客人数不可以为0！');
+                    return false;
+                }
+                var newtake = $("input[name='newtake']").val();
+                if(newtake>0){
+                    layer.msg('当前接送金额或类型已发生变化,请重新选择或者取消接送！');
+                    return false;
+                }
+                $('.ordersubmit').hide();
+                setTimeout(function(){
+                    $('.ordersubmit').hide();
+                },30000);
+            }
+        });
+        //订单取消start
+        $('.action-order-cancel').click(function() {
+            var id = '<!--{$aorder.id}-->';
+            var detail = '订单详情页取消订单';
+            $.layer({
+                shade: [0],
+                area: ['auto','auto'],
+                dialog: {
+                    msg: '确认取消吗？',
+                    btns: 2,
+                    type: 4,
+                    btn: ['确定','关闭'],
+                    yes: function(){
+                        $.post("order.cancel.html", {id:id,detail:detail}, function(data) {
+                            if (data) {
+                                layer.msg('取消成功', 1, 1);
+                            } else {
+                                layer.msg('取消失败', 1, 1);
+                            }
+                            location.reload();
+                        }, "json");
+                    }, no: function(){
+                    }
+                }
+            });
+        });
+
+        // 倒计时
+        var timesHtml = $('.times ');
+        var countDown;
+        function addZero(n) {
+          return n < 10 ? '0' + n : n;
+        };
+        function newTime(seconds) {
+          countDown = seconds;
+          setInterval(function () {
+            countDown--;
+            var oDay = parseInt(countDown / (24 * 60 * 60));
+            var oHours = parseInt(countDown / (60 * 60) % 24);
+            var oMinutes = parseInt(countDown / 60 % 60);
+            var oSeconds = parseInt(countDown % 60);
+            oHours = addZero(oHours);
+            oMinutes = addZero(oMinutes);
+            oSeconds = addZero(oSeconds);
+            timesHtml.text(oHours + "时" + oMinutes + "分" + oSeconds + "秒")
+            //别忘记当时间为0的，要让其知道结束了;
+            if (countDown <= 0) {
+              timesHtml.text("0");
+            }
+          }, 1000);
+        };
+        var countdown =  '<!--{$aorder.countdown}-->';
+        newTime(countdown);
+    });
+    //退款
+    $(".action-show-refund").click(function() {
+            var id=$(this).data('orderid');
+            $.layer({
+                    type:2,
+                    title: '退款操作',
+                    area: ['600px', '400px'],
+                    shadeClose: true,
+                    border: [0],
+                    iframe: {src:'order.refund.html?orderid='+id}
+            });
+    });
+
+    //查看
+    function viewPic(obj){
+            $(obj).closest('td').find('.idcardImgBox').show()
+    }
+    function hidePic(obj) {
+            $(obj).closest('td').find('.idcardImgBox').hide()
+    }
+    //上传
+    $("#guest-list-wrap").find(".guest-list").each(function(index){
+            var uploadName = 'idcardUpload'+(index+1);
+            $(this).find('.idcardWrap').find('#idcardUpload').attr('id',uploadName);
+            $(this).find('.idcardWrap').find('#idcardUpload-preview').attr('id',uploadName + '-preview');
+            setUpload(uploadName);
+    })
+    function setUpload(uploadName) {
+        upload({
+            el: '#' + uploadName,
+            name: 'idcardUpload',
+            buttontext: '上传',
+            file_size_limit: "1MB",
+            callback: function(obj, url){
+                    var fullPath = "<!--{$imghost}-->" + url;
+                    $('#' + uploadName + '-preview').html("<input type='hidden' name='idcardUpload[]' value="+url+"><img src="+fullPath+">");
+                    var len = $('#' + uploadName + '-preview').closest('td').find(".idcardWrap").find('.viewpic').length;
+                    if(!len){
+                      $('#' + uploadName + '-preview').closest('td').find(".idcardWrap").prepend("<a href='javascript:void(0);' class='viewpic' onmouseenter='viewPic(this);' onmouseleave='hidePic(this);'>查看</a>")
+                    }
+            }
+        });
+    }
+    //取消发票
+    $(".invoice_cancel").bind('click',function(){
+        var oid = '<!--{$aorder.id}-->';
+        var invoid = '<!--{$aorder.id}-->';
+        var thiss = $(this);
+        $.layer({
+            shade: [0],
+            area: ['auto','auto'],
+            dialog: {
+                msg: '确认取消发票？',
+                btns: 2,
+                type: 4,
+                btn: ['确定','关闭'],
+                yes: function(){
+
+                    $.post("order.ajaxcancelinvo.html", {orderid:oid,invoid:invoid}, function(data) {
+                        if (data.res == 1) {
+                            layer.msg(data.msg, 1, 1);
+                        } else {
+                            thiss.html("已取消");
+                            layer.msg(data.msg, 1, 1);
+                        }
+                    }, "json");
+                }, no: function(){
+                }
+            }
+        });
+    })
+</script>
+</html>

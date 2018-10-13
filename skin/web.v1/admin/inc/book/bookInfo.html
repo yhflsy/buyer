@@ -1,0 +1,186 @@
+<!--{if in_array($aorder.state,[1,2,4])}-->
+<div class="o-seb-tit">
+    <p class="o-seb-msg">预定信息</p>
+</div>
+<div class="o_orderPrice">
+    <h2 class="fl">
+        <span class="dib"></span>
+        <i>价格类型</i>
+    </h2>
+    <p class="fr">
+        <span>可预订人数:</span>
+        <i class="personNum"><!--{$aline.surplus|default:0}-->人</i>
+        <em>（计划<!--{$aline.person}-->人）</em>
+    </p>
+</div>
+<div class="tableBox">
+    <table>
+        <tr class="tHead">
+            <th>价格类型</th>
+            <th>门市价</th>
+            <th>结算价</th>
+            <th>数量</th>
+            <th>价格小计</th>
+        </tr>
+        <tbody>
+            <tr>
+                <td>成人</td>
+                <td>￥<!--{$aorder.adultpricemarket}--></td>
+                <td>￥<!--{$aorder.adultprice}--></td>
+                <td><!--{$aorder.adult}--></td>
+                <td class="price_lessCom">￥<!--{$aorder.adultprice*$aorder.adult}--></td>
+            </tr>
+            <tr>
+                <td>儿童</td>
+                <td>￥<!--{$aorder.childpricemarket}--></td>
+                <td>￥<!--{$aorder.childprice}--></td>
+                <td><!--{$aorder.child}--></td>
+                <td class="price_lessCom">￥<!--{$aorder.childprice*$aorder.child}--></td>
+            </tr>
+            <tr>
+                <td>婴儿</td>
+                <td>￥<!--{$aorder.babypricemarket}--></td>
+                <td>￥<!--{$aorder.babyprice}--></td>
+                <td><!--{$aorder.baby}--></td>
+                <td class="price_lessCom">￥<!--{$aorder.babyprice*$aorder.baby}--></td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="secondTab">
+        <tr>
+            <td>房间数</td>
+            <td></td>
+            <td></td>
+            <td><!--{if $aorder.totalsingleroom>0}--><!--{ceil(($aorder.totalsingleroom/$aorder.singleroom+$aorder.adult)/2)}--><!--{else}--><!--{ceil($aorder.adult/2)}--><!--{/if}--></td>
+            <td class="price_lessCom"></td>
+        </tr>
+        <tr class="sigRoom">
+            <td>单房差</td>
+            <td>￥<!--{$aorder.singleroom}--></td>
+            <td>￥<!--{$aorder.singleroom}--></td>
+            <td class="roomNum">
+                <em><!--{if $aorder.totalsingleroom>0}--><!--{$aorder.totalsingleroom/$aorder.singleroom}--><!--{else}-->0<!--{/if}--></em>
+                <span></span>
+                <p>
+                    <u></u>
+                    <i>
+                        根据房间数与成人数自动计算得出，计算公式为：
+                    </i>
+                    <i class="sigRoomCompute">单房差数&nbsp;=&nbsp;房间数&nbsp;x&nbsp;2&nbsp;-&nbsp;成人数</i>
+                </p>
+            </td>
+            <td class="price_lessCom">￥<!--{$aorder.totalsingleroom}--></td>
+        </tr>
+    </table>
+    <div class="feeTotal">
+        <p class="fr">
+            <span>团费结算合计:</span>
+            <i>￥</i>
+            <em class="feeTotalFee"><!--{$aorder.adultprice*$aorder.adult+$aorder.childprice*$aorder.child+$aorder.babyprice*$aorder.baby+$aorder.totalsingleroom}--></em>
+        </p>
+    </div>
+</div>
+<!--{else}-->
+<div class="o-seb-tit">
+    <p class="o-seb-msg">预订信息填写</p>
+</div>
+<!--{if !$aorder.orderid}-->
+    <p class="o-gm-tit">游玩日期</p>
+    <div class="o-date-div">
+        出团日期：&nbsp;
+        <select onchange="window.location=this.value;">
+            <!--{foreach $gotime as $key => $value}-->
+            <option value="book.html?id=<!--{$value.id}-->" <!--{if $smarty.get.id == $value.id}-->selected<!--{/if}-->><!--{$value.goTime}-->(<!--{$value.weekday}-->)</option>
+            <!--{/foreach}-->
+        </select>
+        返程日期：&nbsp;<!--{$aline.backtime|date_format:'%Y-%m-%d'}-->
+    </div>
+<!--{/if}-->
+<p class="o-gm-tit">
+    <span>可预定人数：<i class="o-ok-person"><!--{($aline.surplus-$smarty.get.adult-$smarty.get.child)|default:0}-->人</i>
+        <span class="o-dn"><!--{$aline.surplus|default:0}--></span>
+        <span class="o-old-val"></span>（计划<em class="o-pain-count"><!--{$aline.person|default:0}--></em>人）
+    </span>价格类型
+</p>
+<table class="o-table-style o-table-price o-qf" cellpadding="0" cellspacing="0">
+    <tr>
+        <th>价格类型</th>
+        <th>门市价</th>
+        <th>结算价</th>
+        <th>人数</th>
+        <th>价格小计</th>
+    </tr>
+    <!--{if $aline.istakeadult}-->
+    <tr class="o-surplus-number o-dy-tr o-each">
+        <td><span class="o-br-dotted">成人</span></td>
+        <td><span class="o-br-dotted">￥<!--{$aline.adultpricemarket}--></span></td>
+        <td><span class="o-br-dotted"><b class="o-balance">￥<!--{$aline.adultprice}--></b></span></td>
+        <td>
+            <p class="o-p-count" data-category="0">
+                <span class="o-cut"></span><input for-ipt='myInput' name='adult' class="o-person-count o-person-ipt" type="text" value="<!--{if $aorder.adult>0}--><!--{$aorder.adult}--><!--{else}--><!--{$smarty.get.adult|default:0}--><!--{/if}-->" readonly ><span class="o-plus"></span>
+            </p>
+        </td>
+        <td><span class="o-color-red"><b class="o-z-price">￥<!--{if $aorder.adult>0}--><!--{$aorder.adultprice*$aorder.adult}--><!--{else}-->0<!--{/if}--></b></span></td>
+    </tr>
+    <!--{/if}-->
+    <!--{if $aline.istakechild}-->
+    <tr class="o-surplus-number o-dy-tr o-each">
+        <td><span class="o-br-dotted">儿童</span></td>
+        <td><span class="o-br-dotted">￥<!--{$aline.childpricemarket}--></span></td>
+        <td><span class="o-br-dotted"><b class="o-balance">￥<!--{$aline.childprice}--></b></span></td>
+        <td>
+            <p class="o-p-count" data-category="1">
+                <span class="o-cut"></span><input for-ipt='myInput' name='child' class="o-children-ipt" type="text" value="<!--{if $aorder.child>0}--><!--{$aorder.child}--><!--{else}--><!--{$smarty.get.child|default:0}--><!--{/if}-->" readonly><span class="o-plus"></span>
+            </p>
+        </td>
+        <td><span class="o-color-red"><b class="o-z-price">￥<!--{if $aorder.child>0}--><!--{$aorder.child*$aorder.childprice}--><!--{else}-->0<!--{/if}--></b></span></td>
+    </tr>
+    <!--{/if}-->
+    <!--{if $aline.istakebaby}-->
+    <tr class="o-dy-tr">
+        <td><span class="o-br-dotted">婴儿（不占位置）</span></td>
+        <td><span class="o-br-dotted">￥<!--{$aline.babypricemarket}--></span></td>
+        <td><span class="o-br-dotted"><b class="o-balance">￥<!--{$aline.babyprice}--></b></span></td>
+        <td>
+            <p class="o-p-count" data-category="2">
+                <span class="o-cut"></span><input for-ipt='myInput' name='baby' class="o-baby-ipt" type="text" value="<!--{if $aorder.baby>0}--><!--{$aorder.baby}--><!--{else}--><!--{$smarty.get.baby|default:0}--><!--{/if}-->" readonly><span class="o-plus"></span>
+            </p>
+        </td>
+        <td><span class="o-color-red"><b class="o-z-price">￥<!--{if $aorder.baby>0}--><!--{$aorder.baby*$aorder.babyprice}--><!--{else}-->0<!--{/if}--></b></span></td>
+    </tr>
+    <!--{/if}-->
+</table>
+<table class="o-table-style o-table-price" cellpadding="0" cellspacing="0">
+    <tr class="o-no-bg o-dy-tr o-room-count">
+        <td><span class="o-br-dotted">房间数</span></td>
+        <td><span class="o-br-dotted">-</span></td>
+        <td><span class="o-br-dotted"><b>-</b></span>
+            <span class="ttt"></span>
+        </td>
+        <td>
+            <p class="o-p-count o-room-seat">
+                <span class="o-prompt-box o-pb-smaller"><u></u>至少预订&nbsp;<i>3</i>&nbsp;间房间哦！</span>
+                <span class="o-cut o-room o-rm-cut"></span><input for-ipt='myInput' name='singleroomSum' class="o-room-ipt" type="text" value="<!--{if $aorder.roomSum>0}--><!--{$aorder.roomSum}--><!--{else}--><!--{$smarty.get.singleSum|default:0}--><!--{/if}-->" readonly><span class="o-plus o-room o-rm-plus"></span>
+                <span class="o-prompt-box o-pb-biger"><u></u>已达到本产品最多预定上限哦！</span>
+            </p>
+        </td>
+        <td><span class="o-color-red"><b>-</b></span></td>
+    </tr>
+    <tr>
+        <td><span class="o-br-dotted">单房差</span></td>
+        <td><span class="o-br-dotted">-</span></td>
+        <td><span class="o-br-dotted"><b class="o-balance o-broom">￥<!--{$aline.singleroom}--></b></span></td>
+        <td>
+            <div class="o-br-dotted o-question-icon">
+                <em><!--{if $aorder.totalsingleroom>0}--><!--{$aorder.totalsingleroom/$aorder.singleroom}--><!--{else}--><!--{($smarty.get.singleSum*2-$smarty.get.adult)|default:0}--><!--{/if}--></em><span></span>
+                <p><u></u>
+                    根据房间数与成人数自动计算得出，计算公式为：<br/>
+                    <strong>单房差数<i>=</i>房间数<i>×</i>2<i>-</i>成人数</strong>
+                </p>
+            </div>
+        </td>
+        <td><span class="o-color-red"><b class="o-z-price o-z-zoom-price">￥<!--{if $aorder.totalsingleroom>0}--><!--{$aorder.totalsingleroom}--><!--{else}-->0<!--{/if}--></b></span></td>
+    </tr>
+</table>
+<p class="o-tg-price">团费结算合计：<strong>￥<i class="o-group-price"></i></strong></p>
+<!--{/if}-->

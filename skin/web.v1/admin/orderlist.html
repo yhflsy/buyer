@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>馨途-订单列表</title>
+    <meta name="description" itemprop="description" content="馨·驰誉网（原旅游交易网）创建于2012年，是全国的B2B旅游交易平台，上线产品数万条，境内外供应商4千多家，组团社2万多家，提供线上、线下的全方位一站式服务。" />
+    <meta itemprop="name" content="馨途旅游网 中国旅游云平台 400-900-3996"/>
+    <meta itemprop="image" content="<!--{$staticUrl}-->images/<!--{$platform}-->.png" />
+    <meta name="keywords" content="馨·驰誉网（原旅游交易网）,同行平台,旅游交易,旅游平台,旅游同行网,易途乐,同行,旅游价格行情,旅游价格指数" />
+    <link href="<!--{$skinUrl}-->favicon.ico" type="image/x-icon" rel=icon>
+    <link type="image/x-icon" href="<!--{$skinUrl}-->favicon.ico" rel="shortcut icon">
+    <link rel="stylesheet" type="text/css" href="<!--{$skinUrl}-->font/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="<!--{$skinPath}-->css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="<!--{$skinPath}-->css/common2.css" />
+    <link rel="stylesheet" type="text/css" href="<!--{$skinPath}-->css/css2.css" />
+    <link rel="stylesheet" type="text/css" href="<!--{$skinUrl}-->layuijs/layui/css/layui.css" />
+</head>
+<body>
+<!--{include file="../newinc/header.html"}-->
+<!--内容部分-->
+<div id="warpper">
+    <div class="containermain order-list">
+        <!--左侧-->
+        <!--{include file="../newinc/right.html"}-->
+        <!--end-->
+        <!--右侧-->
+        <div class="order-list-right">
+            <!--筛选部分-->
+            <form id="orderform">
+                <ul class="tabbar">
+                    <li <!--{if $state<0 && $ispay<0}-->class="active"<!--{/if}--> data-state="-10"><span>全部订单</span></li>
+                    <li <!--{if $state==3}-->class="active"<!--{/if}--> data-state="3"><span>名单不全</span></li>
+                    <li <!--{if $state==0}-->class="active"<!--{/if}--> data-state="0"><span>待确认</span></li>
+                    <li <!--{if $state==1}-->class="active"<!--{/if}--> data-state="1"><span>待支付</span></li>
+                    <li data-ispay="1"><span>已支付</span></li>
+                    <li <!--{if $ispay==7}-->class="active"<!--{/if}--> data-ispay="7"><span>退款中</span></li>
+                    <li data-ispay="8"><span>退款失败</span></li>
+                    <li data-ispay="9"><span>已退款</span></li>
+                    <li data-state="2"><span>已取消</span></li>
+                </ul>
+                <ul class="lineType">
+                    <li>
+                        <label>
+                            <span>线路类型：</span>
+                            <select class="w150 mr15" name="ltype">
+                                <option value="-1">全部</option>
+                                <option value="1">国内</option>
+                                <option value="0">周边</option>
+                                <option value="2">出境</option>
+                            </select>
+                        </label>
+                        <label><span>订单编号：</span><input type="text" name="ordernum" class="w150 mr15" /></label> 
+                        <label><span style="width:76px">产品名称：</span><input type="text" name="kw" class="w150  mr10" /></label> 
+                        <label><span style="width: 76px">供应商：</span><input type="text" name="companykw" class="w150 " /></label> 
+                    </li>
+                    <li>
+                        <label style="margin-left: 4px"><span>订单来源：</span>						
+                            <select name='ordersite' class="w150 mr15"  >
+                                <option value="">全部</option>
+                                <option value="1">馨·驰誉</option>
+                                <option value="2">馨·欢途</option>
+                                <option value="32">Android</option>
+                                <option value="16">ios</option>
+                                <option value="100">收客通</option>
+                            </select>
+                        </label>
+                        <label><span style="width:80px">组团社计调：</span>
+                            <select name='buyerid' class="w150 mr15" >
+                                <option value="">请选择</option>
+                                <!--{foreach from=$members item=v}-->
+                                <option value="<!--{$v.id}-->"><!--{$v.realname}--></option>
+                                <!--{/foreach}-->
+                            </select>
+                        </label>
+                        <label>下单日期：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="createdate" class="layui-input orderitem orderdate w290" placeholder="yyyy-mm-dd      ~       yyyy-mm-dd">
+                        </div>
+                    </li>
+                    <li>
+                        <label>确认日期：</label>
+                        <div class="layui-input-inline mr20">
+                            <input type="text" name="configrmdate" class="layui-input orderitem w222" placeholder="yyyy-mm-dd  ~  yyyy-mm-dd">
+                        </div>
+                        <label>出团日期：</label>
+                        <div class="layui-input-inline mr20">
+                            <input type="text" name="godate" class="layui-input orderitem w222" placeholder="yyyy-mm-dd  ~  yyyy-mm-dd">
+                        </div>
+                        <label>付款日期：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="paydate" class="layui-input orderitem w222" placeholder="yyyy-mm-dd  ~  yyyy-mm-dd">
+                        </div>
+                    </li>
+                    <li>
+                        <label>
+                            <span>支付方式：</span>
+                            <select name='paystyle' class="w150 mr15">
+                                    <option value="0">全部</option>
+                                    <option value="1">银行卡支付</option>
+                                    <!--<option value="2">公司银行卡支付（借记卡）</option>-->
+                                    <option value="4">支付宝支付</option>
+                                    <option value="5">微信支付</option>
+                                    <option value="6">订单融分期支付</option>
+                                    <option value="9">易宝大额支付</option>
+                            </select>
+                        </label>
+                        <label><span style="width:76px">游客名单：</span><input type="text" name="gname" class="w150  mr10" /></label>
+                        <input type="checkbox" name="fenqi"    value="1"  >&nbsp;订单融订单&nbsp;
+                        <button type="button" class="order-search">搜索</button>
+                        <button type="reset" class="order-reset">重置</button>
+                    </li>
+                </ul>
+            </form>
+            <!--筛选部分结束-->
+            <!--列表部分-->
+            <div class="btns-report">
+                <a href="javascript:void(0)" class="newOutExcel">导出excel</a>
+               <!--{if $user['companyinfo']['parentid'] == 0}--> <a href="javascript:;" class="action-batch-pay accesscheck"  data-accessurl= "11107">批量付款</a> <!--{/if}-->
+            </div>
+            <table style="width: 100%;text-align: left">
+              <thead>
+                <th style="width: 70px">
+                    <!--{if $user['companyinfo']['parentid'] == 0}--><label class="ml-20"><input type="checkbox" class="checkall action-all-orderitem" />全选</label> <!--{/if}-->
+                </th>
+                <th style="width: 410px">订单/线路名称</th>
+                <th style="width: 93px">人数</th>
+                <th style="width: 120px">交易金额</th>
+                <th style="width: 160px">订单状态</th>
+                <th>操作</th>
+              </thead>
+            </table>
+            <ul class="orderLists">
+            </ul>
+            <!-- 分页 -->
+            <div style="text-align:right;">
+                <div id="pageid" class="bg-white"></div>
+            </div>
+            <!-- /分页 -->
+            <!--列表部分-->
+        </div>
+        <!--end-->
+    </div>
+</div>
+<!--内容部分结束-->
+<!--底部-->
+<!--{include file="../newinc/footer.html"}-->
+<!--底部end-->
+<!--{include file="./inc/ordertml.html"}-->
+
+<script src="<!--{$staticUrl}-->js/jquery-1.8.3.min.js<!--{$versions}-->"></script>
+<script type="text/javascript" src="<!--{$staticUrl}-->js/jquery.cityselector.js"></script>
+<script src="<!--{$skinUrl}-->layuijs/layui/layui.js"></script>
+<script src="<!--{$staticUrl}-->js/jquery.tmpl.min.js"></script>
+<script src="<!--{$staticUrl}-->js/orderList.js"></script>
+<script src="<!--{$staticUrl}-->js/public.js<!--{$versions}-->"></script>
+<script src="<!--{$staticUrl}-->js/jquery.dotdotdot.min.js<!--{$versions}-->"></script>
+<script>
+    var mg  = '<!--{$mg}-->';
+    var state  = '<!--{$state}-->';
+    var ispay  = '<!--{$ispay}-->';
+</script>
+<script src="http://<!--{$webhost['index'][$platform]}-->/index.getSites.html" type="text/javascript" ></script>
+</body>
+</html>

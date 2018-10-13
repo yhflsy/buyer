@@ -1,0 +1,183 @@
+<!--{if $aorder.id}-->
+<div class="o-staus-ft">
+    <span class=" <!--{if $aorder.ispay==1}-->huise<!--{else}-->status_circle<!--{/if}-->"></span>
+    订单状态：<!--{if $aorder.ispay==1}--><!--{$aorder.stateName}--><!--{else}--><span><!--{$aorder.stateName}--></span><!--{/if}-->
+    <div class="label_new">
+        <a href="print.html?dateid=<!--{$aline.dateid}-->&takeid=<!--{if $aorder.takeid}--><!--{$aorder.takeid}--><!--{else}--><!--{$smarty.get.takeid}--><!--{/if}-->" target="_blank">行程单</a>
+        <!--{if in_array($aorder.state,[1,2,4]) || $aorder.ispay==1}-->
+        <a href="print.single.html?orderid=<!--{$aorder.id}-->" target="_blank">出团通知单</a>
+        <a href="print.confirm.html?orderid=<!--{$aorder.id}-->" target="_blank">盖章单</a>
+        <!--{/if}-->
+        <!--{if $aorder.ispay==1}-->
+        <a href="/insurance.order.html" target="_blank">保险订单</a>
+        <a href="makecontract.html?contractid=275&orderid=<!--{$aorder.id}-->&action=info" target="_blank">电子合同</a>
+        <!--{/if}-->
+    </div>
+</div>
+<!--{/if}-->
+<!-- 产品信息 -->
+<div class="o-section-box">
+    <div class="o-porduct-msg product-msg-new">
+        <h3><!--{if $aline.title}--><!--{mb_substr($aline.title,0,260,'utf-8')}--><!--{else}--><!--{mb_substr($aorder.linetitle,0,260,'utf-8')}--><!--{/if}--></h3>
+    </div>
+    <!-- 增加 -->
+    <!--{if $aline.groupnumber || $aorder.orderid}-->
+    <div class="group_order_num">
+        <!--{if $aline.groupnumber}-->
+        <span class="group_num">
+            <i>&nbsp;&nbsp;团号</i>
+            <em><!--{$aline.groupnumber}--></em>
+        </span>
+        <!--{/if}-->
+        <!--{if $aorder.orderid}-->
+        <span class="group_num">
+            <i>&nbsp;&nbsp;订单编号</i>
+            <em><!--{$aorder.orderid}--></em>
+        </span>
+        <!--{/if}-->
+    </div>
+    <!--{/if}-->
+    <ul class="o-fm-list">
+        <li>
+            <span>产品编号:</span>
+            <p><!--{$aline.lineid}--></p>
+        </li>
+        <li>
+            <span><!--{if $aorder.id}-->出团<!--{else}-->去程<!--{/if}-->：</span>
+            <p><i> <!--{$aorder.gotime|date_format:'%Y-%m-%d'}--></i><!--{$aline.gotraffic}--></p>
+        </li>
+        <li>
+            <span class="fromPlace">出发地：
+                <i><!--{$aline.departureName}--></i>
+            </span>
+            <span>旅游天数：
+                <i><!--{$aline.days}-->天</i>
+            </span>
+        </li>
+        <li>
+            <span><!--{if $aorder.id}-->返程<!--{else}-->返程<!--{/if}-->：</span>
+            <p><i><!--{$aorder.backtime|date_format:'%Y-%m-%d'}--></i><!--{$aline.backtraffic}--></p>
+        </li>
+    </ul>
+</div>
+<!-- end -->
+<!-- 联系人信息 -->
+<!--{if in_array($aorder.state,[1,2,4])}-->
+<div class="o-section-box">
+    <div class="o-seb-tit">
+        <p class="o-seb-msg">联系人信息</p>
+    </div>
+    <div class="o-group-msg ">
+        <div class="o-group-msg-left w50 fl">
+            <h2>
+                <span class="dib"></span>
+                <i>组团社联系人信息</i>
+            </h2>
+            <p>
+                <i class="first">联系人</i>
+                <i class="second"><!--{$aorder.contactname}--></i>
+            </p>
+            <p>
+                <i class="first">手机号</i>
+                <i class="second"><!--{$aorder.mobile}--></i>
+            </p>
+            <p>
+                <i class="first">电话</i>
+                <i class="second fixTelephone"><!--{$aorder.tel}--></i>
+            </p>
+            <p class="lastP">
+                <i class="first">订单备注</i>
+                <i class="second older"><!--{$aorder.detail}--></i>
+            </p>
+        </div>
+        <div class="o-group-msg-right w50 fr">
+            <h2>
+                <span class="dib"></span>
+                <i>供应商</i>
+            </h2>
+            <p class="travelGroup"><!--{if $destplace}-->金牌供应商<!--{else}--><!--{$sellerinfo.companyname}--><!--{/if}--></p>
+            <p>
+                <i>计调</i>
+                <!--{foreach $company.sellerlist as $k => $v}-->
+                <!--{if $v.id == $aorder.memberid || $v.id == $aorder.selleropeartorid}--><span><!--{$v.realname|default:$v.username}--></span><!--{/if}-->
+                <!--{/foreach}-->
+            </p>
+            <p class="o-connect-icon">
+                <a href="http://wpa.qq.com/msgrd?v=3&uin=<!--{$sellerinfo.responsibleqq}-->&site=qq&menu=yes" class="o-qq-icon" target="_blank" ></a>
+                <a href="javascript:void(0);" class="o-phone-icon"></a>
+            </p>
+        </div>
+    </div>
+</div>
+<!--{else}-->
+<div class="o-section-box">
+    <div class="o-seb-tit">
+        <p class="o-seb-msg">预订信息</p>
+    </div>
+    <!-- 新增 -->
+    <!--{if !$aorder.orderid}-->
+    <div class="o-go-backdate">
+        <div class="o-go-date">
+            <span>出团日期:</span>
+            <label>
+                <select onchange="window.location=this.value;">
+                    <!--{foreach $gotime as $key => $value}-->
+                    <option value="book.html?id=<!--{$value.id}-->" <!--{if $smarty.get.id == $value.id}-->selected<!--{/if}-->><!--{$value.goTime}-->(<!--{$value.weekday}-->)</option>
+                    <!--{/foreach}-->
+                </select>
+            </label>
+        </div>
+        <div class="o-back-date">
+            <span>
+                返程日期：
+                <i><!--{$aline.backtime|date_format:'%Y-%m-%d'}--></i>
+            </span>
+        </div>
+    </div>
+    <div class="o-br-line"></div>
+    <!--{/if}-->
+    <!-- 新增 -->
+    <div class="o-group-msg">
+        <div class="o-fms-div">
+            <p class="o-gm-tit o-no-mt">组团社联系人信息</p>
+            <div class="o-line-div">
+                <span>联系人 :</span>
+                <label><input type="text" placeholder="您的姓名" value="<!--{if $aorder.contactname}--><!--{$aorder.contactname}--><!--{else}--><!--{$user.orderinfo.realname}--><!--{/if}-->" name="contactname"></label>
+            </div>
+            <div class="o-line-div">
+                <span>手机号 :</span>
+                <label><input type="text" placeholder="您的手机号" value="<!--{if $aorder.mobile}--><!--{$aorder.mobile}--><!--{else}--><!--{$user.orderinfo.mobile}--><!--{/if}-->" name="mobile"></label>
+            </div>
+            <div class="o-line-div">
+                <span>电话 :</span>
+                <label><input type="text" placeholder="您的电话号码" value="<!--{if $aorder.tel}--><!--{$aorder.tel}--><!--{else}--><!--{$user.orderinfo.tel}--><!--{/if}-->"  name="tel"></label>
+            </div>
+            <div class="o-line-div">
+                <span>订单备注 :</span>
+                <label><textarea  name="detail" placeholder="您需要填写的备注信息"><!--{$aorder.detail}--></textarea></label>
+            </div>
+        </div>
+        <div class="o-fm-dealer">
+            <p class="o-gm-tit o-no-mt">供应商</p>
+            <h4><!--{if $destplace}-->金牌供应商<!--{else}--><!--{$sellerinfo.companyname}--><!--{/if}--></h4>
+            <div class="o-line-div">
+                <span>计调 :</span>
+                <label>
+                    <select name="selleropeartorid">
+                         <!--{foreach $company.sellerlist as $k => $v}-->
+                         <option value="<!--{$v.id}-->" <!--{if $v.id == $aorder.selleropeartorid || $v.id == $aline.selleropeartorid}-->selected<!--{/if}-->>
+                            <!--{$v.realname|default:$v.username}-->
+                        </option>
+                        <!--{/foreach}-->
+                    </select>
+                </label>
+            </div>
+            <p class="o-connect-icon">
+                <a href="http://wpa.qq.com/msgrd?v=3&uin=<!--{$sellerinfo.responsibleqq}-->&site=qq&menu=yes" class="o-qq-icon" target="_blank" ></a>
+                <a href="javascript:void(0);" class="o-phone-icon"></a>
+            </p>
+        </div>
+    </div>
+</div>
+<!--{/if}-->
+<!-- end -->

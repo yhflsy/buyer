@@ -1,0 +1,98 @@
+<script class="tmpl-linelist" type="text/x-jquery-tmpl">
+    {{each list}}
+     <div class="zblist line line_select">
+        <div class="lineimg fl">
+            <label>周边</label>
+            <a href="/details.html?dateid=${dateid}&lineday=default" target="_blank" class="font-s18 ">
+            <img src="{{if linephoto}}<!--{$imghost}-->${linephoto}{{else}}<!--{$staticUrl}--><!--{$defaultlogo.company}-->{{/if}}"/>
+            </a>
+            <h5>
+                <span class="color_nine">${website}</span>
+                <span class="fr color_nine">
+                <a href="javascript:;" class="color_nine collect-btn btn collect <!--{if !$user}-->user-login-pop<!--{/if}-->" data-id="${dateid}" data-title="${keyword}"><i class="iconfont font-s12">&#xe630;</i> 收藏</a>
+                </span>
+            </h5>
+        </div>
+        <div class=" fl pos_rel peripheryinfo">
+            <a title="${keyword}" href="/details.html?dateid=${dateid}&lineday=default" target="_blank" class="font-s16">{{if activityName}}<span class="orange">【${activityName}】</span>{{/if}}${keyword}</a>
+            <h6 class="color_six"><label>编号：</label><span>${lineid}</span> </h6>
+            <h5>
+            <!--这部分是新加的-->
+					<div class="activity">
+					<!--{if $user}-->
+					{{if discount.subtract>0 || discount.usecoupon>0 || discount.returncoupon>0 || hongbaoprice>0 || integral>0 || discountamount>0}}
+					   <span class="act activity-one">
+					        {{if discount}}
+                               {{if discount.subtract || discountamount>0}}
+                               付款立减：<em class="mr10">{{if discount.subtract &&discountamount>0}}${discount.subtract}%+${discountamount}元{{else discountamount>0}}${discountamount}元{{else}}${discount.subtract}%{{/if}}</em>
+                               {{/if}}
+                               {{if discount.subtract > platformdiscount && stagepay>0}}
+                               订单融立减：<em class="mr10">${discount.subtract-platformdiscount}%</em>
+                               {{/if}}
+                               {{if discount.usecoupon}}
+                                抵：<em class="mr10">${discount.usecoupon}%</em>
+                               {{/if}}
+                               {{if discount.returncoupon>0}}
+                                返：<em class="mr10">${discount.returncoupon}%</em>
+                               {{/if}}
+					        {{/if}}
+                             {{if hongbaoprice>0}}
+                             红：<em class="mr10">${hongbaoprice}</em>
+                             {{/if}}
+					        {{if integral>0}}
+					        积：<em class="mr10">${integral}</em>
+					        {{/if}}
+							<div class="activitytips">
+							 {{if discount.subtract || discountamount>0}}<p><span>出发前付款立减：</span>{{if discount.subtract &&discountamount>0}}${discount.subtract}%+${discountamount}元{{else discountamount>0}}${discountamount}元{{else}}${discount.subtract}%{{/if}}</p>{{/if}}
+							 {{if discount.subtract > platformdiscount && stagepay>0}}<p><span>订单融立减：</span>${discount.subtract-platformdiscount}%</p>{{/if}}
+							 {{if discount.usecoupon}}<p><span>代金券抵扣：</span>${discount.usecoupon}%</p>{{/if}}
+							 {{if discount.returncoupon>0}}<p><span>支付返券：</span>${discount.returncoupon}%</p>{{/if}}
+							 {{if hongbaoprice>0}}<p><span>红包抵用：</span>${hongbaoprice}</p>{{/if}}
+							 {{if integral>0}}<p><span>积分赠送：</span>${integral}</p>{{/if}}
+							 <span class="up-jiantou"></span>
+							</div>
+						</span>
+						{{/if}}
+						<!--{/if}-->
+						{{if instantConfirm>0}}
+					   <span class="act sure"><i class="iconfont"></i>即时确认
+							<div class="activitytips">
+							 <p><span>即时确认：</span>下单立即确认，无需供应商二次确认</p>
+							 <span class="up-jiantou"></span>
+							</div>
+						</span>
+						{{/if}}
+					   {{if stagepay>0}}
+					   <span class="act sure"><i class="iconfont">&#xe668;</i>订单融
+                                    <div class='activitytips'>
+                                        <p><span>订单融：</span>缓解资金压力神器，只需预付${stagepay}%团款可享受20/30/60天的免息账期。部分专线还可同时享受立减优惠。</p>
+                                        <p>注意-订单融订单不支持退款！</p>
+                                        <span class='up-jiantou'></span>
+                                    </div>
+                        </span>
+                        {{/if}}
+					   {{if category}}<span class="act sure1 new">${category}</span>{{/if}}
+					   {{if activityid}} <span class="act sure1 new">${activityName}</span>{{/if}}
+					   {{if takeids  || tianchi>0 }}<span class="act sure1 new">可选接送</span>{{/if}}
+					   {{if freeinsurance>0}} <span class="act sure1 new">赠送保险</span>{{/if}}
+					  </div>
+<!--这部分是新加的end-->
+            <div class="clearfix"></div>
+            </h5>
+        </div>
+        <div class="peripherydate fl color_six">
+            ${days}天<br />
+            ${gocity}/${destination}<br />
+            最近出发：${gotime}<br />
+            最近预订截止：<span class="color_ff780b">${endtime}时</span>
+			<a href="javascript:;" class="color_nine ml-20 calendar"  data-id="${dateid}" data-defaultdate="${gotime}">更多 <i class="iconfont font-s12">&#xe62b;</i></a>
+        </div>
+        <div class="linePrice color_nine fr">
+            <p>市场价</p>
+                <p><span class="color_ff780b font-s20"><span class="font-s14">￥</span><b>{{if adultpricemarket>0}}${adultpricemarket}{{else}}${childpricemarket}{{/if}}</b></span> 起</p>
+                <a  href="/details.html?dateid=${dateid}&lineday=default" class="border_ddd noworder"  target="_blank">立即预定</a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    {{/each}}
+</script>

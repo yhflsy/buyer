@@ -1,0 +1,7 @@
+/cache
+/log
+/nbproject
+/web.config
+/.htaccess
+.idea
+BASEDIR

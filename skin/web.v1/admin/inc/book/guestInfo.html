@@ -1,0 +1,146 @@
+<!--{if in_array($aorder.state,[1,2,4])}-->
+<div class="o-section-box overflow_visible">
+    <div class="o-seb-tit">
+        <a href="order.exportGuest.html?id=<!--{$aorder.id}-->">导出游客名单</a>
+        <p class="o-seb-msg">游客信息</p>
+        <span class="o-md-msg">
+            订单<!--{$aorder.stateName}-->，您无法对游客名单进行操作，如有需要请联系供应商。</span>
+    </div>
+    <table class="o-table-style o-tb-triper other_table" cellspacing="0" cellpadding="0">
+        <tr>
+            <th>序号</th>
+            <th>姓名</th>
+            <th>类别</th>
+            <th>证件类型</th>
+            <th>证件号码</th>
+            <th>性别</th>
+            <th>联系电话</th>
+            <!--{if $aorder.linecategory==2}-->
+            <th>证件图片</th>
+            <!--{/if}-->
+            <th>备注</th>
+        </tr>
+        <!--{foreach $guests as $key => $value}-->
+        <tr>
+            <td><!--{$key+1}--></td>
+            <td><!--{$value.title}--></td>
+            <td><!--{if $value.category == 0}-->成人<!--{elseif $value.category == 1}-->儿童<!--{else}-->婴儿<!--{/if}--></td>
+            <td><!--{if $value.cardcategory == 1}-->身份证<!--{elseif $value.cardcategory == 2}-->护照
+            <!--{elseif $value.cardcategory == 3}-->港澳通行证<!--{elseif $value.cardcategory == 4}-->军官证<!--{else}-->其它<!--{/if}--></td>
+            <td><!--{$value.idcard}--></td>
+            <td><!--{if  $value.gender==1}-->男<!--{elseif $value.gender == 2}-->女<!--{else}-->保密<!--{/if}--></td>
+            <td><!--{$value.mobile}--></td>
+            <!--{if $aorder.linecategory==2}-->
+            <td>
+                <div class="idcardWrap">
+                    <!--{if $value.idcardurl}-->
+                    <a href="javascript:void(0)" onmouseenter="viewPic(this);" onmouseleave="hidePic(this);" class="viewpic">查看</a>
+                    <a href="order.details.html?file=<!--{if $value.idcardurl}--><!--{$imghost}--><!--{$value.idcardurl}--><!--{/if}-->" target="_blank">下载</a>
+                    <!--{/if}-->
+                    <div class="idcardImgBox">
+                        <img class="imgwh"  src="<!--{$imghost}--><!--{$value.idcardurl}-->">
+                    </div> 
+                </div>
+            </td><!--{/if}-->
+            <td><!--{if $value.detail}--><!--{$value.detail}--><!--{/if}--></td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+</div>
+<!--{else}-->
+<div class="o-section-box overflow_visible">
+    <div class="o-seb-tit">
+        <a class="action-import-guests" href="javascript:void(0);" >导入游客名单</a>
+        <a href="/skin/member.center.v1/uploadguests1.xls">下载游客模板</a>
+        <p class="o-seb-msg">游客信息填写</p><span class="o-md-msg"><!--{$aorder.stateName}--></span>
+    </div>
+    <div class="o-count-group">
+        <!--{if $aline.istakeadult || $aorder.adult>0}-->
+        <span class="o-persons">成人：</span>
+        <p class="o-p-count o-surplus-number o-bm-each o-qf" data-category="0">
+              <span class="o-cut o-cut1"></span><input for-ipt='myInput' name='adult' class="o-s-person o-person-ipt" type="text" value="<!--{if $aorder.adult>0}--><!--{$aorder.adult}--><!--{else}--><!--{$smarty.get.adult|default:0}--><!--{/if}-->" readonly ><!--{if $aline.istakeadult}--><span class="o-plus o-plus1"></span><!--{/if}-->
+        </p>
+        <!--{/if}-->
+        <!--{if $aline.istakechild || $aorder.child>0}-->
+        <span class="o-persons">儿童：</span>
+        <p class="o-p-count o-surplus-number o-bm-each o-qf" data-category="1">
+              <span class="o-cut"></span><input for-ipt='myInput' name='child' class="o-s-children o-children-ipt" type="text" value="<!--{if $aorder.child>0}--><!--{$aorder.child}--><!--{else}--><!--{$smarty.get.child|default:0}--><!--{/if}-->" readonly><!--{if $aline.istakechild}--><span class="o-plus"></span><!--{/if}-->
+        </p>
+        <!--{/if}-->
+        <!--{if $aline.istakebaby ||  $aorder.baby>0}-->
+        <span class="o-persons">婴儿：</span>
+        <p class="o-p-count o-qf" data-category="2">
+              <span class="o-cut"></span><input for-ipt='myInput' name='baby' class="o-s-baby o-baby-ipt" type="text" value="<!--{if $aorder.baby>0}--><!--{$aorder.baby}--><!--{else}--><!--{$smarty.get.baby|default:0}--><!--{/if}-->" readonly><!--{if $aline.istakebaby}--><span class="o-plus"></span><!--{/if}-->
+        </p>
+        <!--{/if}-->
+        <span class="o-persons">单房差：</span>
+        <p class="o-p-count o-rm-cha o-room-seat">
+              <span class="o-cut o-rc-cut"></span><input for-ipt='myInput' name="singleroomSum" class="o-rmcha-ipt" type="text" value="<!--{if $aorder.totalsingleroom>0}--><!--{$aorder.totalsingleroom/$aorder.singleroom}--><!--{else}--><!--{$smarty.get.singleSum|default:0}--><!--{/if}-->" readonly><span class="o-plus o-rc-plus"></span>
+              <span class="o-prompt-box o-pb-biger"><u></u>已达到单房差最多预定上限哦！</span>
+        </p>
+        <div class="o-num-pain">
+            可预订人数：<i class="o-ok-person"><!--{$aline.surplus-$smarty.get.adult-$smarty.get.child|default:0}-->人</i>(计划<em class="o-pain-count"><!--{$aline.person|default:0}--></em>人)
+        </div>
+    </div>
+    <table class="o-table-style o-tb-triper " cellspacing="0" cellpadding="0" id="guest-list-wrap">
+        <tr>
+            <th>序号/姓名</th>
+            <th>类别</th>
+            <th>证件类型/证件号码</th>
+            <th>性别</th>
+            <th>联系电话</th>
+            <!--{if $aline.linecategory==2}-->
+            <th>上传证件</th>
+            <!--{/if}-->
+            <th>备注</th>
+            <th>操作</th>
+        </tr>
+        <!--{foreach $guests as $k => $v}-->
+        <tr  class="guest-list <!--{if  $v.category == 0}-->o-tr-person<!--{elseif $v.category == 1}-->o-tr-children<!--{elseif $v.category == 2}-->o-tr-baby<!--{/if}-->" >
+            <td><span class="o-tb-xh index"><!--{$k+1}--></span>
+                <input class="o-ipt-85" type="text" name="title[]" value="<!--{if $v.title}--><!--{$v.title}--><!--{/if}-->"/>
+                 <input type="hidden" name="guestid[]" value="<!--{$v.id}-->">
+            </td>
+            <td>
+                <input type="hidden"  value="<!--{$v.category}-->" name="category[]" />
+                <!--{$v.typeop}--> 
+            </td>
+            <td>
+                <select class="o-t-paper" name="cardcategory[]">
+                     <!--{$v.cardcategoryop}-->
+                </select>
+                <input class="o-ipt-180" type="text" name="idcard[]"  value="<!--{if $v.idcard}--><!--{$v.idcard}--><!--{/if}-->" <!--{if $v.cardcategory eq '1'}-->datatype="idcard"<!--{elseif $v.cardcategory eq '2'}-->datatype="passport"<!--{else}-->datatype="*"<!--{/if}--> ignore="ignore">
+            </td>
+            <td class="o-td-sex">
+                <select name="gender[]">
+                    <!--{$v.sexop}-->
+                </select>
+            </td>
+            <td><input class="o-ipt-130" type="text" name="guestmobile[]" value="<!--{if $v.mobile}--><!--{$v.mobile}--><!--{/if}-->" ignore="ignore" datatype="m" errormsg="请正确填写手机号码"></td>
+            <!--{if $aline.linecategory==2}-->
+            <td>
+                <div class="idcardWrap">
+                <!--{if $v.idcardurl}-->
+                    <a href="javascript:void(0)" onmouseenter="viewPic(this);" onmouseleave="hidePic(this);" class="viewpic">查看</a>
+                    <a href="order.details.html?file=<!--{if $v.idcardurl}--><!--{$imghost}--><!--{$v.idcardurl}--><!--{/if}-->" target="_blank">下载</a>
+                        <div id="idcardUpload"></div>
+                        <div id="idcardUpload-preview" class="idcardImgBox ">
+                            <input type="hidden" name="idcardUpload[]" value="<!--{if $v.idcardurl}--><!--{$v.idcardurl}--><!--{/if}-->" />
+                            <img class="imgwh" src="<!--{$imghost}--><!--{$v.idcardurl}-->">
+                        </div>
+                <!--{else}-->
+                        <div id="idcardUpload"></div>
+                        <div id="idcardUpload-preview" class="idcardImgBox">
+                        </div>
+                <!--{/if}-->
+                </div>
+            </td>
+            <!--{/if}-->
+            <td><input class="o-ipt-180" type="text" name="guestdetail[]" value="<!--{if $v.detail}--><!--{$v.detail}--><!--{/if}-->"></td>
+            <td><a class="o-tb-del" href="javascript:void(0);" >删除</a></td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+            <span id="msgdemo"  style="margin-left:44%;margin-top: 5px;color:red" ></span>
+</div>
+<!--{/if}-->

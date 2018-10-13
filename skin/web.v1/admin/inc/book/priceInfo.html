@@ -1,0 +1,106 @@
+<div class="o-section-box">
+    <div class="o-seb-tit">
+        <span class="showOrHide fr">
+            <em class="o_arrow_down"></em>
+            <i><!--{if in_array($aorder.state,[1,2,4])}-->收起<!--{else}-->展开查看明细<!--{/if}--></i>
+          </span>
+        <p class="o-seb-msg">价格明细</p>
+    </div>
+    <div class="o-price-detaile" <!--{if !in_array($aorder.state,[1,2,4])}-->style="display:none;"<!--{/if}-->>
+        <div class="o-pd-list">
+            <span>基本团费</span>
+            成人 <i class="o-s-person"><!--{if $aorder.adult>0}--><!--{$aorder.adult}--><!--{else}--><!--{$smarty.get.adult|default:0}--><!--{/if}--></i> *￥<!--{$aline.adultprice}--> +
+            儿童 <i class="o-s-children"><!--{if $aorder.child>0}--><!--{$aorder.child}--><!--{else}--><!--{$smarty.get.child|default:0}--><!--{/if}--></i> *￥<!--{$aline.childprice}--> +
+            婴儿 <i class="o-s-baby"><!--{if $aorder.baby>0}--><!--{$aorder.baby}--><!--{else}--><!--{$smarty.get.baby|default:0}--><!--{/if}--></i> *￥<!--{$aline.babyprice}--> +
+            单房差 <i class="o-fc-numb"><!--{if $aorder.totalsingleroom>0}--><!--{$aorder.totalsingleroom/$aorder.singleroom}--><!--{else}--><!--{($smarty.get.singleSum*2-$smarty.get.adult)|default:0}--><!--{/if}--></i> * ￥<!--{$aline.singleroom}-->
+        </div>
+        <div class="o-pd-list">
+            <span>附件服务</span>
+            接送<i class="o-js-num"><!--{if $aorder.takeid}--><!--{$aorder.adult+$aorder.child}--><!--{else}--><!--{($smarty.get.adult+$smarty.get.child)|default:0}--><!--{/if}--></i>*￥<em class="price-take"><!--{if $aorder.takeid}--><!--{$aorder.takeprice}--><!--{else}--><!--{$other.takeinfo.price|default:0}--><!--{/if}--></em>
+        </div>
+        <div class="o-pd-list">
+            <span>其他调价</span>
+             ￥<!--{if $aorder.promotionprice+$aorder.buyeradjustprice+$aorder.selleradjustprice}--><!--{$aorder.promotionprice+$aorder.buyeradjustprice+$aorder.selleradjustprice}--><!--{else}-->0<!--{/if}-->
+        </div>
+        <div class="o-pd-list hongbao">
+            <span>活动参与</span>
+            红包抵扣  -￥<em><!--{if $aorder.hongbaoprice>0}--><!--{$aorder.hongbaoprice}--><!--{else}-->0<!--{/if}--></em>
+        </div>
+    </div>
+    <!--{if $aorder.orderid}-->
+    <div class="o-jine-div">
+        <div class="o-jine-price">
+            <p>订单总额：<span class="o-ft-black">￥<b><!--{$aorder.totalprice}--></b></span></p>
+        </div>
+        <div class="o-price-detaile">
+            <div class="o-pd-list">
+                <span>代金券</span>
+                -￥<em class="o-voucher"><!--{if $aorder.couponamount}--><!--{$aorder.couponamount}--><!--{else}-->0<!--{/if}--></em>
+            </div>
+            <!--{if $aorder.ispay==1}-->
+            <div class="o-pd-list">
+                <span>立减</span>
+                -￥<em class="o-hurryon"><!--{if $aorder.subtract}--><!--{$aorder.subtract}--><!--{else}-->0<!--{/if}--></em>
+            </div>
+            <!--{/if}-->
+        </div>
+        <div class="o-jine-price o-hurry-price">
+            <p>优惠立减：<span class="o-ft-green">￥<b><!--{if $aorder.ispay==1}--><!--{$aorder.subtract+$aorder.couponamount}--><!--{else}--><!--{$aorder.couponamount}--><!--{/if}--></b></span></p>
+        </div>
+    </div>
+    <!--{/if}-->
+
+    <div class="o-order-balance">
+
+        <p><!--{if $aorder.ispay==1}-->实付金额<!--{else}-->订单总额<!--{/if}-->：<span>￥<b><!--{if $aorder.payamount && $aorder.ispay==1}--><!--{$aorder.payamount}--><!--{else if $aorder.totalprice}--><!--{$aorder.totalprice}--><!--{/if}--></b></span></p>
+        <!--{if $aorder.ispay==1}-->获得<!--{elseif $aorder.refundtype == 5 || $aorder.refundtype == 9}-->已退<!--{else}-->支付成功将获得积分<!--{/if}-->：<strong>
+            <!--{if $aorder}--><!--{$aline.integral*$aorder.adult+$aline.integralchild*$aorder.child+$aline.integralbaby*$aorder.baby}-->
+            <!--{else}--><!--{$aline.integral*$smarty.get.adult+$aline.integralchild*$smarty.get.child+$aline.integralbaby*$smarty.get.baby|default:0}--><!--{/if}--></strong>积分   
+            <span style="margin-left: 45%;">
+                <!--{if $aorder.ispay==1}-->
+                <!--{if $aorder.paystyle == 1}-->
+                信用卡支付
+                <!--{elseif  $aorder.paystyle == 2 || $aorder.paystyle == 4 }-->
+                支付宝支付
+                <!--{elseif  $aorder.paystyle == 3 || $aorder.paystyle == 5 }-->
+                微信支付
+                <!--{else}-->
+                储蓄卡支付
+                <!--{/if}-->
+                <!--{/if}-->
+            </span>
+    </div>
+    <div class=" limitTime clearfix ">
+        <p class="fr">
+        <!--{if $aorder.state==1 && $aorder.platformdiscount>0 && $aorder.countdown>0 && $aorder.ispay!=1}-->
+            <span class="times"></span>
+            <em>内支付，还可享受立减<!--{$aorder.platformdiscount}-->%</em>
+        <!--{/if}-->
+        </p>
+    </div>
+    <div class="o-order-btns">
+        <!--{if $aorder.orderid}-->
+            <!--{if $aorder.state==1 && $aorder.category !=1 && $aorder.createtime >= 1489593600 && $aorder.ispay==0 }-->
+            <!--{if $isInsurancePay.completeStatus==1 && $isInsurancePay.freeStatus==2 }-->
+            <a class="o-ob-submit" href="order.orderPay.html?orderid=<!--{$aorder.id}-->&paytype=5">立即支付</a>
+            <!--{elseif  $isInsurancePay.errorFlg}-->
+            <span class='o-p-deductible'>保险名单信息有误，如需支付,请前往列表页查看详细信息</span>
+            <!--{else}-->
+            <a class="o-ob-submit" href="order.orderPay.html?orderid=<!--{$aorder.id}-->">立即支付</a>
+            <!--{/if}-->
+            <!--{/if}-->
+            <!--{if !in_array($aorder.state,[1,2,4]) && $aorder.category !=1 && $aorder.createtime >= 1489593600}-->
+            <a class="o-ob-submit ordersubmit" href="javascript:void(0);">提交订单</a>
+            <a class="o-ob-qx action-order-cancel" href="javascript:void(0);">取消订单</a>
+            <!--{/if}-->
+            <!--{if $aorder.ispay==1 && !$aorder.refundtype && time()<$aorder.backtime}-->
+              <a class="o-ob-qx action-order-tuikuan action-show-refund" href="javascript:void(0);" data-orderid="<!--{$aorder.id}-->">申请退款</a>
+            <!--{/if}-->
+        <!--{else}-->
+            <a class="o-ob-submit ordersubmit" href="javascript:void(0);">提交订单</a>
+        <!--{/if}-->
+    </div>
+</div>
+<span id="msgdemo"  style="margin-left: 88%;margin-top: 5px;color:red" ></span>
+
+

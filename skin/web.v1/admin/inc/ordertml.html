@@ -1,0 +1,524 @@
+<!--订单列表 开始-->
+<script class="tmpl-order-list" type="text/x-jquery-tmpl">
+{{each list}}
+     <li>
+        <dl class="clearfix"> 
+            <dt class="clearfix">
+                <div class="fl">
+                    <!--{if $user['companyinfo']['parentid'] == 0}-->
+                    {{if (state == 1 || state == 4) && ispay==0 && financepay==0 && category !=1}}
+                    {{if insurance && (insurance.freeStatus == 1 || insurance.freeStatus == 2)}}
+                    {{else}} 
+                        <input type="checkbox" class="orderitem accesscheck" name="orderid[]" value="${id}" data-accessurl= "11107">
+                    {{/if}}
+                    {{/if}}
+                    <!--{/if}-->
+                    订单号：${orderid} 
+                    <span class="ml-10 class="color51a54e"">{{if ordersite==1}}馨驰誉{{else}}馨欢途{{/if}}</span>
+                    {{if category==1}}<span>收客通</span>{{/if}}
+                    {{if takeid>0 || tianchi>0}}<span class="color51a54e">接送</span>{{/if}}
+                    {{if isinvoice>0}}<span >发票</span>{{/if}} 
+                    {{if stagepay >0 && stageconfirm<3}}<span class="color51a54e">订单融</span>{{/if}}
+                </div>
+                <div class="fr websites">下单：${createtimes}<span class="o-name">${contactname}</span>${siteinfo[siteid]}站点</div>
+            </dt>
+            <dd class="fl" style="width: 428px" >
+                <h3 class="color17b2df">${selleropeartorcompanyname}&nbsp;&nbsp;&nbsp;${selleropeartorname}&nbsp;&nbsp;&nbsp;${selleropeartormobile}</h3>
+                <h4 class="txt-cuttwo"><a href= "http://${cyindex[movetoplatform]}/line.details.html?dateid=${lineid}&order=1&sid=${siteid}" title="{{if brand !=0 || !brand}}${brand}{{/if}}${linetitle}-${subtitle}">{{if brand !=0 || !brand}}${brand}{{/if}}${linetitle}-${subtitle}</a></h4>
+                <p class="color999 mt5">出团：${gotimes}&nbsp;&nbsp;&nbsp;${goTrafficName}</p>
+                <p class="color999 mt5">回团：${backtimes}&nbsp;&nbsp;&nbsp;${backTrafficName}</p>
+            </dd>
+            <dd class="fl" style="width: 44px">
+                <p>成人：${adult}</p>
+                <p>儿童：${child}</p>
+                <p>婴儿：${baby}</p>
+            </dd> 
+            <dd class="fl orderamt" > 
+                <p>订单：￥${totalprice}</p>
+                {{if ispay>0 && subtract>0}}<p class="colorfb6c6c">立减：-￥${subtract}</p>{{/if}}
+                {{if couponsubtract>0 && (refundtype !=5 && refundtype!=9)}}<p class="colorfb6c6c">代金券：-￥${couponsubtract}</p>{{/if}}
+                {{if ispay>0}}<p class="colorfb6c6c">实付：￥${payamount*1+platformcharge*1}</p>{{/if}}
+                {{if refundtype ==5 || refundtype==9 || refundamount*1!=0 && refundtype!=10 && refundtype!=4}}<p class="mt30">退款：￥${refundamount}</p>{{/if}}
+            </dd>
+            <dd class="fl t-center" style="width: 73px">
+                <a class="{{if stateNmae=='退款中'}}color8ec756{{else stateNmae=='待支付' || stateNmae=='待放款'}}colorfb6c6c{{else stateNmae=='名单不全'}} colorf0b645{{else}}color999{{/if}}" href="javascript:;">${stateNmae}</a><br>
+                {{if paytime>0 && refundtype<1 }}${paytimes}<br>{{/if}}
+                {{if  state == 1 && (ispay !=1 || stageday >0) && refundtype == 0}}
+                    {{if  stagepay > 0 && stageconfirm == 1}}
+                        <a class="color999" href="javascript:;">订单融待审核</a>
+                    {{/if}}
+                    {{if stagepay > 0 && stageconfirm == 2}}
+                        <a class="color999" href="javascript:;">订单融已审核</a>
+                    {{/if}}
+                    {{if stagepay > 0 && stageconfirm == 3}}
+                        <a class="color999" href="javascript:;">订单融未通过</a>
+                    {{/if}}
+                {{/if}}<br>
+                {{if (state==1 || state==4) && ispay==0 && financepay==0 && category!= 1 && buyerispay==0}}
+                    {{if insurance && (insurance.freeStatus ==1 || insurance.freeStatus ==2)}}
+                        <a href="javascript:void(0)" class="pay-monery bg_fb6c6c action-orderpay" data-orderid="${id}" data-insuranceid="${insurance.orderId}">点击付款</a>
+                    {{else}}
+                        <a href="javascript:void(0)" class="pay-monery bg_fb6c6c action-ordersafe" data-accessurl= "11107" data-orderid="${id}" data-isinvoice="${isinvoice}" >点击付款</a>
+                    {{/if}}</br>
+                {{/if}}
+                {{if category==1 && stateNmae=='待支付'}} <a href="javascript:void(0)" class=" color999 " title="收客通订单请让游客支付">?</a>{{/if}}
+                {{if ret && ispay<1 && ret.countdown>0 }}<p class="color808080 lijian" title="该时间范围内支付享受立减"><i class="iconfont font-s12 color8993a3">&#xe659;</i><em class="back-time">${ret.countdown}</em><br>内立减{{if ret.discount}}${ret.discount}%{{/if}}{{if ret.peopleSum}}{{if ret.discount}}+ {{/if}}${ret.peopleSum}元{{/if}}</p>{{/if}}
+            </dd> 
+
+            <dd class="fl caozuo" style="width: 140px">
+                <a class="" href="order.details.html?id=${id}">订单详情</a>
+                {{if state == 1}}<a class="" href="print.confirm.html?orderid=${id}" target="_blank">盖章单</a>{{/if}}
+                <a class="" href="print.html?dateid=${lineid}&takeid=${takeid}&tianchi=${tianchi}"  target="_blank">行程单</a>
+                {{if ispay == 0 && isinvoice == 0 && state != 2 && 0}}
+                    <a class=" invoice_confirm" href="javascript:;" title="开发票" order-id="${id}">开发票</a>
+                {{/if}}
+                {{if isinvoice == 3 && ishyorder.status != 4 && ispay ==0}}
+                    <a class=" invoice_cancel" href="javascript:;" title="取消发票" order-id="${id}">取消发票</a>
+                {{/if}}
+                <a class="" href="print.guest.html?id=${id}&dateid=${lineid}"  target="_blank">名单表</a>
+                <a class="" href="print.single.html?orderid=${id}" target="_blank">出团单</a> 
+                <span href="javascript:void(0)" class="morecz color666">更多操作<i class="iconfont font-s12 ml-5">&#xe629;</i>
+                    <div class="morecz-item">
+                        {{if state == 0 || state == 3}}
+                            <a href="javascript:void(0)" class=" action-order-cancel accesscheck" data-accessurl= "11103" title="取消订单" line-id="${lineid}" order-id="${id}" >取消</a>
+                        {{/if}}  
+                        {{if state ==2}}
+                            <a href="javascript:void(0)" class=" action-order-cancel-result accesscheck" data-accessurl= "11105" title="取消的原因" line-id="${lineid}" order-id="${id}" >取消原因</a>
+                        {{/if}}
+                        {{if stageday < 1 || (stageconfirm == 3 || stageconfirm == 0)}}
+                            {{if  category !=1 && refund15days == 0 && ispay==1 && refundtype != 10 && refundtype != 7 && refundtype != 4}}
+                                <a href="javascript:void(0)" class=" action-show-refund" data-orderid="${id}">退款</a>
+                            {{/if}}
+                            {{if refundtype == 7 || refundtype == 4 }}
+                                <a href="javascript:void(0)" class=" action-show-refund" data-orderid="${id}">申诉</a>
+                            {{/if}}
+                        {{/if}} 
+                    </div> 
+                 </span>
+            </dd>
+        </dl>
+        <ul class="Insurance">
+           <li>
+            {{if insurance && insurance.orderCode}}
+               <small class="bao">保</small>
+               {{if insurance.freeStatus==1 }}
+               <span>免费赠送保险：${insurance.orderCode}</span>
+               {{else}}
+                   <span>保险订单号：${insurance.orderCode}</span>
+               {{/if}}
+               <a href="insurance.order.html?lineordercode=${orderid}" target="_blank">查看订单</a>
+            {{else}}
+                <small class="bao">保</small>
+               <span>此单未购保险</span>
+               <a class="color0d80aa border0"  href="line.booksuccess.html?orderid=${id}" target="_blank">购买保险>></a>
+            {{/if}}
+            </li>
+            <!--{if $user['companyinfo']['parentid'] == 0}-->
+            {{if stageday>0 && ispay==1 && stageconfirm==2 && refundtype==0}}
+            <li>
+                <small class="bao">融</small>
+                <span>订单融</span>
+                <span>申请垫资：${payamount-prepaymentfq}</span>
+                <span>支付定金：${prepaymentfq}</span>
+                <span>还款日：${repaytime}</span>
+                <span class="colorfb6c6c">{{if repayAmount}}已逾期{{/if}}需还款金额：￥：{{if repayAmount}}${repayAmount}{{else}}${payamount-prepaymentfq}{{/if}}</span>
+                {{if endpaytime>0}}
+                    <a href="javascript:void(0)" class="color999">已还清</a>
+                {{else ispaylend == 1}}
+                    <a href="order.orderrepay.html?orderid=${id}" class="colorfb6c6c">立即还款</a>
+                {{/if}}
+            </li>
+            {{/if}}
+            {{if state == 1 && ispay==0 && stagepay > 0 && stageconfirm==0 && isinvoice != 3 && !insurance.orderCode}}
+            <li>
+                <small class="bao">融</small>
+                <span>支持订单融分期</span>
+                <a href="javascript:void(0)" class="orderfenqi" data-orderid="${id}" href="javascript:;" data-price="${totalprice}"data-state="${state}">申请订单融支付</a>
+            </li>
+            {{/if}}
+            <!--{/if}-->
+            {{if contract.submitNum || contract.noSubmitNum}}
+            <li>
+                <small class="bao">合</small>
+                <span>已制作电子合同：{{if !contract.submitNum}}0{{else}}${contract.submitNum}{{/if}}份</span>
+                <span>未提交电子合同：{{if !contract.noSubmitNum}}0{{else}}${contract.noSubmitNum}{{/if}}份</span> 
+                {{if contract.submitNum}}<a href="contractlist.html?lineCode=${orderid}" target="_blank">查看</a>{{/if}}
+                {{if contract.noSubmitNum>0}}<a href="contractlist.html?status=0&lineCode=${orderid}" target="_blank">提交合同</a>{{/if}}
+            </li>
+            {{else}}
+                {{if (state == 1 || state == 4) && (gotime*1+86400 > time) && contractstatus !=3 &&  ispay==1}}
+                    <li>
+                        <small class="bao">合</small>
+                        <span>此单未制作合同</span>
+                        <a href="javascript:void(0)" class="color0d80aa action-getcontracrt" data-orderid="${id}" data-linecategory="${linecategory}" title="制作合同">制作合同</a>
+                    </li>
+                {{/if}}
+            {{/if}}
+        </ul>
+     </li>
+ {{/each}}
+</script>
+<!--订单列表结束-->
+<!--保险 开始-->
+<script id="tmpl-order-no-baoxian" type="text/x-jquery-tmpl">
+    <div class="order-safe-context">
+		<div class="order-no-infomation-context"><span class="font-s14">此订单已出团，出团日(含)后支付将无法购买{{if freeStatus==2}}绑定的{{else}}免费赠送{{/if}}保险！</span></div>
+
+	</div>
+</script>
+<!--保险 结束-->
+<!--电子合同 开始-->
+<script id="tmpl-order-is-contract" type="text/x-jquery-tmpl">
+    <div class="order-safe-context">
+        <div class="order-no-infomation-context"><span class="font-s14">您的合同还未开通，请立即开通后使用！</span></div>
+    </div>
+</script>
+<!--评论 开始-->
+<script id="score-table" type="text/x-jquery-tmpl">
+    <form id="form-score">
+        <div class="score-wrap">
+            <table class="table-v1 table-default-skin gray-border">
+                <colgroup>
+                        <col width="100">
+                        <col>
+                        <col width="100">
+                </colgroup>
+                <tr>
+                    <td class="head"><b class="red-color red">*</b>总满意度</td>
+                    <td colspan="3"><label class="score-label mr20"><input type="radio" class="score-label" name="lineappraise" value="2" />满意</label><label class="score-label mr20"><input type="radio" class="score-label" name="lineappraise" value="1" />一般</label><label class="score-label"><input type="radio" class="score-label" name="lineappraise" value="0" />不满意</label></td></tr>
+                <tr>
+                    <td class="head"><b class="red-color red">*</b>行程安排</td>
+                    <td width="180"><div id="test2" class="score-level allow-select"  data-el=".score-level-1" data-score='1'></div></td>
+                    <td class="head"><b class="red-color red">*</b>旅游交通</td>
+                    <td><span class="score-level allow-select" data-el=".score-level-2" data-score='2'></span></td>
+                </tr>
+                <tr>
+                    <td class="head"><b class="red-color red">*</b>住宿安排</td>
+                    <td  width="180"><span class="score-level allow-select"  data-el=".score-level-3" data-score='3'></span></td>
+                    <td class="head"><b class="red-color red">*</b>餐饮安排</td>
+                    <td><span class="score-level allow-select" data-el=".score-level-4" data-score='4'></span></td>
+                </tr>
+                <tr>
+                    <td class="head"><b class="red-color red">*</b>导游服务</td>
+                    <td  width="180"><span class="score-level allow-select"  data-el=".score-level-5" data-score='5'></span></td>
+                    <td class="head"><b class="red-color red">*</b>商家服务</td>
+                    <td><span class="score-level allow-select" data-el=".score-level-6" data-score='6'></span></td>
+                </tr>
+                <tr> 
+                    <td class="head align-top"><b class="red-color red">*</b>发表评论</td>
+                    <td colspan="3"><textarea name="detail" class="textarea-skin-1"></textarea></td>
+                </tr>
+                <tr>
+                    <td class="head">上传照片</td><td colspan="3"><a class="button-small button-bg-lightblue button-font-black redbag-info" id="score-upload">批量上传</a><span class="gray-color mh5">  最多只能上传3张图片</span></td>
+                </tr>
+		<tr>
+                    <td class="head">图片预览</td><td colspan="3"><div class="attachment-list"></div></td>
+                </tr>
+                <tr class="hide">
+                        <td class="head"></td>
+                        <td colspan="3">
+                                <span class="button-middle button-bg-blue button-font-white search-spaceing action-srore-submit button-srore-submit">提交</span>
+                                <div class="form-score-lsit hide">
+                                        <input type="hidden" name="appraise" value="0" class="score-level-1" />
+                                        <input type="hidden" name="appraise" value="0" class="score-level-2" />
+                                        <input type="hidden" name="appraise" value="0" class="score-level-3" />
+                                        <input type="hidden" name="appraise" value="0" class="score-level-4" />
+                                        <input type="hidden" name="appraise" value="0" class="score-level-5" />
+                                        <input type="hidden" name="companyappraise" value="0" class="score-level-6" />
+                                </div>
+                        </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</script> 
+<script id="score-table-view" type="text/x-jquery-tmpl">
+<table class="table-v1 table-default-skin gray-border">
+	<colgroup>
+		<col width="100">
+		<col>
+		<col width="100">
+	</colgroup>
+	<tr>
+        <td class="head">总满意度</td>
+        <td colspan="3" class="line">${line}</td>
+	</tr>
+	<tr>
+        <td class="head">行程安排</td>
+        <td><span class="score-level score-star"></span></td>
+        <td class="head">旅游交通</td>
+        <td><span class="score-level score-star"></span></td>
+	</tr>
+	<tr>
+        <td class="head">住宿安排</td>
+        <td><span class="score-level score-star"></span></td>
+        <td class="head">餐饮安排</td>
+        <td><span class="score-level score-star"></span></td>
+	</tr>
+	<tr>
+        <td class="head">导游服务</td>
+        <td><span class="score-level score-star"></span></td>
+        <td class="head">商家服务</td>
+        <td><span class="score-level score-star"></span></td>
+	</tr>
+	<tr>
+        <td class="head">评论</td>
+        <td colspan="3" class="detail">${detail}</td>
+	</tr>
+        <tr><td class="head">图片预览</td><td colspan="3"><div class="attachment"></div></td></tr>
+</table>
+</script> 
+<!--评论 结束-->
+<!--取消 开始-->
+<script id="tmpl-order-cancel" type="text/x-jquery-tmpl">
+<table class="table-v1 table-default-skin gray-border">
+	<tr>
+		<td class="head" width="60">取消原因<b class="red-color">*</b></td><td ><textarea class="textarea"></textarea></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center"><span class="button-small button-bg-blue button-font-white action-submit-cancel">确定</span> <span class="button-small button-bg-orange button-font-white" onClick="layer.closeAll()">取消</span></td>
+	</tr>
+</table>
+</script>
+<!--取消 结束-->
+<!--点击支付 保险 开始-->
+<script id="tmpl-order-no-infomation" type="text/x-jquery-tmpl">
+    <div class="order-safe-context">
+		<span class="font-s14">您购买的线路订单{{if freeStatus==2}}绑定的{{else}}赠送的{{/if}}保险订单名单{{if errorFlg == 1}}信息有误{{else}}信息不全{{/if}}</span>
+		<div class="order-no-infomation-context">
+				{{if freeStatus==1}}赠送{{/if}}保险订单：<span>${insuranceOrder.orderCode} </span>原价￥${insuranceOrder.price}
+	    </div>
+
+	</div>
+</script>
+
+<script id="tmpl-order-pay-safe" type="text/x-jquery-tmpl">
+    <div class="order-safe-context">
+		<span class="font-s14">您购买的线路订单可同下面订单一起快捷支付</span>
+		<ul>
+			<li>
+				<input type="checkbox" class="order-choose"/>
+				<span class="order-saft-name">保险订单：${orderCode} </span>
+				<span class="red-color">￥${price}<span>
+		    <li>
+	    </ul>
+	    <a href="javascript:;" class="order-pay button-operation-small button-bg-blue button-font-white" stype="padding:0 15px" data-insurance-orderid="${orderId}"></a>
+	</div>
+</script>
+
+<script id="tmpl-order-auto-infomation" type="text/x-jquery-tmpl">
+<form method="post" action="order.ajaxFindFeel.html" class="frm-findfeel">
+<div class="order-auto-infomation tc">
+    	<table width="100%">
+    		        <tr>
+				<th style="width:40px">ID</th>
+				<th>姓名</th>
+				<th>证件类型</th>
+				<th>证件号码</th>
+				<th>性别</th>
+				<th>出生日期</th>
+				<th>手机号码</th>
+                {{if errorFlg == 1}}<th>备注</th>{{/if}}
+			</tr>
+            {{each(i,guest) guestList}}
+			<tr class="findfeel-item">
+				<td class="tc"><input name="orderId[]" type="hidden" value="${orderId}" class="orderId" /><span>${orderId}</span></td>
+				<td class="order-auto-name"><input type="text" name="name[]" value="${name}" class="name w100" disabled/></td>
+				<td>
+					<select name="cardCategory[]" class="cardCategory h25" disabled>
+                               {{if cardCategory==1}}
+                                    <option value="${cardCategory}">身份证</option>
+                               {{else cardCategory==2}}
+                                    <option value="${cardCategory}">护照</option>
+                               {{else cardCategory==3}}
+                                    <option value="${cardCategory}">港澳通行证</option>
+                               {{else cardCategory==4}}
+                                    <option value="${cardCategory}">台胞证</option>
+                               {{else cardCategory==5}}
+                                    <option value="${cardCategory}">海员证</option>
+                               {{else cardCategory==6}}
+                                    <option value="${cardCategory}">旅行证</option>
+                               {{else cardCategory==7}}
+                                    <option value="${cardCategory}">出生证</option>
+                               {{else cardCategory==8}}
+                                    <option value="${cardCategory}">出生证</option>
+                               {{else cardCategory==9}}
+                                    <option value="${cardCategory}">军人证</option>
+                               {{else}}
+                                    <option value="${cardCategory}">其他</option>
+                               {{/if}}
+                    </select>
+                </td>
+				<td><input type="text" name="idCard[]" value="${idcard}" class="idCard" disabled/></td>
+				<td>    
+					<select  name="gender[]" class="gender h25" {{if errorFlg == 1}}disabled{{/if}}>
+                         {{if gender=="1"||gender==""}}
+                               <option  value="1" selected="selected">男</option>
+                               <option value="2">女</option>
+                         {{else}}
+                               <option value="1">男</option>
+                               <option   value="2" selected="selected">女</option>
+                         {{/if}}
+                    </select>
+				</td>
+				<td>
+                    <input type="text" name="birthdayDate[]" value="${birthdayDate}" datatype="*" class="birthdayDate" placeholder="格式：如2000-01-01" {{if errorFlg == 1}}disabled{{/if}} />
+                    <input type="hidden" value="${guestId}" class="guestId" />
+                </td>
+				<td>
+				<input type="text" name="mobile[]" value="${mobile}" class="mobile" {{if errorFlg == 1}}disabled{{/if}}/><span class="errorstatus"></span></td>
+                                {{if errorFlg == 1}}<td><input type="text" name="error[]" value="${errorInfo}" class="mobile" {{if errorFlg == 1}}disabled{{/if}} /></td>{{/if}}
+			</tr>
+            {{/each}}
+    	</table>
+        {{if errorFlg != 1}}
+<!--	<a href="javascript:;" class="order-edit-cancel order-edit-margin button-operation-small button-bg-blue button-font-white">取消</a>
+	<input type="button" class="order-edit-ok order-edit-margin button-operation-small button-bg-blue button-font-white" value="确认" id="btn">-->
+        {{/if}}
+</div>
+<form>
+</script>
+<!--点击支付 保险 结束-->
+<!--开票 开始-->
+<script id="invoiceconfirm" type="text/x-jquery-tmpl">
+	<div class="invoiceconfirm">
+		<div class="express mb10">
+			<table>
+				<colgroup>
+                                <col width="170">
+                                <col width="842">
+                                </colgroup>
+				<tbody>
+                                        <tr>
+						<th class="title">发票种类：<b class="mh5 red-color red">*</b></th>
+						<td class="pl10">
+							<select name="addedtax" id="addedtax" class="addedtax">
+                                                            {{if chksealpath}}
+                                                                <option value="1">普通发票</option>
+                                                            {{else chkzp}}
+								<option value="2">普通发票</option>
+                                                            {{/if}}
+							</select>
+						</td>	
+					</tr>
+                                        <tr>
+						<th class="title">发票抬头：<b class="mh5 red-color red">*</b></th>
+						<td class="pl10">
+							<!--{$user.companyinfo.companyname}--> <span class="orange-color">（若名称有误或需开其他公司名称，请联系客服电话：400-9003-996）</span>
+						</td>	
+					</tr>
+					<tr>
+						<th class="title">发票内容：<b class="mh5 red-color red">*</b></th>
+						<td>
+							<select name="hyheader" id="hyheader" class="hyheader">
+                                                                <option value="1">旅游费</option>
+								<option value="2">团费</option>
+							</select>
+						</td>	
+					</tr>
+					<tr>
+						<th class="title">快递信息：<b class="mh5 red-color red">*</b></th>
+						<td class="pl10">
+							<select name="hyexpress" id="hyaddselect" class="express-select hyaddselect" style="width:300px">
+                                                                {{each(i,v) addr}}
+                                                                <option value="${v.id}" >${v.name},${v.mobile},${v.address},${v.zipCode}</option>
+                                                                 {{/each}}
+							</select>
+							 <a href="javascript:;" class="button-small button-bg-blue button-font-white search-spaceing add_invoice" id="add_invoice">增加地址</a>
+                                                         <a href="javascript:;" class="button-small button-bg-blue button-font-white search-spaceing delete_invoice" id="delete_invoice">删除地址</a>
+						</td>
+					</tr>
+					<tr>
+						<th class="title red-color">温馨提示：</th>
+						<td class="pl10">该订单将由<span class="orange-color">北京锦途旅行社有限公司(上海分公司)</span>为您开具发票，开票金额为客户实付金额。
+						</td>
+					</tr>
+                                 
+     
+                                  
+                                        
+				</tbody>
+			</table>
+		</div>
+		<div class="invoicebtn">
+
+		</div>
+	</div>
+</script>
+<script id="incomplete"  type="text/x-jquery-tmpl">
+    <div class="incomplete">
+        <div class="express mb10">
+        <table class="mb10 iframe-lineroad-border iframe-lineroad-border-second lineroad-border-v1 big-table-padding">
+        <colgroup>
+           <col width="170">
+           <col width="842">
+        </colgroup>
+         <tbody>
+            <tr>
+                <td class="pl10" colspan="2" align="center">
+                   <div style=" text-align:left; margin:15px 0">
+                   请去往【发票信息】页提交开票资质并通过审核后，再进行申请开发票操作。<br />
+                   你也可以先勾选不开票，支付前您仍可在订单管理页申请开发票。<br />
+                   <a href="/company.invoice.html" target="_blank" style=" display:inline-block; text-decoration:underline; float:left" class="blue-color">点我补全开票资质并提交审核</a></div>
+                </td>
+            </tr>
+          </tbody>
+        </table>
+            </div>
+            <div class="invoicebtn">
+                
+            </div>
+    </div>
+</script>
+<script id="addadress"  type="text/x-jquery-tmpl">
+<div class="addaddress">
+	<p class="red-color">你的快递信息都将记录在选择框内，请谨慎编辑！</p>
+	<table>
+		<colgroup><col width="140"><col width="500"></colgroup>
+		<tbody> 
+                        <tr>
+                                <th class="title">收件人：<b class="mh5 red-color red">*</b></th>
+                                <td class="pl10">
+                                        <input type="text" class="input-skin-1" id="hyname">
+                                </td>
+                        </tr>
+                        <tr>
+                                <th class="title">联系电话：<b class="mh5 red-color red">*</b></th>
+                                <td class="pl10">
+                                        <input type="text" class="input-skin-1" id="hytell">   
+                                </td>
+                        </tr>
+                        <tr>
+                                <th class="title">邮寄地址：<b class="mh5 red-color red">*</b></th>
+                                <td class="pl10">
+                                        <input type="text" class="input-skin-1" id="hyaddr" style="width:500px">
+                                </td>
+                        </tr>
+                        <tr>
+                                <th class="title">邮编：<b class="mh5 red-color red">*</b></th>
+                                <td class="pl10">
+                                        <input type="text" class="input-skin-1" id="hynum">
+                                </td>
+                        </tr>
+                        <tr>
+
+                                <td class="pl10" colspan="2" align="center">
+  
+                                </td>
+                        </tr>
+		</tbody>
+	</table>
+</div>
+</script>
+<script id="deleadress"  type="text/x-jquery-tmpl">
+<div class="deleadress">
+    <ul>     
+            {{each(i,v) addr}} 
+        <li>
+            ${v.name},${v.mobile},${v.address},${v.zipCode} <i class="iconfont red cursor-pointer" data-addrid="${v.id}">&#xe627;</i>
+        </li>
+            {{/each}}
+    </ul>
+</div>
+</script>
+<!--开票 结束-->

@@ -1,0 +1,83 @@
+<link rel="stylesheet" type="text/css" href="<!--{$staticUrl}-->css/dialog.css" />
+<!--弹窗 1-->
+<div class="dialog animated zoomIn dialog1" >
+    <div class="dialog-body">
+        <h3>推至微店首页<i class="iconfont fr weidiancancer">&#xe627;</i></h3>
+        <div class="dialog-content">
+            <ul>
+                <li class="dilogli active" data-id="-1"><i class="iconfonttwo">&#xe607;</i><em>默认分组</em><span></span></li>
+                <!--{foreach $wdcategory as $k=>$item}-->
+                <li class="dilogli" data-id="<!--{$item.id}-->"><i class="iconfonttwo">&#<!--{$item.icon}--></i><em><!--{$item.categoryName}--></em><span></span></li>
+                <!--{/foreach }-->
+            </ul>
+        </div>
+        <div class="d-btns tx-center">
+            <button class="btn-blue1 mr-10 weidiansure">确定</button>
+            <button class="btn-blue2 weidiancancer">取消</button>
+        </div>
+    </div>
+</div>
+<!--弹窗 end-->
+<!--弹窗 2-->
+<div class="dialog dialog2">
+    <div class="dialog-body">
+        <h3>添加图标<i class="iconfont fr weidiancancer">&#xe627;</i></h3>
+        <div class="dialog-content clearfix">
+            <div class="fl"><img src="<!--{$staticUrl}-->images/finised.png" /></div>
+            <div class="fl">
+                <h4>推至首页成功</h4>
+                <p>商品已上架到你的店铺首页</p>
+            </div>
+        </div>
+        <div class="d-btns tx-center">
+            <a class="btn-blue1 mr-10 lookadd" target="_blank" href="http://<!--{$shopurl}-->/line.html">查看添加</a>
+        </div>
+    </div>
+</div>
+<!--弹窗 end-->
+<script>
+    $(function(){
+        var id = '-1';
+        //弹窗选中效果
+        $(".dialog").find("li").click(function(){
+            id = $(this).data('id');
+            $(this).addClass("active").siblings().removeClass("active");
+        });
+        //弹窗关闭
+        $(".weidiancancer").click(function(){
+            $(".dialog").fadeOut();
+        });
+
+        $(".line-add-weidian").click(function(){
+            $(".dialog1").show();
+        })
+        //弹窗确认按钮
+        $(".weidiansure").click(function(){
+            var lineid = '<!--{$detail.lineid}-->';
+            $.ajax({
+                url: "details.ajaxaddwline.html",
+                dataType: "json",
+                data: { id:id,lineid:lineid},
+                success: function (result) {
+                    if (result.code == "200") {
+                        $(".dialog1").hide();
+                        $(".dialog2").show();
+                    }else if(result.code == "503"){
+                        layer.msg(result.msg);
+                    }else {
+                        layer.msg(result.msg);
+                    }
+                },
+                beforeSend: function () {
+                    if(id == ''){
+                        layer.msg('请选择分组');
+                    }
+                }
+            });
+        });
+        //查看
+        $(".lookadd").click(function(){
+            $(".dialog2").hide();
+        });
+    })
+</script>

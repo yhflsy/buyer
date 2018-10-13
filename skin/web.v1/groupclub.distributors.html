@@ -1,0 +1,463 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>注册分销商(非旅行社) - 馨途旅游网 - 中国旅游云平台 400-900-3996 http://www.tripb2b.com</title>
+        <!--{include file="newinc/header.js.html"}-->
+        <link rel="stylesheet" type="text/css" href="<!--{$staticUrl}-->css/groupclub.css" />
+        <link rel="stylesheet" type="text/css" href="<!--{$staticUrl}-->css/stylev1.css" />
+    </head>
+    <body>
+    <div class="index-header">
+        <div class="container clearfix">
+            <div class="logo"><img src="<!--{$staticUrl}-->images/tripb2b.png" /></div>
+            <div class="tit">提供线上、线下的全方位一站式服务。</div>
+            <div class="reg-link"><a href="registers.html?choose=wholesaler" class="blue-btn">供应商入驻</a><a href="/groupclub.html" class="orange-btn">分销商注册</a></div>
+        </div>
+    </div>
+        <div class="g bg-white feilvxingshe">
+            <div class="register">
+                <dl>
+                    <dd class="active">验证手机号</dd>
+                    <dd class="active">填写注册资料</dd>
+                    <dd>提交审核</dd>
+                </dl>
+                <div class="step">
+                    <span class="step1 active">1</span>
+                    <span class="line line1 active"></span>
+                    <span class="step2 active">2</span>
+                    <span class="line line2"></span>
+                    <span class="step3">3</span>
+                </div>
+            </div>
+            <div class="f-content">
+                <form action="" id="two-form" method="post" enctype="multipart/form-data">
+                    <div class="item">
+                        <div class="xinxi-header">
+                            基础信息
+                            <div class="line-img"></div>
+                            <span class="line"></span>
+                        </div>
+                        <dl>
+                            <dt><strong>*&nbsp;</strong>公司名称：</dt>
+                            <dd>
+                                <input  type="text" id="companyName" value="<!--{if $registers.companyName}--><!--{$registers.companyName}--><!--{/if}-->" name="companyName" datatype="*" placeholder="需和您的营业执照上名称一致" nullmsg="不能为空"  ajaxurl="groupclub.checkCompanyname.html?type=1"><label class="compney vertical-align8px">※ 若您是公司分部，请在公司名称中注明。<br/> 例:XX旅行社有限公司（XX门市部）</label>
+                            </dd>
+                        </dl>
+                        <dl class="margin-top30">
+                            <dt><strong>*&nbsp;</strong>所在城市：</dt>
+                            <dd>
+                                <div id="region"></div>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt><strong>*&nbsp;</strong>公司地址：</dt>
+                            <dd>
+                                <input type="text" datatype="*"  placeholder="公司详细地址" nullmsg="请填写公司地址!" errormsg="" id="detail" value="<!--{if $registers.detail}--><!--{$registers.detail}--><!--{/if}-->" name="detail" /><span class="Validform_checktip"></span>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>公司固话：</dt>
+                            <dd>
+                                <input type="text" class="tel" value="<!--{if $registers.tel}--><!--{$registers.tel}--><!--{/if}-->" name="tel" datatype="/^\s*$/|tel" placeholder="格式为：区号-电话 例：400-9003996"  errormsg="电话号码格式错误"><span class="Validform_checktip"></span>
+                            </dd>
+                        </dl>
+                        <!--{if $isTravel == 1}-->
+       	  	  	<dl>
+       	  	  		<dt>公司传真：</dt>
+       	  	  		<dd>
+                                    <input type="text" placeholder="传真格式为:400-9003996" name ="responsiblefax" value="<!--{if $registers.responsiblefax}--><!--{$registers.responsiblefax}--><!--{/if}-->" datatype="/^\s*$/|tel"  errormsg="传真号码格式错误"/><span class="Validform_checktip"></span>
+       	  	  		</dd>
+       	  	  	</dl>
+                        <!--{/if}-->
+                    </div>
+                    <input name="vCode" type="hidden" value="<!--{$registers.vCode}-->" />
+                    <input name="mobile" type="hidden" value="<!--{$registers.mobile}-->" />
+                    <!--{if $isTravel == 1}-->
+                    <div class="item">
+                        <div  class="xinxi-header">
+                            资质信息
+                            <div class="line-img"></div>
+                            <span class="line"></span>
+                        </div>
+                        <dl>
+                            <dt style="width:170px" class="alignl"><strong>*&nbsp;</strong>新版营业执照：</dt>
+                           <div class="upload inline-block"> <div id="businessLicensePath" ></div></div>
+                        </dl>
+                        <div id="businessLicensePath-preview">
+                             <!--{if $registers.businessLicensePath}-->
+                             <img width="160" height="120" src="<!--{$imghost}--><!--{$registers.businessLicensePath}-->">
+                             <input name="businessLicensePath" type="hidden" value="<!--{$registers.businessLicensePath}-->" />
+                             <!--{else}-->
+                             <img width="160" height="120" style="display: none;" data-upload="true">
+                             <!--{/if}-->
+                        </div>
+                        <dl>
+                            <dt class="w172 alignl"><strong>*&nbsp;</strong>新版营业执照有效期：</dt>
+                            <dd style="width:70%">
+                                <div class="date-time">
+                                       <input type="text" readonly placeholder="有效期" id="a1" class="import datepicker calendar-length margin-left0" datatype="compareDate" name="businessLicenseStart" /><span class="data-line-small">-</span>
+                                       <input type="text" readonly placeholder="有效期" id="a2" class="import datepicker calendar-length " datatype="compareDate" name="businessLicenseEnd" id="businessLicenseEnd" />
+                                        <label class="cq-checkbox">
+                                            <input type="checkbox" class="long" id ="long" /><span>长期</span>
+                                        </label>
+                                </div>
+
+                            <div id ="businessLicense"></div>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="w172 alignl"><strong>*&nbsp;</strong>经营许可证：</dtc>
+                            <dd class="margin0">
+                                    <!--<a href="#" class="upload">上传文件</a>-->
+                                <div class="upload inline-block"><div id="travelpath" ></div></div>
+                                <span class="pic-describe"><label class="compney x-kezheng">※ 门市、营业部或分社可上传备案登记证</label></span>
+                            </dd>
+                        </dl>
+                        <div id="travelpath-preview">
+                            <!--{if $registers.travelPath}-->
+                            <input name="travelPath" type="hidden" value="<!--{$registers.travelPath}-->" />
+                            <img width="160" height="120" src="<!--{$imghost}--><!--{$registers.travelPath}-->">
+                            <!--{else}-->
+                            <img width="160" height="120" style="display: none;" data-upload="true">
+                            <!--{/if}-->
+                        </div>
+                    </div>
+                    <!--{/if}-->
+                    <div class="item">
+                        <div  class="xinxi-header">
+                            个人信息
+                            <div class="line-img"></div>
+                            <span class="line"></span>
+                        </div>
+                        <dl>
+                            <dt><strong>*&nbsp;</strong>联系人：</dt>
+                            <dd>
+                                <input type="text" datatype="*"  placeholder="公司联系人" nullmsg="请填写公司联系人!" errormsg="" id="detail" value="<!--{if $registers.realname}--><!--{$registers.realname}--><!--{/if}-->" name="realname" /><span class="Validform_checktip"></span>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt><strong>*&nbsp;</strong>性别：</dt>
+                            <dd>
+                               <label> <input type="radio" name="gender"   value ="2" <!--{if $registers.gender==2}-->class="active" checked="true"<!--{/if}-->/>男</label>
+                                <label><input type="radio" name="gender" id ="gender" value ="1" style="margin-left:30px" <!--{if $registers.gender==1}-->class="active" checked="true"<!--{/if}-->/>女<span class="Validform_checktip"></span></label>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt><strong>*&nbsp;</strong>QQ：</dt>
+                            <dd>
+                                <input type="text" placeholder="请输入QQ号码" value="<!--{if $registers.qq}--><!--{$registers.qq}--><!--{/if}-->" name="qq" datatype="*" ><span class="Validform_checktip"></span>
+                            </dd>
+                        </dl>
+                        <!--{if $isTravel != 1}-->
+                        <dl class="margin-top30">
+                            <dt><span class="upload-cars"><strong>*&nbsp;</strong>上传名片：</span></dt>
+                            <dd class="margin0">
+                                <!--<a href="javascript:;" class="upload">上传名片正面</a>-->
+                                <div class="upload fl margin-right10px">
+                                     <!--<span class="c-zheng">上传名片正面</span>-->
+                                    <div id="cardZheng"></div>
+                                </div>
+                                <div class="upload fl ">
+                                    <!--<span class="c-fan">上传名片反面</span>-->
+                                    <div id="cardFan"></div>
+                                </div>
+                                <!--<a href="javascript:;" class="upload">上传名片反面</a>-->
+                                <label class="compney upload-text line-height" >※ 支持.jpg .jpeg .bmp .gif格式照片，大小不超过1M</label>
+                            </dd>
+                        </dl>
+                        <div class="upload-card">
+                            <div id="cardZheng-preview" style="float: left" class="margin-right10px">
+                                <!--{if $registers.cardZheng}-->
+                                <img width="160px" height="120px" src="<!--{$imghost}--><!--{$registers.cardZheng}-->">
+                                <input name="cardZheng" type="hidden" value="<!--{$registers.cardZheng}-->" />
+                                <p>正面</p>
+                                <!--{else}-->
+                                <!--<img  src="&lt;!&ndash;{$staticUrl}&ndash;&gt;/images/personnal_card1.png" width="160px" height="120px">-->
+                                <!--<p>正面</p>-->
+                                <!--{/if}-->
+                            </div>
+                            <div id="cardFan-preview"  style="display: inline-block">
+                                <!--{if $registers.cardFan}-->
+                                <img width="160px" height="120px" src="<!--{$imghost}--><!--{$registers.cardFan}-->">
+                                <input name="cardFan" type="hidden" value="<!--{$registers.cardFan}-->" />
+                                <p>反面</p>
+                                <!--{else}-->
+                                <!--<img  src="&lt;!&ndash;{$staticUrl}&ndash;&gt;/images/personnal_card2.png" width="160px" height="120px">-->
+                                <!--<p>反面</p>-->
+                                <!--{/if}-->
+                            </div>
+                        </div>
+                        <!--{/if}-->
+                    </div>
+                    <div class="item" >
+                        <div  class="xinxi-header">
+
+                           账号配置
+                            <div class="line-img"></div>
+                            <span class="line"></span>
+                        </div>
+                        <dl>
+                            <dt><strong>*&nbsp;</strong>用户名：</dt>
+                            <dd>
+                                <input type="text" value="<!--{if $registers.userName}--><!--{$registers.userName}--><!--{/if}-->" name="userName" datatype="/(^[a-zA-Z][a-zA-Z0-9]{3,20}$)|(^1[0-9]{10}$)/i" placeholder="以此用户名登录平台，慎重填写，不可修改" nullmsg="请填写用户名" errormsg="不合法！" ajaxurl="groupclub.checkUsername.html"><label class="compney text-length">※ 可输入英文字母、数字，需以字母开头；长度4-20！</label><span class="Validform_checktip"></span>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt><strong>*&nbsp;</strong>密码：</dt>
+                            <dd>
+                                <input type="password" name="userPassword" datatype="*6-16" placeholder="设置登录密码" nullmsg="密码不能为空" errormsg="密码不符合要求" sucmsg=" "><span class="Validform_checktip"></span>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt><strong>*&nbsp;</strong>确认密码：</dt>
+                            <dd>
+                                <input type="password" name="userConfirmPassword" datatype="*6-16" placeholder="再一次输入密码" recheck="userPassword" sucmsg=""><span class="Validform_checktip"></span>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="xieyi"> 
+                        <label><input type="checkbox" class="agrees" />同意</label><a href="#" class="blue agreement">《馨途平台注册协议》</a>和<a href="#" class="blue tradeRule">《馨途平台交易规则》</a>
+                    </div>
+                    <div class="tijiao">
+                        <a href="groupclub.html" class="back">返回上一步</a>
+                        <input type="submit" value="提交"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+<!--{include file="registers-rules.html"}-->
+<!--{include file="registers-agreement.html"}-->
+<!--{include file="newinc/footer.html"}-->
+<!--{include file="newinc/footer.js.html"}-->
+<link rel="stylesheet" type="text/css" href="<!--{$staticUrl}-->js/date-picker/datepicker.min.css" />
+<link rel="stylesheet" type="text/css" href="<!--{$staticUrl}-->js/date-picker/datepicker.calendar.css" />
+<script src="<!--{$staticUrl}-->js/validform_v5.3.2_min.js"></script>
+<script src="<!--{$staticUrl}-->js/date-picker/datepicker.js"></script>
+<script src="<!--{$staticUrl}-->js/base.js"></script>
+<!--{include file="newinc/upload.html"}-->
+<script src="<!--{Common::staticUrl()}-->region.js"></script>
+<script>$.fn.region.defaults.script = "<!--{Common::staticUrl()}-->area.js?<!--{date('Y-m-d')}-->";</script>
+<script>
+
+    $(function () {
+        groupclub.init();
+        groupclub.setValidform();
+        groupclub.setRegion();
+        groupclub.showTradeRule();
+        groupclub.dateselects();
+    });
+    var groupclub = groupclub || {};
+    groupclub = {
+        verifycodes:"",
+        //表单初始化
+        init:function () {
+            $("input[type='radio']").click(function () {
+                $(this).addClass("active").siblings().removeClass("active");
+            });
+            $("#long").click(function () {
+                 if ($(this).prop("checked")) {
+                    $("input[name='businessLicenseEnd']").val("长期");
+                 } else {
+                    $("input[name='businessLicenseEnd']").val("");
+                 }
+             });
+            this.setUpload();
+        },
+        setValidform:function () {
+            $('#two-form').Validform({
+                tiptype:3,
+                postonce:true,
+                datatype:{
+                    'compareDate':function(gets,obj,curform,regxp){
+                         var start_date = $("input[name='businessLicenseStart']").val();
+                         var end_date = $("input[name='businessLicenseEnd']").val();
+                         if(start_date == "" || end_date == ""){return "有效期不能为空";}
+                         if(start_date > end_date){
+                            return "结束日期应大于开始日期";
+                         }
+                    }
+                },
+                beforeSubmit:function (curform) {
+                    var status1 = groupclub.setPicupload();
+                    var gender = $("input[name='gender']:checked").val();
+                    if(!gender){
+                        var bc=$("#gender").siblings(".Validform_checktip");
+                        bc.removeClass("Validform_right").addClass("Validform_wrong").html("请选择性别");
+                        return false;
+                    }
+                    if(!groupclub.showAgreement() || !status1 ){
+                        return false;
+                    }
+                    return true;
+                }
+            });
+        },
+        //设定图片上传
+        setPicupload:function(){
+            var type = "<!--{$isTravel}-->";
+             var business_bool = true,travel_bool = true;
+            if(type == 1){
+                var businessLicensePath_path=$("#businessLicensePath-preview").find("img").attr('src');//false
+                var travel_path=$("#travelpath-preview").find("img").attr('src');//false
+                business_bool = testPicupload(businessLicensePath_path,'businessLicensePath-preview');
+                travel_bool = testPicupload(travel_path,'travelpath-preview');
+            }else{
+                var cardZheng=$("#cardZheng-preview").find("img").attr('src');//false
+                var cardFan=$("#cardFan-preview").find("img").attr('src');//false
+                business_bool = testPicupload(cardZheng,'cardZheng-preview');
+                travel_bool = testPicupload(cardFan,'cardFan-preview');
+ 
+            }
+            if(!business_bool || !travel_bool){
+                return false;
+            }else{
+                return true;
+            } 
+            //验证图片是否上传
+            function testPicupload(pathObj,previewObj){
+                if(!pathObj){
+                    if(!$("#"+previewObj).find('.photo-upload').length){
+                        $("#"+previewObj).append("<div class='photo-upload' style='color:red;padding-top:5px;font-size:12px'>请上传图片</div>");
+                    }
+                    return false;
+                }else{
+                    if($("#"+previewObj).find('.photo-upload').length > 0){$("#"+previewObj).find('.photo-upload').remove();}
+                    return true;
+                }
+            }
+        },
+        //日历初始化
+        dateselects:function(){
+            $('.datepicker').dateselect({
+                changeYear:true,
+                changeMonth:true,
+               beforeShow:function (input, obj) {
+                    $(obj.dpDiv).wrap($('<div class="calendar_custom_v2" style="top:0;left:0;">')); 
+                },
+               onClose:function(date, obj){
+                   groupclub.testDate();
+                   var calendar = $(obj.dpDiv).closest(".calendar_custom_v2");
+                   $(obj.dpDiv).hide().appendTo($(document.body));
+                   calendar.remove();
+               }
+            });
+        },
+        testDate:function(){
+            var validformtip = $("#businessLicense").closest("dd").find(".Validform_checktip");
+            var start_date = $("input[name='businessLicenseStart']").val();
+            var end_date = $("input[name='businessLicenseEnd']").val();
+            if (end_date == "" || start_date == "") {
+                $(validformtip).hide().addClass("Validform_wrong").removeClass("Validform_right").html("有效期不能为空").show();
+                return false;
+            } else if (end_date && start_date && (end_date > start_date)) {
+                $(validformtip).hide().removeClass("Validform_wrong").addClass("Validform_right").html("").show();
+                return true;
+            } else {
+                $(validformtip).hide().addClass("Validform_wrong").removeClass("Validform_right").html("结束日期应大于开始日期").show();
+                return false;
+            }
+        },
+        //用户注册协议
+        showAgreement:function(){
+            if(!$(".agrees").is(":checked")){
+                layer.msg("您还没有勾选同意协议内容",2,8);
+                return false;
+            }
+            return true;
+        },
+        //馨途平台交易规则
+        showTradeRule:function(){
+            $(document).on('click','.tradeRule',function(){
+             var ptjygz = $.layer({
+                    type:1,
+                    title:"馨途旅游在线交易规则", //不显示默认标题栏
+                    shade:[0.5, '#000'], //不显示遮罩
+                    shadeClose: false,
+                    area: ['800px', '800px'],
+                    border:[0],
+                    closeBtn: [0, true],
+                    fix: true,
+                    page:{dom:$(".ptjygz-cont")}
+                })
+                $(".agreement-btn").click(function() {
+                 layer.close(ptjygz);
+                 $(".agrees").prop({"checked":true});
+                 });
+            }); 
+            $(document).on('click','.agreement',function(){
+              var yhzcxy = $.layer({
+                    type: 1,
+                    title: "用户注册协议", //不显示默认标题栏
+                    shade: [0.5, '#000'], //不显示遮罩
+                    shadeClose:false,
+                    area: ['800px', '800px'],
+                    border: [0],
+                    closeBtn: [0, true],
+                    fix: true,
+                    page:{dom:$(".yhzcxy-cont")}
+                })
+               $(".agreement-btn").click(function() {
+                  layer.close(yhzcxy);
+                  $(".agrees").prop({"checked":true});
+               });
+            });
+        },
+        //设置省市区
+        setRegion: function () {
+            $("#region").region({
+                depth: 4,
+                names: ['regionId', 'provinceId', 'cityId', 'areaId'],
+                values: ['', '', '', ''],
+                attrs: [{datatype: '*'}, {datatype: '*'}, {datatype: '*'}, {datatype: '*'}]
+            });
+        },
+        setUpload:function(){
+            upload({// 名片正面
+                el: '#cardZheng',
+                name: 'cardZheng',
+                buttontext: '上传正面',
+                file_size_limit: "1MB",
+                callback: function(obj, url){
+                    $('#cardZheng-preview>img').css('display','inline');
+                    $('input[name="cardZheng"]').remove();
+                    $('#cardZheng-preview').append('<input name="cardZheng" type="hidden" value="'+url+'" /><p>正面</p>');
+                }
+            });
+            upload({// 名片反面
+                el: '#cardFan',
+                name: 'cardFan',
+                buttontext: '上传反面',
+                file_size_limit: "1MB",
+                callback: function(obj, url){
+                    $('#cardFan-preview>img').css('display','inline');
+                    $('input[name="cardFan"]').remove();
+                    $('#cardFan-preview').append('<input name="cardFan" type="hidden" value="'+url+'" /><p>反面</p>');
+                }
+            });
+            upload({// 经营许可证
+                el: '#travelpath',
+                name: 'travelpath',
+                buttontext: '上传',
+                file_size_limit: "1MB",
+                callback: function(obj, url){
+                    $('#travelpath-preview>img').css('display','inline');
+                    $('input[name="travelPath"]').remove();
+                    $('#travelpath-preview').append('<input name="travelPath" type="hidden" value="'+url+'" />');
+                }
+            });
+            upload({// 营业执照
+                el: '#businessLicensePath',
+                name: 'businessLicensePath',
+                buttontext: '上传',
+                file_size_limit: "1MB",
+                callback: function(obj, url){
+                    $('#businessLicensePath-preview>img').css('display','inline');
+                    $('input[name="businessLicensePath"]').remove();
+                    $('#businessLicensePath-preview').append('<input name="businessLicensePath" type="hidden" value="'+url+'" />');
+                }
+            });
+        },
+    }
+</script>
+    </body>
+</html>

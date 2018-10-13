@@ -1,0 +1,123 @@
+
+<!-- 退款信息 -->
+<!--{if $refund}-->
+<div class="o-section-box">
+    <div class="o-seb-tit">
+        <p class="o-seb-msg">退款信息</p>
+    </div>
+    <div class="refundContent">
+        <p>
+            <span class="integral">
+                <i>退款状态:</i>
+                <em><!--{if $refund.0.refundtype == 5 || $refund.0.refundtype == 9}-->
+                    退款成功
+                    <!--{elseif $refund.0.refundtype == 10}-->
+                    退款失败
+                    <!--{elseif $refund.0.refundtype == 7}-->
+                    申诉中
+                    <!--{elseif $refund.0.refundtype == 4}-->
+                    卖家已拒绝
+                    <!--{else}-->
+                    退款中
+                    <!--{/if}--></em>
+            </span>
+            <span>
+                <i>申请时间:</i>
+                <em><!--{$refund[count($refund)-1].createtime|date_format:'%Y-%m-%d %H:%M:%S'}--></em>
+            </span>
+        </p>
+        <p class="apply">
+            <span>
+                <i>申请退款金额:</i>
+                <em>￥<!--{if $refund[count($refund)-1].refundamount*(-1)>0}--><!--{$refund[count($refund)-1].refundamount*(-1)}--><!--{else}--><!--{$refund.refundamount}--><!--{/if}--></em>
+            </span>
+            <span>
+                <i>卖家调整退款:</i>
+                <em>￥<!--{abs($refund.0.sellamount)}--></em>
+            </span>
+        </p>
+        <p>
+            <span>
+                <i>实退金额:</i>
+                <em>￥<!--{if $refund.0.refundtype == 5 || $refund.0.refundtype == 9}--><!--{abs($refund.0.refundamount)}--><!--{else}-->0<!--{/if}--></em>
+            </span>
+            <span>
+                <i>退款理由:</i>
+                <em><!--{$refund.0.detail}--></em>
+            </span>
+
+        </p>
+    </div>
+        <table class="o-table-style o-tb-triper refundContentTable" cellspacing="0" cellpadding="0">
+          <tr>
+            <th>序号</th>
+            <th>操作人</th>
+            <th>操作时间</th>
+            <th>退款金额</th>
+            <th>退款说明</th>
+          </tr>
+          <!--{foreach $refund as  $key => $value }-->
+          <tr>
+            <td><!--{$key+1}--></td>
+            <td><!--{$value.username}--></td>
+            <td><!--{$value.createtime|date_format:'%Y-%m-%d %H:%M:%S'}--></td>
+            <td>￥<!--{abs($value.refundamount)}--></td>
+            <td><!--{$value.detail}--></td>
+          </tr>
+          <!--{/foreach}-->
+        </table>
+</div>
+<!--{/if}-->
+<!-- 退款信息 -->
+
+<!-- 操作日志 -->
+<div class="o-section-box o_operation_log">
+    <div class="o-seb-tit">
+        <span class="showOrHide fr">
+            <em class="o_arrow_down"></em>
+            <i>展开查看明细</i>
+        </span>
+        <p class="o-seb-msg">操作日志</p>
+    </div>
+    <div class="o_operation_content">
+        <div class="o_operation_content_head">
+            <ul class="clearfix">
+                <li class="fl first">操作时间</li>
+                <li class="fl">操作人</li>
+                <li class="fl">操作内容</li>
+            </ul>
+        </div>
+        <div class="o_operation_content_body clearfix">
+            <div class="o_operation_content_body_line fl">
+                <ul class="">
+                    <!--{foreach $loglist as $key => $value}-->
+                    <li></li>
+                    <!--{/foreach}-->
+                </ul>
+            </div>
+            <div class="o_operation_content_body_txt fl">
+                <ul>
+                    <!--{foreach $loglist as $key => $value}-->
+                    <li class="clearfix">
+                        <span>
+                            <!--{$value.createtime|date_format:'%Y-%m-%d %H:%M:%S'}-->
+                        </span>
+                        <span class="customer ">
+                            <!--{if $value.isSeller}-->
+                            <i class="seller">卖</i>
+                            <!--{else}-->
+                            <i class="buyer">买</i>
+                            <!--{/if}-->
+                            <em><!--{if $value.edituser}--><!--{$value.edituser}--><!--{else}--><!--{$value.readuser}--><!--{/if}--></em>
+                        </span>
+                        <span class="customer_nameList"><!--{str_replace('<br><br>','<br>',$value.detail)}--></span>
+                    </li>
+                    <!--{/foreach}-->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 操作日志 -->
+
+

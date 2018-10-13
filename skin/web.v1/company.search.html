@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html >
+<head>
+        <title>供应商检索 - 馨途旅游网 - 中国旅游云平台 400-900-3996 http://www.tripb2b.com</title>
+        <!--{include file="newinc/header.js.html"}-->
+</head>
+<body>
+        <!--{include file="newinc/header.html"}-->
+        <div class="containermain">
+                <div id="supplier">
+                	<!--{if $list}-->
+                        <!--{foreach $list as $v}-->
+                        <div class="sp_search mt20 ">
+                                <dl class="borShadow bg_white">
+                                        <dt class="fl">
+                                                <span class="border_eee mar-20 pos_rel fl">
+                                                        <a href="company.detail.html?companyid=<!--{$v.companyid}-->" target="_blank"><img src="<!--{if $v.logopath}--><!--{$imghost}--><!--{$v.logopath}--><!--{else}--><!--{$staticUrl}--><!--{$defaultlogo.company}--><!--{/if}-->" class="mid"/></a>
+                                                </span>
+                                                <a href="company.detail.html?companyid=<!--{$v.companyid}-->" class="font-s16" target="_blank"><!--{$v.companyname}--></a>
+                                                <h5 class="color_six">
+                                                        <i class="iconfont mr-5 color_nine">&#xe648;</i>联系电话：<!--{$v.responsiblemobile}--> <br />
+                                                </h5>
+                                        </dt>
+                                        <dd class="fr" style="float:left;">
+                                            <!--{if $v.detail}-->
+                                                <ul>
+                                                    <!--{foreach array_slice($v.detail,0,4) as $key=>$value}-->
+                                                        <li class="border_dashed">
+                                                                <span class="sp_fr pos_rel">
+                                                                        <a href="details.html?dateid=<!--{$value.dateid}-->" target="_blank"><img src="<!--{if $value.photo}--><!--{$imghost}--><!--{$value.photo|replace:'.':'_164x90.'}--><!--{else}--><!--{$staticUrl}--><!--{$defaultlogo.line|replace:'.':'_164x90.'}--><!--{/if}-->"/></a>
+                                                                        <span>
+                                                                                <i class="color_fff45c">￥<b class="font-s14"><!--{$value.adultpricemarket}--></b></i> 起
+                                                                        </span>
+                                                                </span>
+                                                                <a href="details.html?dateid=<!--{$value.dateid}-->" target="_blank"><!--{if $value.brandtitle}-->【<!--{$value.brandtitle}-->】<!--{/if}--><!--{$value.title}--><!--{if $value.subtitle }-->|<!--{$value.subtitle}--><!--{/if}--></a>
+                                                        </li>
+                                                    <!--{/foreach}-->
+                                                </ul>
+                                            <!--{else}-->
+                                                <div class="sp_noline color_nine font-s20">
+                                                        该供应商目前没有线路！
+                                                </div>
+                                            <!--{/if}-->
+                                        </dd>
+                                </dl>
+                        </div>
+                        <!--{/foreach}-->
+                        <!--{include file="newinc/page.html"}-->
+                        <!--{else}-->
+                    	<div class="mt20 borShadow nosupply">
+                                对不起，没有找到供应商
+                    	</div>
+                        <!--{/if}-->
+                </div>
+        </div>
+<!--{include file="newinc/footer.html"}-->
+<!--{include file="newinc/footer.js.html"}-->
+<script type="text/javascript">
+    var keywords = "<!--{$keywords}-->"
+    if(keywords!=''){
+            $("input[name='keywords']").attr('value',keywords);
+    }
+    $(".search-type").each(function() {
+          $(this).find('li:eq(1)').addClass("active").siblings().removeClass("active");
+    });
+</script>
+</body>
+</html>

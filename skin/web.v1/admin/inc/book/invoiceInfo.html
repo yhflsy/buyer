@@ -1,0 +1,113 @@
+<!--{if !in_array($aorder.state,[1,2,4]) && !$aorder.isinvoice && 0}-->
+    <div class="o-section-box">
+        <div class="o-seb-tit">
+            <p class="o-seb-msg">发票信息</p>
+            <a href="javascript:void(0);" id="editInvoice" <!--{if !$other.hyinvoiceaddr}-->style="display:none;"<!--{/if}-->>修改</a>
+            <br/>
+        </div>
+        <!--{if $other.invoice.status != '1'}-->
+            <!-- 发票A -->
+            <div class="o-open-invoice">
+                <p class="o-oi-p">
+                    <em class="o-gth-icon"></em><span class="o-pay-sp"><!--{$other.invoice.msg1}--></span><a href="company.invoice.html" target="_blank"><!--{$other.invoice.msg2}--></a>
+                </p>
+            </div>
+        <!--{else}-->
+            <!-- 发票B -->
+            <div class="o-open-invoice">
+                <label>
+                    <input type="checkbox" name="invoice" value="2" class="o-ck-box invoiceInfo" <!--{if $aorder.isinvoice eq 3}-->checked="checked"<!--{/if}-->>
+                    <span>开具平台发票</span>
+                </label>
+                    <i class="o-color-red">若您不勾选，后期补开发票请联系该线路供应商。</i>
+                
+            </div>
+            <!-- 发票C -->
+            <div class="o-invoice-label" <!--{if !$other.hyinvoiceaddr}-->style="display:none;"<!--{/if}-->>
+                <p class="o-iside-left"></p>
+                <div class="o-imain">
+                    <dl>
+                        <dd>
+                            <span>发票种类：</span>普通发票
+                            <input type="hidden" name="addedtax" value="1"/>
+                        </dd>
+                        <dd>
+                            <span>发票抬头：</span><!--{$other.invoice.info.enterpriseName}-->
+                            <input type="hidden" name="invoicetitle" value="<!--{$other.invoice.info.enterpriseName}-->"/>
+                            <input type="hidden" name="hyinvoflg" value="1"/>
+                        </dd>
+                        <dd class="hycontent">
+                            <span>发票内容：</span><em><!--{if $invoiceCheck.invoiceType}--><!--{if $invoiceCheck.invoiceType eq 1}-->旅游费<!--{elseif $invoiceCheck.invoiceType eq 2}-->团费<!--{/if}--><!--{else}-->旅游费<!--{/if}--></em>
+                            <input type="hidden" name="hyheader" value="1"/>
+                        </dd>
+                        <dd>
+                            <span>纳税人识别号：</span><!--{$other.invoice.info.taxNo}-->
+                        </dd>
+                        <dt>
+                            <span>收票地址：</span><em class="addr"><!--{if $other.hyinvoiceaddr[0].name}--><!--{$other.hyinvoiceaddr[0].name}-->，<!--{$other.hyinvoiceaddr[0].mobile}-->，<!--{$other.hyinvoiceaddr[0].address}-->，<!--{$other.hyinvoiceaddr[0].zipCode}--><!--{/if}--></em>
+                            <input type="hidden" name="hyexpress" value="<!--{$other.hyinvoiceaddr[0].id}-->"/>
+                        </dt>
+                        <dd>
+                            <p class="o-idt-p">
+                                <em></em>该订单发票将由
+                                <b>北京锦途旅行社有限公司上海分公司</b>为您开具
+                            </p>
+                        </dd>
+                    </dl>
+                </div>
+                <p class="o-iside-right"></p>
+            </div>
+            <!-- 发票C -->
+        <!--{/if}-->
+    </div>
+<!--{elseif $aorder.isinvoice eq 3}-->
+    <div class="o-section-box">
+        <div class="o-seb-tit">
+            <p class="o-seb-msg">发票信息</p>
+            <br/>
+        </div>
+        <!-- 发票C -->
+        <div class="o-invoice-label">
+            <p class="o-iside-left"></p>
+            <div class="o-imain">
+                <dl>
+                    <dd>
+                        <span>发票种类：</span>普通发票
+                    </dd>
+                    <dd>
+                        <span>发票抬头：</span><!--{$other.invoice.info.enterpriseName}-->
+                    </dd>
+                    <dd class="hycontent">
+                        <span>发票内容：</span><em><!--{if $invoiceCheck.invoiceType eq 1}-->旅游费<!--{elseif $invoiceCheck.invoiceType eq 2}-->团费<!--{/if}--></em>
+                    </dd>
+                    <dd>
+                        <span>纳税人识别号：</span><!--{$other.invoice.info.taxNo}-->
+                    </dd>
+                    <dt>
+                        <span>收票地址：</span><em class="addr"><!--{if $other.hyinvoiceaddr[0].name}--><!--{$other.hyinvoiceaddr[0].name}-->，<!--{$other.hyinvoiceaddr[0].mobile}-->，<!--{$other.hyinvoiceaddr[0].address}-->，<!--{$other.hyinvoiceaddr[0].zipCode}--><!--{/if}--></em>
+                    <p class="o-idt-p">
+                        <em></em>该订单发票将由
+                        <b>北京锦途旅行社有限公司上海分公司</b>为您开具
+                    </p>
+                    </dt>
+                </dl>
+            </div>
+            <p class="o-iside-right"></p>
+        </div>
+        <!-- 发票C -->
+    </div>
+<!--{/if}-->
+<!--{if !$aorder.orderid && $aline.applicationnote}-->
+<!-- 预订须知 -->
+<div class="o-section-box">
+    <div class="o-seb-tit">
+        <p class="o-seb-msg">预订须知</p>
+    </div>
+    <div class="advanceInformation">
+        <ul>
+            <!--{nl2br($aline.applicationnote)|default:"无"}-->
+        </ul>
+    </div>
+</div>
+<!-- 预订须知 -->
+<!--{/if}-->

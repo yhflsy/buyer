@@ -1,0 +1,50 @@
+<!-- 3.9号新增  签证材料-->
+<!--{if $aline.linecategory == 2 && !$aline.erpid}-->
+<div class="o-section-box">
+    <div class="o-seb-tit">
+        <p class="o-seb-msg">签证材料寄送地址</p>
+    </div>
+    <div class="sentAddress">
+        
+        <p class="endDate">
+            <i></i>
+            <span><!--{if $aline.visa.isshow || $aorder.ispay}-->
+                本订单材料截止日期为：<em><!--{if $aline.visa.beforedays}--><!--{date("Y-m-d H:i:s",($aline.gotime-$aline.visa.beforedays*86400-1))}--><!--{/if}-->。</em> 请在此日期之前邮寄签证所需材料至以下地址。
+                <!--{else}-->
+                您在支付后可在订单中查看签证材料寄送地址
+                <!--{/if}-->
+            </span>
+        </p>
+        <!--{if $aline.visa.isshow || $aorder.ispay}-->
+        <div class="sentAddress_content">
+            <!--{foreach $aline.visa.contact as $k=>$v}-->
+            <ul>
+                <!--{if $aline.visa.contactindex == $k}-->
+                <li>
+                    <i>联系人：</i>
+                    <span><!--{if $v.name}--><!--{$v.name}--><!--{/if}--></span>
+                </li>
+                <li>
+                    <i>地址：<!--{if $v.addr}--><!--{$v.addr}--><!--{/if}--></i>
+                    <span>
+                    </span>
+                </li>
+                <li>
+                    <i>联系方式：</i>
+                    <span><!--{if $v.tel}--><!--{$v.tel}--><!--{/if}-->
+                    </span>
+                </li>
+                <!--{/if}-->
+                <li>
+                    <i>备注：</i>
+                    <span><!--{if $aline.visa.notes}--><!--{$aline.visa.notes}--><!--{/if}-->
+                    </span>
+                </li>
+            </ul>
+            <!--{/foreach}-->
+        </div>
+        <!--{/if}-->
+    </div>
+</div>
+ <!--{/if}-->
+<!-- 3.9号新增 签证材料-->

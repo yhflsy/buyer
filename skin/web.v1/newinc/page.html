@@ -1,0 +1,28 @@
+<div class="pagination-v1 page" >
+        <form method="GET">
+                <span class="page-num"><!--{$page->size}--> 条/页 共 <!--{$page->total}--> 条</span>
+                <ul class="pagination-list">
+                        <!--{if $page->prev}-->
+                        <li class="active"><a class="prev" href="<!--{$page->prev.url}-->">&nbsp;</a></li>
+                        <!--{else}-->
+                        <li class="active"><a class="prev disabled-prev" href="javascript:;">&nbsp;</a></li>
+                        <!--{/if}-->
+                        <!--{foreach $page->items as $p => $v}-->
+                        <!--{if $v.current}-->
+                        <li><a class="page-link current" href="javascript:;"><!--{$v.text}--></a></li>
+                        <!--{else}-->
+                        <!--{if $v.url}-->
+                        <li><a class="page-link" href="<!--{$v.url}-->"><!--{$v.text}--></a></li>
+                        <!--{else}-->
+                        <li><a class="page-link" href="javascript:;"><!--{$v.text}--></a></li>
+                        <!--{/if}-->
+                        <!--{/if}-->
+                        <!--{/foreach}-->
+                        <!--{if $page->next}-->
+                        <li class="active"><a class="next" href="<!--{$page->next.url}-->">&nbsp;</a></li>
+                        <!--{else}-->
+                        <li class="active"><a class="next disabled-next">&nbsp;</a></li>
+                        <!--{/if}-->
+                </ul>
+        </form>
+</div>

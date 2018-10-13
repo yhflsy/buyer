@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>订单-线路预定</title>
+    <link rel="stylesheet" href="<!--{$skinPath}-->css/base.css">
+    <link rel="stylesheet" href="<!--{$skinPath}-->css/order.css">
+    <link rel="stylesheet" href="<!--{$skinPath}-->css/wmy_order.css">
+</head>
+<body>
+<!-- 头部 -->
+<!--{include file="./inc/book/bookHead.html"}-->
+<!-- end 头部 -->
+<div class="o-main o_finishi">
+    <form class=" checkform" method="post" action="">
+        <div class="o-mleft">
+            <input type="hidden"  value="<!--{$aline.integral}-->" name="integraladult"  class="integraladult"/> 
+            <input type="hidden"  value="<!--{$aline.integralchild}-->" name="integralchild"  class="integralchild"/>
+            <input type="hidden"  value="<!--{$aline.integralbaby}-->" name="integralbaby"  class="integralbaby"/>
+            <input type="hidden" name="token" value="<!--{$token}-->">
+            <!--状态,产品信息，联系人信息 -->
+            <!--{include file="./inc/book/lineInfo.html"}-->
+            <!-- end状态,产品信息，联系人信息 -->
+            <!-- 游客信息填写 -->
+            <!--{include file="./inc/book/guestInfo.html"}-->
+            <!-- end游客信息填写 -->
+            <!-- 签证信息填写 -->
+             <!--{include file="./inc/book/visa.html"}-->
+             <!-- end签证信息填写 -->
+            <!-- 预定信息填写 -->
+            <div class="o-section-box">
+                <!--游客-->
+                <!--/{include file="./inc/book/bookInfo.html"}/-->
+                <!--其他-->
+                <!--{include file="./inc/book/otherInfo.html"}-->
+            </div>
+            <!-- end预定信息填写 -->
+            <!-- 发票信息 -->
+            <!--{include file="./inc/book/invoiceInfo.html"}-->
+            <!--end 发票信息 -->
+            <!--价格明细 -->
+            <!--/{include file="./inc/book/priceInfo.html"}/-->
+            <!-- end 价格明细 -->
+            <!--{include file="./inc/book/submit.html"}-->
+        <div class="o-footer">
+            <p>Copyright © 2008-2020 tripb2b.com, All Rights Reserved. &nbsp;&nbsp;&nbsp;&nbsp;沪ICP备17022850号-1 沪公网安备 31010402000945号</p>
+        </div>
+        </div>
+        
+        <!--{include file="./inc/book/floatRight.html"}-->
+    </form>
+</div>
+<style>
+	.viewpic{display: inline-block;width:auto;height:auto;color:#053a5b;margin-bottom: 10px}
+	.idcardWrap{position: relative;}
+	.idcardImgBox{border:1px solid #999;display:none;width: 180px;height: 120px;background: white;z-index: 5000;position: absolute;left: 100px;
+    top: -20px;}
+</style>
+<!--弹层-->
+<!--{include file="./inc/book/bullet.html"}-->
+<!--{include file="./inc/book/import.html"}-->
+<script src="<!--{$skinPath}-->js/jquery-3.1.0.js"></script>
+<script src="<!--{$skinPath}-->/js/tmpl/jquery.tmpl.js"></script>
+<script src="<!--{$skinPath}-->js/validform_v5.3.2_min.js<!--{$versions}-->"></script>
+<!--{include file="./inc/upload.html"}-->
+<script src="<!--{$skinPath}-->js/book.js"></script>
+<script src="<!--{$skinPath}-->js/neworder.js"></script>
+<script src="<!--{$skinPath}-->js/layer.js<!--{$versions}-->"></script>
+<!--{include file="./inc/book/tmpl.html"}-->
+<script>
+    var istakeadult = "<!--{$aline.istakeadult}-->";
+    var istakechild = "<!--{$aline.istakechild}-->";
+    var istakebaby = "<!--{$aline.istakebaby}-->";
+    var hyinvoiceaddr = "<!--{$other.hyinvoiceaddr[0].id}-->";
+    var booksingleSum = "<!--{$smarty.get.singleSum|default:0}-->";
+    var orderid  = "";
+    var isinvoice = "";
+    var state = "";
+    $(function () {
+        $(".checkform").Validform({
+            btnSubmit: ".ordersubmit",
+            tiptype:function(msg,o,cssctl){
+                var objtip=$("#msgdemo");
+                cssctl(objtip,o.type);
+                objtip.text(msg);
+            },
+            postonce:true,
+            beforeSubmit:function(){
+                var contactname = $("input[name='contactname']").val();
+                var mobile = $("input[name='mobile']").val();
+                var tel = $("input[name='tel']").val();
+                var regex = /^1[0-9]{10}$/;
+                if($(".o-submit-div a").hasClass("noChecked")){
+                    return false;
+                }
+                if(contactname=="") {layer.msg("请填写您的姓名！"); return  false;}
+                if(!regex.test(mobile)){
+                    layer.msg('请正确填写您的手机号码！');
+                    return false;
+                }
+                if(tel=="") {layer.msg("请填写您的电话号码！"); return  false;}
+                var personnum = parseInt($("input[name='adult']").val())||0 + parseInt($("input[name='child']").val())||0 ;
+                if(!personnum){
+                    layer.msg('游客人数不可以为0！');
+                    return false;
+                }
+                $('.ordersubmit').hide();
+                setTimeout(function(){
+                    $('.ordersubmit').hide();
+                },30000);
+            }
+        });
+    })
+
+        function viewPic(obj){
+            $(obj).closest('td').find('.idcardImgBox').show()
+        }
+        function hidePic(obj) {
+            $(obj).closest('td').find('.idcardImgBox').hide()
+        }
+        //上传
+        $("#guest-list-wrap").find(".guest-list").each(function(index){
+                var uploadName = 'idcardUpload'+(index+1);
+                $(this).find('.idcardWrap').find('#idcardUpload').attr('id',uploadName);
+                $(this).find('.idcardWrap').find('#idcardUpload-preview').attr('id',uploadName + '-preview');
+                setUpload(uploadName);
+        })
+        function setUpload(uploadName) {
+            upload({
+                el: '#' + uploadName,
+                name: 'idcardUpload',
+                buttontext: '上传',
+                file_size_limit: "1MB",
+                callback: function(obj, url){
+                        var fullPath = "<!--{$imghost}-->" + url;
+                        $('#' + uploadName + '-preview').html("<input type='hidden' name='idcardUpload[]' value="+url+"><img src="+fullPath+">");
+                        var len = $('#' + uploadName + '-preview').closest('td').find(".idcardWrap").find('.viewpic').length;
+                        if(!len){
+                          $('#' + uploadName + '-preview').closest('td').find(".idcardWrap").prepend("<a href='javascript:void(0);' class='viewpic' onmouseenter='viewPic(this);' onmouseleave='hidePic(this);'>查看</a>")
+                        }
+                }
+            });
+        }
+</script>
+</body>
+</html>

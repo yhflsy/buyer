@@ -1,0 +1,30 @@
+<!--左侧-->
+<div class="order-list-left">
+    <ul>
+        <li class="item active">
+            <a class="title" href="/orderlist.html"><i class="iconfont mr10 color17b2df">&#xe676;</i>订单管理<i>&nbsp&nbsp</i></a>
+        </li>
+        <li>
+            <a  class="title" href="/finance.html"><i class="iconfont mr10 color17b2df">&#xe672;</i>财务中心<i>&nbsp&nbsp</i></a>
+        </li>
+        <li class="item active">
+            <a class="title"><i class="iconfont mr10 color17b2df">&#xe66f;</i>账户设置<i class="iconfont fr font-s12 colorbbb">&#xe628;</i></a>
+            <div class="menu-item"  style="display: block;">
+                <!--{if in_array('/company.html',$roles.menu)}-->
+               <a href="/company.html">公司信息</a>
+                <!--{/if}-->
+                <!--{if in_array('/member.html',$roles.menu)}-->
+                <a href="/member.profile.html">个人信息</a>
+                <a href="/member.html">用户管理</a></dd>
+                <a href="/password.html">密码管理</a>
+                <!--{/if}-->
+                <!--{if in_array('/role.html',$roles.menu)}-->
+                <a href="/power.html">角色管理</a>
+                <!--{/if}-->
+                <a href="/protect.html">数据保护</a>
+            </div>
+        </li>
+    </ul>
+    <a href="http://<!--{$shop}-->" target="_blank"><img src="<!--{$staticUrl}-->images/menu-left.png"></a>
+</div>
+<!--end-->

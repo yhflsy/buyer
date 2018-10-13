@@ -1,0 +1,5 @@
+<form name="importguest" action="import.guest.html" enctype="multipart/form-data" method='post' target='tar'>
+	<input type="hidden" name="MAX_FILE_SIZE" value="512000">
+	<input type="file" class="list-batch-import" onKeyDown="return false" onKeyUp="return false" oncontextmenu="return false" contenteditable="false" hidefocus="true" onChange="$(this).parent().submit();" name="guestfile">
+</form>
+<iframe name='tar' style=" display:none"></iframe><!--xls表数据上传 然后回调iframe-->

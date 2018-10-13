@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns="http://www.w3.org/TR/REC-html40">
+    <head>
+        <!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:TrackMoves>false</w:TrackMoves><w:TrackFormatting/><w:ValidateAgainstSchemas/><w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid><w:IgnoreMixedContent>false</w:IgnoreMixedContent><w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText><w:DoNotPromoteQF/><w:LidThemeOther>EN-US</w:LidThemeOther><w:LidThemeAsian>ZH-CN</w:LidThemeAsian><w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript><w:Compatibility><w:BreakWrappedTables/><w:SnapToGridInCell/><w:WrapTextWithPunct/><w:UseAsianBreakRules/><w:DontGrowAutofit/><w:SplitPgBreakAndParaMark/><w:DontVertAlignCellWithSp/><w:DontBreakConstrainedForcedTables/><w:DontVertAlignInTxbx/><w:Word11KerningPairs/><w:CachedColBalance/><w:UseFELayout/></w:Compatibility><w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel><m:mathPr><m:mathFont m:val="Cambria Math"/><m:brkBin m:val="before"/><m:brkBinSub m:val="--"/><m:smallFrac m:val="off"/><m:dispDef/><m:lMargin m:val="0"/> <m:rMargin m:val="0"/><m:defJc m:val="centerGroup"/><m:wrapIndent m:val="1440"/><m:intLim m:val="subSup"/><m:naryLim m:val="undOvr"/></m:mathPr></w:WordDocument></xml><![endif]-->
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="Cache-Control" content="no-cache">
+        <title>行程单</title>
+        <script src="<!--{$skinPath}-->js/jquery-1.8.3.min.js"></script>
+        <script src="<!--{$staticUrl}-->js/layer.js"></script>
+        <style type="text/css">
+            * {
+                font-size: 14px;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                list-style: none;
+                line-height: 1.6;
+                font-family: '宋体';
+            }
+
+            body {
+                margin: 0;
+                padding-bottom: 30px;
+                background: #eee;
+            }
+
+            a {
+                color: #308fd4;
+            }
+
+            a:hover {
+                color: #333;
+            }
+
+            .c, .c45 {
+                display: block;
+                height: 0;
+                clear: both;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                overflow: hidden;
+                background: none !important;
+            }
+
+            .c45 {
+                height: 45px;
+            }
+						
+			.ax {
+			    color: #fff;
+			    font-family: "Arial Normal","Arial";
+			    font-size: 13px;
+			    font-style: normal;
+			    font-weight: 400;
+			    line-height: normal;
+			    text-align: center;
+				background-color:#40b146;
+				margin:0 5px;padding:0 3px;
+			}			
+						
+            .line_print_box {
+                width: 100%;
+                height: 30px;
+                line-height: 30px;
+                position: fixed;
+                border-bottom: 1px solid #fde5a3;
+                background: #fffeea;
+                text-align: center;
+            }
+
+            .line_print_box a {
+                padding: 0 10px;
+            }
+
+            .button {
+                display: inline-block;
+                zoom: 1;
+                line-height: normal;
+                white-space: nowrap;
+                vertical-align: baseline;
+                text-align: center;
+                cursor: pointer;
+                -webkit-user-drag: none;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                border: 0;
+                font-family: inherit;
+                font-size: 14px;
+                *overflow: visible;
+                padding: 8px 15px;
+                text-decoration: none;
+                text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+                color: #fff;
+                *vertical-align: top;
+                *margin-right: 5px;
+                background: #06c;
+            }
+
+            .content {
+                width: 750px;
+                margin: 0 auto;
+                padding: 20px 30px;
+                background: #fff;
+            }
+
+            .content h1 {
+                font-size: 24px;
+            }
+
+            .content h2 {
+                margin-bottom: 10px;
+                font-size: 18px;
+                text-align: center;
+                font-weight: normal;
+            }
+
+            .content h3 {
+                padding-bottom: 5px;
+                font-size: 16px;
+                color: #308fd4;
+            }
+
+            .content table {
+                border: 1px solid #999;
+                border-collapse: collapse;
+            }
+
+            .content th {
+                text-align: left;
+                background: #eee;
+            }
+
+            .content td h2 {
+                margin: 5px 0;
+                font-weight: bold;
+            }
+
+            .content table thead {
+                height: 0;
+                overflow: hidden;
+            }
+
+            .content table thead th, .content table thead td {
+                height: 0;
+                padding: 0;
+                margin: 0;
+                border: 0;
+                overflow: hidden;
+            }
+
+            .content td, .content th {
+                line-height: 1.4;
+                border: 1px solid #999;
+                vertical-align: top;
+                padding: 3pt 5pt;
+                font-size: 11pt;
+            }
+
+            .content b {
+                color: #f69053;
+            }
+
+            .content strong {
+                font-size: 11pt;
+                color: #ed5a5a;
+            }
+
+            .top {
+                margin-bottom: 10px;
+            }
+
+            .top .img {
+                float: left;
+                width: 200px;
+                height: 80px;
+                overflow: hidden;
+            }
+
+            .top .img img {
+                width: 200px;
+            }
+
+            .top h1 {
+                float: right;
+                width: 600px;
+                margin: 10px 0;
+                text-align: right;
+            }
+
+            .heji {
+                line-height: 14pt;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+
+            .air10 {
+                height: 10px;
+                overflow: hidden;
+            }
+
+            .footer {
+            }
+
+            .footer th {
+                background: none;
+            }
+
+            label {
+                font-size: 12px;
+            }
+
+            .selectdy {
+                width: 708px;
+                height: auto;
+                background-color: #ffc;
+                border: 1px solid #ffcc66;
+                border-radius: 4px;
+                padding: 10px 20px;
+                margin-bottom: 10px;
+                overflow: hidden;
+            }
+
+            .selectdy form ul {
+                float: left;
+                width: 700px;
+                height: auto;
+                overflow: hidden;
+                padding: 10px 0;
+            }
+
+            .selectdy form ul li span {
+                float: left;
+                width: 80px;
+                height: 60px;
+                line-height: 20px;
+            }
+
+            .selectdy form ul li p {
+                float: left;
+                width: 120px;
+                line-height: 20px;
+            }
+
+            .selectdy form ul li input {
+                display: block;
+                margin-right: 8px;
+                margin-top: 5px;
+                float: left;
+            }
+
+            .selectdy form dl dd {
+                margin-right: 15px;
+                line-height: 20px;
+                float: left;
+            }
+
+            .selectdy form dl dd input {
+                display: block;
+                margin-right: 8px;
+                margin-top: 5px;
+                float: left;
+            }
+
+            .selectdy form h4 {
+                clear: both;
+                font-size: 16px;
+            }
+
+            .tbselect {
+                table-layout: fixed;
+                display: table;
+                overflow: hidden;
+            }
+            .title {
+            font-weight: bold; color#000; font-size: 16px;
+            }
+            .hide {
+                display:none;
+            }
+        </style>
+        <style type="text/css" media="print">
+            * {
+                font-size: 8pt !important;
+            }
+
+            body {
+                background: none !important;
+            }
+
+            .line_print_box {
+                display: none !important;
+            }
+
+            .content {
+                border: none !important;
+            }
+
+            .content h1 {
+                margin-bottom: 10px !important;
+                font-size: 9pt !important;
+                color: #000 !important;
+            }
+
+            .content h2 {
+                font-size: 11pt !important;
+                color: #000 !important;
+            }
+
+            .content h3 {
+                font-size: 9pt !important;
+                color: #000 !important;
+            }
+
+            .content table {
+                font-size: 8pt;
+                border: 1px solid #000 !important;
+                border-top: none;
+            }
+
+            .content td, .content th {
+                padding: 0 5px;
+                border: 1px solid #000 !important;
+            }
+
+            .content b, .content strong {
+                color: #000;
+            }
+
+            .c {
+                display: none;
+            }
+
+            .toptable, .toptable td, .toptable th {
+                border: none !important;
+            }
+
+            .selectdy {
+                display: none !important;
+            }
+
+            .selectdy h4 {
+                display: none !important;
+            }
+
+            .dy {
+                display: none !important;
+            }
+        </style>
+    </head>
+
+    <body style="font-family:'宋体',Arial;line-height:1.6em;">
+        <div class="line_print_box">
+            <a href="javascript:void(0);" class="send_email" style="color:#f30; font-weight:bold;">发送邮件</a>
+            <a href="javascript:void(0);" onClick="javascript:window.print(); return false;" style="color:#f30; font-weight:bold;">打印本页</a>
+            <a href=""  style="color:#f30; font-weight:bold;" id="downword">导出word</a>
+            <a href=""  style="color:#f30; font-weight:bold;" id="downwordpdf">导出pdf</a>
+            <a href="javascript:void(0);" onClick="javascript:window.close();">关闭窗口</a>
+        </div>
+        <div class="c45"></div>
+        <div class="content">
+            <table class="toptable" width="750" cellpadding="0" cellspacing="0" border="0" align="center" style="border:none; margin-bottom:15px; clear:both;">
+                <tr>
+                    <td style="width:200pt;border:none;"> 
+                        <!--{if $users['logopath']}-->
+                        <img src="<!--{$imghost}--><!--{$users['logopath']}-->" height="80" width="107"> 
+                        <!--{/if}--> 
+                    </td>
+                    <td align="right" style="width:670pt;font-weight:bold; border:none;text-align:right;">
+                        <h1 style="font-size:16pt;" class="companyinfotitle"> 
+                            <!--{$users.companyname}--><br />
+                            <samp> 
+                                <!--{if $users.tel}-->电话：<!--{$users.tel}--> <br />
+                                <!--{/if}--> 
+                                <!--{if $users.responsiblefax}-->传真：<!--{$users.responsiblefax}--> <br />
+                                <!--{/if}--> 
+                                <!--{if $users.contactaddr.detail}-->地址：<!--{$users.contactaddr.detail}--><!--{/if}--> 
+                            </samp> 
+                        </h1>
+                    </td>
+                </tr>
+            </table>
+            <div class="selectdy">
+                <form class="select-form">
+                    <h4 class="prxx"> 请选择需要打印的数据</h4>
+                    <dl>
+                        <dd>
+                            <label>
+                                <input type='checkbox'  class="selectcb" checked="checked" data-class="baseinfo">
+                                基本信息</label>
+                        </dd>
+                        <dd>
+                            <label>
+                                <input type='checkbox'  class="selectcb" checked="checked" data-class="routeinfo">
+                                行程信息</label>
+                        </dd>
+                        <dd>
+                            <label>
+                                <input type='checkbox' class="selectcb" checked="checked" data-class="reminder">
+                                温馨提醒</label>
+                        </dd>
+                    </dl>
+                    <ul class="kxul">
+                        <li> <span>选择隐藏项:</span>
+                            <p>
+                                <label>
+                                    <input type='checkbox'  class="selectkx" data-class="include"/>
+                                    <!--{if $linedetail.linecategory==2}-->费用包含<!--{else}-->包含项目<!--{/if}--></label>
+                            </p>
+                            <p>
+                                <label>
+                                    <input type='checkbox'  class="selectkx" data-class="exclude"/>
+                                    <!--{if $linedetail.linecategory==2}-->费用不含<!--{else}-->不含项目<!--{/if}--></label>
+                            </p>
+                            <!--{if $linedetail.linecategory==2}-->
+                            <p>
+                                <label><input type='checkbox'  class="selectkx" data-class="selfnotes"/>自费项目</label>
+                            </p>
+                            <!--{/if}-->
+                            <p>
+                                <label>
+                                    <input type='checkbox'  class="selectkx" data-class="child"/>
+                                    儿童安排</label>
+                            </p>
+                            <p>
+                                <label>
+                                    <input type='checkbox'  class="selectkx" data-class="shopping"/>
+                                    购物安排</label>
+                            </p>
+                            <!--{if $linedetail.linecategory!=2}-->
+                            <p>
+                                <label>
+                                    <input type='checkbox'  class="selectkx" data-class="kxxm"/>
+                                    可选项目</label>
+                            </p>
+                            <!--{/if}-->
+                            <p>
+                                <label>
+                                    <input type='checkbox'  class="selectkx" data-class="attention"/>
+                                    注意事项</label>
+                            </p>
+                            <p>
+                                <label>
+                                    <input type='checkbox'  class="selectkx" data-class="standard"/>
+                                    地接资质</label>
+                            </p>
+
+                            <!--               <p>
+                                                   <label>
+                                                           <input type='checkbox'  class="selectkx" data-class="applicationnote"/>
+                                                           报名须知</label>
+                                           </p>-->
+                            <p>
+                                <label>
+                                    <input type='checkbox'  class="selectkx" data-class="other"/>
+                                    其他事项</label>
+                            </p>
+                            <p>
+                            <label>
+                                <input type='checkbox' class="selectkx" checked="checked" data-class="faq">
+                                报名须知</label>
+                            </p>
+                            <!--{if $linedetail.linecategory==2}-->
+                            <p><label><input type='checkbox'  class="selectkx" data-class="planenote"/>航班变动说明</label></p>
+                            <p><label><input type='checkbox'  class="selectkx" data-class="groupnote"/>成团说明</label></p>
+                            <p><label><input type='checkbox'  class="selectkx" data-class="ordernote"/>预定说明</label></p>
+                            <p><label><input type='checkbox'  class="selectkx" data-class="breakrule"/>违约条款</label></p>
+                            <!--{/if}-->
+                        </li>
+                    </ul>
+                </form>
+            </div>
+            <table class="baseinfo" cellpadding="0" cellspacing="0" border="0" width="750" align="center" >
+                <tr>
+                    <td colspan="6">
+			<h2><!--{$linedetail.title}--><!--{if $takeinfo}--><span class="ax">含接送</span><!--{/if}--></h2>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="width:90pt;text-align:center;">产品编号</th>
+                    <td style="width:90pt;"><!--{$linedetail.id}--></td>
+                    <th style="width:120pt;text-align:center;">出发地</th>
+                    <td style="width:370pt;"><!--{$linedetail.gocity}--></td>
+                    <th style="width:80pt;text-align:center;">旅游天数</th>
+                    <td style="width:100pt;"><!--{$linedetail.days}--></td>
+                </tr>
+                <tr>
+                    <th style="width:90pt;text-align:center;">出团日期</th>
+                    <td style="width:90pt;"><!--{date('Y-m-d',$linedetail.gotime)}--></td>
+                    <th style="width:120pt;text-align:center;">出发交通</th>
+                    <td colspan="3" style="width:370pt;"><!--{$linedetail.gotraffic}--></td>
+                </tr>
+                <tr>
+                    <th style="width:90pt;text-align:center; ">返程日期</th>
+                    <td style="width:90pt;"><!--{date('Y-m-d',$linedetail.gotime+($linedetail.days-1)*86400)}--></td>
+                    <th style="width:120pt;text-align:center; ">返程交通</th>
+                    <td colspan="3" style="width:370pt;"><!--{$linedetail.backtraffic}--></td>
+                </tr>
+                <tr>
+                    <th style="width:90pt;text-align:center;">集合时间</th>
+                    <td style="width:90pt;white-space:nowrap;"><!--{$linedetail.togethertime}--></td>
+                    <th style="width:120pt;text-align:center;">集合地点</th>
+                    <td style="width:370pt;"><!--{$linedetail.together}--></td>
+                    <th style="width:100pt;text-align:center;">单房差价</th>
+                    <td style="width:100pt;"><!--{$linedetail.singleroom}--></td>
+                </tr>
+                <tr>
+                    <th style="width:90pt;text-align:center;">送团电话</th>
+                    <td style="width:90pt;"><!--{$linedetail.grouptel}--></td>
+                    <th style="width:120pt;text-align:center;">送团标志/人</th>
+                    <td colspan="3" style="width:100pt;"><!--{$linedetail.flag}-->/<!--{$linedetail.dipei}--></td>
+                </tr>
+		<!--{if $takeinfo}-->
+                <tr>
+                    <th style="width:60pt;text-align:center;">接送信息</th>
+                    <td colspan="5" style="width:465pt;">接送站名: <!--{if $takeinfo}--><!--{$takeprice['takeinfo']['title']}--><!--{else}--><!--{$linedetail['takeinfo']['title']}--><!--{/if}-->&nbsp;&nbsp;上车地点:<!--{if $takeinfo}--><!--{$takeprice['takeinfo']['detail']}--><!--{else}--><!--{$linedetail['takeinfo']['detail']}--><!--{/if}--></td>
+                </tr>
+		<!--{/if}-->
+                <tr>
+                    <th style="width:60pt;text-align:center;">产品亮点</th>
+                    <td colspan="5"><!--{nl2br($linedetail.detail)}--></td>
+                </tr>
+                <tr class="faq">
+                    <th style="width:60pt;text-align:center;">报名须知</th>
+                    <td colspan="5"><!--{nl2br($linedetail.applicationnote)}--></td>
+                </tr>
+
+            </table>
+            <div>&nbsp;<h1></h1></div>
+            <div class="heji"> <span style="font-size: 16px;">成人价格：</span><b style="color: #f69053; font-size:20px;">&yen;<!--{$linedetail.adultpricemarket}--></b> <span style="font-size: 16px;">/人 小孩价格：</span><b style="color: #f69053; font-size:20px;">&yen;<!--{$linedetail.childpricemarket}--></b> <span style="font-size: 16px;">/人</span> </div>
+            
+            <!--<h3>行程特色</h3>-->
+
+            <table class="routeinfo" cellpadding="0" cellspacing="0" border="0" width="750" align="center">
+                <!--{if $linedetail.isstruct == 2}-->
+                <tr>
+                    <th style="width:40pt;">日期</th>
+                    <th style="width:489pt; ">描述</th>
+
+                </tr>
+                <!--{if $linedetail.routelist}-->
+                <!--{$i = 0}--> 
+                <!--{foreach $linedetail.routelist as $k=>$v}-->
+                <tr>
+                    <td style="width:40pt;"><!--{date('Y-m-d',$linedetail.gotime+$i*86400)}--></td>
+                    <td>
+                        <div class="title">标题：<!--{$v['title']}--></div>
+                        <!--{if $v.lunch or $v.breakfast or $v.supper}-->
+                        三餐内容：<!--{if $v.breakfast}-->含早餐<!--{if $v.breakfastnote}-->：<!--{$v.breakfastnote}--><!--{/if}-->&nbsp;<!--{/if}-->
+                        <!--{/if}-->
+                        <!--{if $v.lunch}-->含中餐<!--{if $v.lunchnote}-->：<!--{$v.lunchnote}--><!--{/if}-->&nbsp;<!--{/if}-->
+                        <!--{if $v.supper}-->含晚餐<!--{if $v.suppernote}-->：<!--{$v.suppernote}--><!--{/if}-->&nbsp;<!--{/if}-->
+                        <!--{if $v.breakfast or $v.lunch or $v.supper}--><br/><!--{/if}-->
+                        <!--{if $v.hotel}-->住宿：<!--{$v['hotel']}--><br/><!--{/if}-->
+                        <!--{if $v.structlist}-->
+                        <!--{foreach $v.structlist as $k1=>$v1}-->
+                        <span><strong>行程<!--{$k1 + 1}-->:</strong></span><br/>
+                        出发时间：<!--{$v1.begintime}-->时<!--{$v1.endtime}-->分<br/>
+                        <!--{if $v1.go}-->出发：<!--{$v1.go}-->，<!--{/if}--><!--{if $v1.arrive}-->抵达：<!--{$v1.arrive}--><!--{/if}--><!--{if $v1.go or $v1.arrive}--><br/><!--{/if}-->
+                        <!--{if $v1.traffic}-->交通方式：<!--{$v1.traffic}--><br/><!--{/if}-->
+                        <!--{if $v1.playhour or $v1.playminute}-->游玩时间：<!--{$v1.playhour}-->小时<!--{$v1.playminute}-->分钟<br/><!--{/if}-->
+                        <!--{if $v1.hotellist}-->酒店：<!--{join(',',$v1.hotellist)}--><br/><!--{/if}-->
+                        <!--{if $v1.scenerylist}-->景点：<!--{join(',',$v1.scenerylist)}--><br/><!--{/if}-->
+                        <!--{if $v1.notes}-->说明：<!--{nl2br($v1.notes)}--><br/><br/><br/><!--{/if}-->
+                        <!--{/foreach}-->
+                        <!--{/if}-->
+
+                    </td>
+
+                </tr>
+                <!--{$i= $i+1}--> 
+                <!--{/foreach}-->
+                <!--{/if}-->
+
+
+                <!--{else}-->
+                <tr>
+                    <th style="width:40pt;">日期</th>
+                    <th style="width:400pt; ">描述</th>
+                    <th style="width:9pt;">餐</th>
+                    <th style="width:80pt; ">住宿</th>
+                </tr>
+                <!--{if $linedetail.routelist}-->
+                <!--{$i = 0}--> 	
+                <!--{foreach $linedetail.routelist as $k=>$v}-->
+                <tr>
+                    <td style="width:40pt;"><!--{date('Y-m-d',$linedetail.gotime+$i*86400)}--></td>
+                    <td ><div class="title">标题：<!--{$v['title']}--></div><!--{nl2br($v['detail'])}--></td>
+                    <td style="width:9pt;vertical-align: middle; text-align:center; "><!--{if $v.breakfast}-->早<!--{/if}--><!--{if $v.lunch}-->中<!--{/if}--><!--{if $v.supper}-->晚<!--{/if}--></td>
+                    <td style="width:80pt; word-break: break-all;"><!--{$v['hotel']}--></td>
+                </tr>
+                <!--{$i= $i+1}--> 
+                <!--{/foreach}-->
+                <!--{/if}-->
+
+                <!--{/if}-->
+            </table>
+            <div>&nbsp;<h1></h1></div>
+            <!--<h3>服务项目</h3>-->
+            <table cellpadding="0" cellspacing="0" border="1" width="750" align="center"   id="kxxm" >
+                <tr class="include">
+                    <th style=" width:50pt;"> <!--{if $linedetail.linecategory==2}-->费用包含<!--{else}-->包含项目<!--{/if}--><br />
+                    </th>
+                    <td style=" width:500pt; ">
+                        <!--{if $linedetail.linecategory==2}-->
+                        <!--{foreach $linedetail.feelist.include as $k=>$v}-->
+                        <!--{$k+1}-->、<!--{$v}--> <br />
+                        <!--{/foreach}-->
+                        <!--{else}-->
+                        <!--{nl2br($linedetail.include)}-->
+                        <!--{/if}-->
+                    </td>
+                </tr>
+                <tr class="exclude">
+                    <th style=" width:50pt;"> <!--{if $linedetail.linecategory==2}-->费用不含<!--{else}-->不含项目<!--{/if}--><br />
+                    </th>
+                    <td style=" width:500pt; ">
+                        <!--{if $linedetail.linecategory==2}-->
+                        <!--{foreach $linedetail.feelist.noinclude as $k=>$v}-->
+                        <!--{$k+1}-->、<!--{$v}--> <br />
+                        <!--{/foreach}-->
+                        <!--{else}-->
+                        <!--{nl2br($linedetail.exclude)}-->
+                        <!--{/if}-->
+                    </td>
+                </tr>
+                <!--{if $linedetail.linecategory==2}-->
+                <tr class="selfnotes">
+                    <th style="width:50pt">自费项目<br /></th>
+                    <td style="width:500pt;"> <!--{nl2br($linedetail.feelist.selfnotes)}--></td>
+                </tr>
+                <!--{/if}-->
+                <tr class="child">
+                    <th style=" width:50pt;"> 儿童安排<br />
+                    </th>
+                    <td style=" width:500pt; "><!--{nl2br($linedetail.child)}--></td>
+                </tr>
+                <tr class="shopping">
+                    <th style=" width:50pt;"> 购物安排<br />
+                    </th>
+                    <td style=" width:500pt; "><!--{nl2br($linedetail.shopping)}--></td>
+                </tr>
+                <!--{if $linedetail.linecategory!=2}-->
+                <tr class="kxxm">
+                    <th style=" width:50pt;"> 可选项目<br />
+                    </th>
+                    <td style=" width:500pt; "><!--{nl2br($linedetail.selffinance)}--></td>
+                </tr>
+                <!--{/if}-->
+                <tr class="attention">
+                    <th style=" width:50pt;"> 注意事项<br />
+                    </th>
+                    <td style=" width:500pt; "><!--{nl2br($linedetail.attention)}--></td>
+                </tr>
+                <tr class="standard">
+                    <th style=" width:50pt;"> 地接资质<br /></th>
+                    <td style=" width:500pt; "><!--{nl2br($linedetail.standard)}--></td>
+                </tr> 
+                <tr class="other">
+                    <th style=" width:50pt;"> 其他事项<br /></th>
+                    <td style=" width:500pt; "><!--{nl2br($linedetail.other)}--></td>
+                </tr>
+                <!--{if $linedetail.linecategory==2}-->
+                <tr class="planenote">
+                        <th style=" width:50pt;">
+                                航班变动说明<br />
+                        </th>
+                        <td style=" width:500pt; ">
+                            <!--{nl2br($linedetail.planenote)}-->
+                        </td>
+                </tr>
+                <tr class="groupnote">
+                        <th style=" width:50pt;">
+                                成团说明<br />
+                        </th>
+                        <td style=" width:500pt; ">
+                            <!--{nl2br($linedetail.groupnote)}-->
+                        </td>
+                </tr>
+                <tr class="ordernote">
+                        <th style=" width:50pt;">
+                                预定说明<br />
+                        </th>
+                        <td style=" width:500pt; ">
+                            <!--{nl2br($linedetail.ordernote)}-->
+                        </td>
+                </tr>
+                <tr class="breakrule">
+                        <th style=" width:50pt;">
+                                违约条款<br />
+                        </th>
+                        <td style=" width:500pt; ">
+                            <!--{nl2br($linedetail.breakrule)}-->
+                        </td>
+                </tr>
+                <!--{/if}-->
+            </table>
+            <div>&nbsp;</div>
+            <table class="reminder" cellpadding="0" cellspacing="0" border="0" width="750" align="center" >
+                <tr>
+                    <th style=" width:65pt; ">温馨提醒</th>
+                    <td ><!--{nl2br($linedetail.reminder)}--></td>
+                </tr>
+            </table>
+            <table cellpadding="0" cellspacing="0" border="0" width="750" align="center" style="border:none;">
+                <tr>
+                    <td style="border:none; padding-top:8px; ">操作人：<!--{$operation}--> &nbsp;&nbsp;打印日期：<!--{date('Y-m-d')}--> </td>
+                    <td  style="border: none; padding-top: 8px; font-size: 9pt;width:25%">
+                        <label style="height:14px;vertical-align:middle">
+                            <input type="checkbox" name="isagree" id="isagree" value="1" style="height: 14px; vertical-align: middle;margin-right:2px">
+                            我已阅读行程细则并认可</label>
+                        <br>
+                        <p style="line-height:3em;font-size:12px;margin-top:1.5em"> 签字：<br>
+                            日期： </p>
+                    </td>
+                    <td style="border: none;"></td>
+                </tr>
+            </table>
+        </div>
+        <script>
+
+                        var send_email_box = '<ul class = "send_email_box" style = "list-style-type:none; width: 300px; height: 76px; position: fixed; _position:absolute; left:50%; top:32px; margin-left:-160px;text-align: left; border: 1px solid #aaa; background: white;padding:5px 0 0 10px;" > <li> <b> 邮箱地址：</b><em style="display:none;">请填写正确的邮箱！</em></li>\n\
+                                <li><input type="text" id="email" name="email" size="20" style="border:1px solid #999;"/><input type="hidden" id="title" value="行程单"/></li><li><input class="submit2" type="button" value="发 送" /></li></ul>';
+                                $(function() {
+                        var emailurl = location.href + '&isdown=1&operation=<!--{$operation}-->&companyid=<!--{$usersession.companyinfo.id}-->&areaid=<!--{$areaid}-->&reminder=2,2,2,2,2,2,2,2,2,2,2,2';
+                        var urlpdf = location.href + '&isPdf=1&operation=<!--{$operation}-->&companyid=<!--{$usersession.companyinfo.id}-->&areaid=<!--{$areaid}-->&reminder=2,2,2,2,2,2,2,2,2,2,2,2';
+                                    var url = "<!--{$docx}-->dowm/<!--{$linedetail.dateid}-->?takeid=<!--{$takeprice['takeinfo']['id']}-->&userid=<!--{$usersession.memberinfo.id}-->&reminder=2,2,2,2,2,2,2,2,2,2,2"
+                                    $('#downword').attr("href", url);
+                                        $('#downwordpdf').attr("href", urlpdf);
+                                        $('.selectcb').prop("checked", true);
+                                        $('.selectkx').removeAttr("checked");
+                                        $('.selectcb,.selectkx').click(function() {
+                                var name = $(this).data('class');
+                                        $('.' + name).toggleClass('hide');
+                                        var reminder = [];
+                                        $('.selectcb').each(function(){
+                                if ($(this).attr('checked') == 'checked'){
+                                reminder[reminder.length] = 2;
+                                } else {
+                                reminder[reminder.length] = 1;
+                                }
+                                });
+                                        $('.selectkx').each(function(){
+                                if ($(this).attr('checked') == 'checked'){
+                                reminder[reminder.length] = 1;
+                                } else {
+                                reminder[reminder.length] = 2;
+                                }
+                                });
+                                        url = url.replace(/&reminder=.*/, '');
+                                        url = url + '&reminder=' + reminder.join(",");
+                                        $('#downword').attr("href", url);
+                                });
+                                        //发送邮件
+                                        $('.send_email').click(function(){
+                                if ($('.send_email_box').length <= 0){
+                                $("body").append(send_email_box);
+                                }
+                                });
+                                        $(document).click(function(e){
+                                if ($(e.target).closest(".send_email_box").size() == 0 && $(e.target).closest('.send_email').size() == 0){$('.send_email_box').remove(); }
+                                });
+                                        $('.send_email_box .submit2').live("click", function(){
+                                                        var email = $('.send_email_box #email').val();
+                                        if (email == '' || !/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email)){
+                                $('.send_email_box li:first em').show();
+                                } else {
+                                var title = $('#title').val();
+                                        $('.send_email_box').mouseout();
+                         $.post('print.routemail.html', {title:title, email:email,infourl:emailurl,companyid:'<!--{$usersession.companyinfo.id}-->'}, function(data){
+                                                                if(data == 1){
+                                                                        layer.alert('发送成功',9);
+                                                                }else {
+                                                                        layer.alert('发送失败');
+                                                                }
+                                                                $('.send_email_box').remove();
+                                                        });
+                                                        }
+                                        });
+				
+                                });
+        </script>
+    </body>
+</html>

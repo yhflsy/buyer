@@ -1,0 +1,97 @@
+<!-- main of side -->
+<div class="o-mside <!--{if !$aorder.id}-->o-mside-detail <!--{/if}-->">
+    <div class="o-ms-div">
+        <dl class="o-ms-price">
+            <dd>
+                <span class="o-color-orange"><i class="o-i-person"><!--{if $aorder.adult>0}--><!--{$aorder.adult}--><!--{else}-->0<!--{/if}--></i>&nbsp;x&nbsp;￥<em class="o-em-person"><!--{if $aorder.id}--><!--{$aorder.adultprice|default:0}--><!--{else}--><!--{$aline.adultprice|default:0}--><!--{/if}--></em></span>
+                成人：
+            </dd>
+            <dd>
+                <span class="o-color-orange"><i class="o-i-children"><!--{if $aorder.child>0}--><!--{$aorder.child}--><!--{else}-->0<!--{/if}--></i>&nbsp;x&nbsp;￥<em class="o-em-children"><!--{if $aorder.id}--><!--{$aorder.childprice|default:0}--><!--{else}--><!--{$aline.childprice|default:0}--><!--{/if}--></em></span>
+                儿童：
+            </dd>
+            <dd>
+                <span class="o-color-orange"><i class="o-i-baby"><!--{if $aorder.baby>0}--><!--{$aorder.baby}--><!--{else}-->0<!--{/if}--></i>&nbsp;x&nbsp;￥<em class="o-em-baby"><!--{if $aorder.id}--><!--{$aorder.babyprice|default:0}--><!--{else}--><!--{$aline.babyprice|default:0}--><!--{/if}--></em></span>
+                婴儿：
+            </dd>
+            <dd>
+                <span class="o-color-orange"><i class="o-i-cha"><!--{if $aorder.totalsingleroom>0}--><!--{$aorder.totalsingleroom/$aorder.singleroom}--><!--{else}-->0<!--{/if}--></i>&nbsp;x&nbsp;￥<em class="o-em-rmcha"><!--{if $aorder.id}--><!--{$aorder.singleroom|default:0}--><!--{else}--><!--{$aline.singleroom|default:0}--><!--{/if}--></em></span>
+                房差：
+            </dd>
+            <dd>
+                <span class="o-color-red o-ss-sp"><i class="o-i-js"><!--{if $aorder.takeid}--><!--{$aorder.adult+$aorder.child}--><!--{/if}--></i>&nbsp;x&nbsp;￥<strong class="o-js-price"><!--{if $aorder.takeid}--><!--{$aorder.takeprice}--><!--{else}--><!--{$other.takeinfo.price|default:0}--><!--{/if}--></strong></span>
+                接送：
+            </dd>
+            <!--{if $aorder.id}-->
+            <dd>
+                <span class="o-color-red">￥<strong class="o-other-price"><!--{if $aorder.promotionprice+$aorder.buyeradjustprice+$aorder.selleradjustprice}--><!--{$aorder.promotionprice+$aorder.buyeradjustprice+$aorder.selleradjustprice}--><!--{else}-->0<!--{/if}--></strong></span>
+                其他明细：
+            </dd>
+            <!--{/if}-->
+            <dd>
+                <span class="o-color-green">-￥<em class="o-em-dk"><!--{if $aorder.hongbaoprice>0}--><!--{$aorder.hongbaoprice}--><!--{else}-->0<!--{/if}--></em></span>
+                抵扣金额：
+            </dd>
+            <!--{if in_array($aorder.state,[1,2,4]) && $aorder.ispay!=1}-->
+            <dd>
+                <span class="o-color-green">-￥<em class="o-em-djq"><!--{if $aorder.couponamount>0}--><!--{$aorder.couponamount}--><!--{else}-->0<!--{/if}--></em></span>
+                代金券：
+            </dd>
+            <!--{/if}-->
+            <dt class="o-special-dt">
+                <em class="o-line-gray"></em>
+                <span class="o-color-red o-order-price">￥<strong><!--{if $aorder.ispay!=1}--><!--{$aorder.totalprice-$aorder.couponamount}--><!--{else}--><!--{$aorder.totalprice}--><!--{/if}--></strong></span>
+                <i class="o-ft-fl"><!--{if $aorder.id}-->订单总额<!--{else}-->总计<!--{/if}-->：</i>
+            </dt>
+            <!--{if $aorder.ispay==1}-->
+            <dd>
+                <span class="o-color-green">-￥<em class="o-em-lj"><!--{if $aorder.subtract}--><!--{$aorder.subtract}--><!--{else}-->0<!--{/if}--></em></span>
+                立减：
+            </dd>
+            <dd>
+                <span class="o-color-green">-￥<em class="o-em-djq"><!--{if $aorder.couponsubtract>0}--><!--{$aorder.couponsubtract}--><!--{else}-->0<!--{/if}--></em></span>
+                代金券：
+            </dd>
+            <dt>
+                <span class="o-color-red">￥<strong><b class="o-b-total"><!--{if $aorder.payamount && $aorder.ispay==1}--><!--{$aorder.payamount}--><!--{else if $aorder.totalprice}--><!--{$aorder.totalprice}--><!--{/if}--></b></strong></span>
+                实付金额：
+            </dt>
+            <!--{/if}-->
+        </dl>
+        <p class="o-bm-p o-score">
+        <!--{if $aline.integral || $aline.integralchild || $aline.integralbaby}-->
+            <em class="o-icon-sigh-gray"></em>
+            <span>可获得&nbsp;
+                <b class="o-color-orange o-b-integral">
+                    <!--{if $aorder}-->
+                        <!--{$aline.integral*$aorder.adult+$aline.integralchild*$aorder.child+$aline.integralbaby*$aorder.baby}-->
+                    <!--{else}-->
+                        <!--{$aline.integral*$smarty.get.adult+$aline.integralchild*$smarty.get.child+$aline.integralbaby*$smarty.get.baby|default:0}-->
+                    <!--{/if}-->
+                </b>&nbsp;积分
+            </span>
+        <!--{/if}-->
+        <!--{if $aorder.ispay==1}-->
+            <span class="o-pay-zfb">      
+            <!--{if $aorder.paystyle == 1}-->
+            信用卡支付
+            <!--{elseif  $aorder.paystyle == 2 || $aorder.paystyle == 4 || $aorder.paystyle == 6 }-->
+            支付宝支付
+            <!--{elseif  $aorder.paystyle == 3 || $aorder.paystyle == 5  || $aorder.paystyle == 7}-->
+            微信支付
+            <!--{elseif $aorder.paystyle == 8}-->
+            手机微信支付
+            <!--{else}-->
+            储蓄卡支付
+            <!--{/if}-->
+            </span>
+        <!--{/if}-->
+        </p>
+        <!--{if $aorder.state==1 && ($aorder.platformdiscount>0 || $aorder.peopleSum>0) && $aorder.countdown>0  && $aorder.ispay!=1}-->
+        <p class="o-bm-p">
+            <em class="o-icon-sigh-red"></em><span><i class="o-color-red times"></i>&nbsp;内享受立减<!--{if $aorder.platformdiscount}--><!--{$aorder.platformdiscount}-->%<!--{/if}--><!--{if $aorder.peopleSum}--><!--{if $aorder.platformdiscount}-->+<!--{/if}--><!--{$aorder.peopleSum}-->元<!--{/if}--></span>
+        </p>
+        <!--{/if}-->
+    </div>
+</div>
+<!-- /main of side -->

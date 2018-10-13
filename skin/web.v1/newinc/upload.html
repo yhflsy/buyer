@@ -1,0 +1,109 @@
+<!--{*
+
+用法：
+<!--{include file='inc/upload.html'}-->
+<script>
+$(function () {
+		upload({
+			el         : '#uploadfile',             // jquery 选择器 默认：#uploadfile
+			name       : '',                        // 域名称，默认：photo
+			buttontext : '',                        // 按钮文字，默认：上传
+			multi      : false,                     // 是否多选，默认：false
+			callback   : function(obj, url){},      // 回调函数，默认：无
+			userid     : 0,                         // 用户id，默认0，按用户目录保存文件
+			exts       : '*.jpg;*.jpeg;*.gif;*.png' // 允许的扩展名
+		});
+		//alert(111)
+})
+</script>
+
+*}-->
+<link rel="stylesheet" href="<!--{$staticUrl}-->js/swfupload/swfupload_custom.css" />
+<link rel="stylesheet" href="<!--{$staticUrl}-->js/qtip/jquery.qtip.css" />
+<script src="<!--{$staticUrl}-->js/qtip/jquery.qtip.min.js"></script>
+<script src="<!--{$staticUrl}-->js/swfupload/swfupload.js"></script>
+<script src="<!--{$staticUrl}-->js/swfupload/plugins/swfupload.cookies.js"></script>
+<script src="<!--{$staticUrl}-->js/swfupload/loadswfupload.js"></script>
+<script src="<!--{$staticUrl}-->js/swfupload/swfupload_custom.js"></script>
+<script>
+function upload(params) {
+	var defaults = {
+		el         : "#uploadfile",
+		name       : "photo",
+		style      : "list",
+		fileurl    : "<!--{$imghost}-->",//imgurl 图片服务器地址前缀
+		callback   : function(obj, url){},
+		path       : "<!--{$staticUrl}-->",
+		buttontext : '上传',
+		multi      : false,
+		userid     : 0,
+		w          : 160,
+		h          : 120,
+		type       : 1,
+		exts       : '*.jpg;*.jpeg;*.gif;*.png',
+		preheight  : 120,
+		prewidth   : 160,
+		updatename: true,
+		limit:0,
+        upload_url: "<!--{$host}-->common.upload.html",
+	};
+
+  defaults.pre = (params.el || defaults.el) + '-preview';
+
+	params = $.extend(defaults, params || {});
+    var oldcb = params.callback;
+    params.callback = function(obj, url){
+	    if($(params.pre).size()){
+	        var preurl = url.replace(/(\.[a-zA-Z]+)$/, '_' + params.prewidth + 'x' + params.preheight + "$1").replace("/o/", "/t/");
+		    $(params.pre).html("<img src='" + params.fileurl + preurl + "' width='" + params.prewidth + "' height='" + params.preheight + "' />");
+	    }
+	    if (params.updatename) {
+	        var input = $("<input>", { name: params.name + "[]", "type": "hidden", value: url });
+	        if ($("#" + obj.id).size() > 0) {
+	            $("#" + obj.id).append(input)
+	        } else {
+	            $("input[name='" + params.name + "']").val(url);
+	        }
+	    }
+
+			  //辅助-编辑页设置封面的索引重置
+	    var refreshIndex=function(){$(".attachment-card .progressIsCover").each(function (index) {
+	        $(this).val(index);
+				 });
+				}
+			refreshIndex();
+	    $("#" + obj.id).find(".progressDelete").click(function () {
+	    	$("#" + obj.id).remove();
+				refreshIndex();
+	    });
+
+	    oldcb.call(this, obj, url, params.fileurl);
+    }
+
+	if (params.style == 'card'){
+		$.getScript("<!--{$staticUrl}-->js/swfupload/fileprogress.card.custom.js");
+	} else if(params.style == 'list'){
+		$.getScript("<!--{$staticUrl}-->js/swfupload/fileprogress.list.custom.js");
+	}
+
+	var postParams = {
+			upfile : params.name,
+			userid : params.userid,
+			type   : params.type,
+			w      : params.w,
+			h      : params.h
+	}
+
+	var action = SWFUpload.BUTTON_ACTION.SELECT_FILE;
+
+	if (params.multi) {
+		action= SWFUpload.BUTTON_ACTION.SELECT_FILES;
+	}
+
+	var swfu= $(params.el).upload({ 
+		upload_end_callback: params.callback, 
+		file_size_limit:params.file_size_limit,
+		file_post_name: params.name, upload_file_url: params.fileurl, post_params: postParams, upload_skinpath: params.path, button_action: action,button_text:params.buttontext,file_types:params.exts,file_upload_limit:params.limit,upload_url:params.upload_url });
+}
+
+</script>

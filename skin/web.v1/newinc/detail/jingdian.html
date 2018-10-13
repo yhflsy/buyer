@@ -1,0 +1,63 @@
+<script class="tmpl-jingdian" type="text/x-jquery-tmpl">
+ <div class="dialog-wrap">
+    <div class="dialogdays">
+       <h3>${title}<i class="iconfont close">&#xe627;</i></h3>
+       <!--弹窗主体部分-->
+       <div class="d-content">
+           <div class="viewtop clearfix">
+               <div class="viewbanner fl">
+                   <div class="view-popup-pic">
+                        <div class="view-popup-pic-box">
+                            <img src="<!--{$imghost}-->${photopath}" class="view-img"></div>
+                             <div class="view-popup-pic-show js-show">
+                                 <a href="javascript:;" class="view-btn view-pic-prev"><i class="iconfont">&#xe62c;</i></a>
+                                 <a href="javascript:;" class="view-btn view-pic-next"><i class="iconfont">&#xe62b;</i></a>
+                                 <div class="view-popup-pic-list">
+                                     <ul class="view-popup-pic-all js-list">
+                                         {{each(i,list) photo}}
+                                         <li class="view-popup-pic-item" data-url="">
+                                            <img src="<!--{$imghost}-->${list.path}" class="view-img">
+                                         </li>
+                                         {{/each}}
+                                     </ul>
+                                 </div>
+                             </div>
+                        </div>
+                   </div>
+                   <div class="viewdes fl">
+                      <dl class="clearfix">
+                          <dt class="fl">${nametitle}：</dt>
+                          <dd class="fl">${title}</dd>
+                      </dl>
+                      <dl class="clearfix">
+                          <dt class="fl">${addresstitle}：</dt>
+                          <dd class="fl">${address}</dd>
+                      </dl>
+                      <dl class="clearfix">
+                            <dt class="fl">${contactitle}${begintitle}：</dt>
+                            <dd class="fl">${tel}${opentime}</dd>
+                      </dl>
+                     <dl class="clearfix">
+                          <dt class="fl">${destitle}：</dt>
+                          <dd class="fl jianjie">${shortsummary}</dd>
+                      </dl>
+                   </div>
+           </div>
+
+        {{if status=='scenery'}}
+           <div class="viewfooter">
+                  <dl class="clearfix">
+                      <dt class="fl">${spottitle}：</dt>
+                      <dd class="fl">${characteristic}</dd>
+                  </dl>
+                  <dl class="clearfix">
+                       <dt class="fl">${traffictitle}：</dt>
+                       <dd class="fl">${trafficinformation}</dd>
+                  </dl>
+           </div>
+        {{/if}}
+       </div>
+       <!--弹窗主体部分end-->
+ </div>
+</div>
+</script>

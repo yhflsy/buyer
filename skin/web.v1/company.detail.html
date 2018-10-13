@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <title>供应商详情 - 馨途旅游网 - 中国旅游云平台 400-900-3996 http://www.tripb2b.com</title>
+        <!--{include file="newinc/header.js.html"}-->
+</head>
+<body style="background: #f5f7f9;">
+        <!--{include file="newinc/header.html"}-->
+	<div class="containermain">
+                <div id="supplierdetails" class="mt10">
+                        <a href="javascript:;" class="sdtop_up"><i class="iconfont">&#xf538;</i> 展开 <i class="iconfont">&#xf538;</i></a>
+                        <div class="bg_white borShadow pd-0-20" style="padding-bottom: 15px;">
+                                <div class="sd_top ">
+                                        <div class="sdtopimg fl">
+                                                <img src="<!--{if $list.companyInfo.logopath}--><!--{$imghost}--><!--{$list.companyInfo.logopath}--><!--{else}--><!--{$staticUrl}--><!--{$defaultlogo.company}--><!--{/if}-->"/>
+                                        </div>
+                                        <div class="sdtopinfo fl">
+                                                <h2 class="font-s16"><!--{$list.companyInfo.companyname}--></h2>
+                                                <h5 class="mt10 color_six">
+                                                        <p><i class="iconfont">&#xe648;</i> 电话：<!--{$list.companyInfo.tel}--></p>
+                                                        <p><i class="iconfont font-s16">&#xe647;</i> 传真：<!--{$list.companyInfo.responsiblefax}--></p>
+                                                        <p><i class="iconfont font-s16">&#xe649;</i> 地址：<!--{$list.companyInfo.contactaddr.detail}--></p>
+                                                </h5>
+                                        </div>
+                                        <div class="sdtopcontact fl color_six">
+                                                <!--{if $list.contactList}-->
+                                                <ul>
+                                                        <!--{foreach array_slice($list.contactList,0,4) as $v}-->
+                                                        <li>
+                                                                <p>
+                                                                        客服：   <!--{$v.contactname}-->
+
+                                                                </p>
+                                                                <p style="margin-bottom: 10px;">
+                                                                        在线QQ：<a href="http://wpa.qq.com/msgrd?v=3&amp;uin=<!--{$v.qq}-->&amp;site=qq&amp;menu=yes" class="qqcontact" target="_blank"><i class="iconfont fl">&#xe61c;</i> QQ咨询</a>
+                                                                </p>
+                                                        </li>
+                                                        <!--{/foreach}-->
+                                                </ul>
+                                                <!--{else}-->
+                                                        <p>
+                                                                联系人：   <!--{$list.companyInfo.responsiblename}-->
+
+                                                        </p>
+                                                        <p style="margin-bottom: 10px;">
+                                                                在线QQ：<a href="http://wpa.qq.com/msgrd?v=3&amp;uin=<!--{$list.companyInfo.responsibleqq}-->&amp;site=qq&amp;menu=yes" class="qqcontact" target="_blank"><i class="iconfont fl">&#xe61c;</i> QQ咨询</a>
+                                                        </p>
+                                                <!--{/if}-->
+                                        </div>
+                                        <div class="sdtop_sc fr action-favourite-company" data-id="<!--{$list.companyInfo.id}-->" data-title="<!--{$list.companyInfo.companyname}-->">
+                                                <!--{if $collect}-->
+                                                <p>
+                                                        <i class="iconfont color-yellow">
+                                                                &#xe632;
+                                                        </i>
+                                                </p>
+                                                已收藏
+                                                <!--{else}-->
+                                                <p>
+                                                        <i class="iconfont">
+                                                                &#xe631;
+                                                        </i>
+                                                </p>
+                                                收藏
+                                                <!--{/if}-->
+                                        </div>
+                                        <div class="clearfix"></div>
+                                </div>
+                                <div class="sd_text">
+                                        <!--{if $list.contactList && count($list.contactList)>4}-->
+                                        <div class="sd_text_qq">
+                                                <ul>
+                                                        <!--{foreach array_slice($list.contactList,4) as $v}-->
+                                                        <li>
+                                                                <p>  客服：  <!--{$v.contactname}--></p>
+                                                                <p style="margin-bottom: 10px;">
+                                                                在线QQ：<a href="http://wpa.qq.com/msgrd?v=3&amp;uin=<!--{$v.qq}-->&amp;site=qq&amp;menu=yes" class="qqcontact" target="_blank"><i class="iconfont fl">&#xe61c;</i> QQ咨询</a>
+                                                                </p>
+                                                        </li>
+                                                        <!--{/foreach}-->
+                                                </ul> 
+                                                <div class="clearfix"></div>
+                                        </div>
+                                        <!--{/if}-->
+                                        <!--{strip_tags($list.companyInfo.description)}-->
+                                </div>
+                        </div>
+                </div>
+                <div id="line">
+                        <div class="lineTitle">
+                                <ul>
+                                        <li <!--{if $params.l==''}-->class="active"<!--{/if}-->><a href="company.detail.html?companyid=<!--{$smarty.get.companyid}-->">全部</a></li>
+                                        <li <!--{if $params.l==1}-->class="active"<!--{/if}-->><a href="company.detail.html?l=1&companyid=<!--{$smarty.get.companyid}-->">国内游</a></li>
+                                        <li <!--{if $params.l==2}-->class="active"<!--{/if}-->><a href="company.detail.html?l=2&companyid=<!--{$smarty.get.companyid}-->">周边游</a></li>
+                                        <li <!--{if $params.l==3}-->class="active"<!--{/if}-->><a href="company.detail.html?l=3&companyid=<!--{$smarty.get.companyid}-->">出境线</a></li>
+                                        <li <!--{if $params.l==4}-->class="active"<!--{/if}-->><a href="company.detail.html?l=4&companyid=<!--{$smarty.get.companyid}-->">自由行</a></li>
+                                        <li <!--{if $params.l==5}-->class="active"<!--{/if}-->><a href="company.detail.html?l=5&companyid=<!--{$smarty.get.companyid}-->">游轮</a></li>
+                                </ul>
+                        </div>
+                        <div class="line_serTop borShadow mt10 line_search">
+                                <!--{if $lineinfo.departure}-->
+                                <dl>
+                                        <dt class="fl">
+                                                <p>出发地</p>
+                                        </dt>
+                                        <dd class="fl">
+                                                <ul class="citylist lineserchlist">
+                                                        <li class="active"><a href="javascript:;" data-tmp="departure" data-url="">不限</a></li>
+                                                        <!--{foreach item=item  from=$lineinfo.departure}-->
+                                                        <li><a href="javascript:;" data-tmp="departure" data-url="<!--{$item.name}-->"><!--{$item.name}--></a></li>
+                                                        <!--{/foreach}-->
+                                                </ul>
+                                                        <div class="clearfix"></div>
+                                        </dd>
+                                        <div class="clearfix"></div>
+                                </dl>
+                                <!--{/if}-->
+                                <!--{if $lineinfo.destination}-->
+                                <dl class="mar-0-20">
+                                        <dt class="fl">
+                                                <p>目的地</p>
+                                        </dt>
+                                        <dd class="fl">
+                                                <ul  class="citylist lineserchlist">
+                                                        <li class="active"><a href="javascript:;" data-tmp="destination" data-url="">不限</a></li>
+                                                        <!--{foreach item=item  from=$lineinfo.destination}-->
+                                                        <li><a href="javascript:;" data-tmp="destination" data-url="<!--{$item.name}-->"><!--{$item.name}--></a></li>
+                                                        <!--{/foreach}-->
+                                                </ul>
+                                        </dd>
+                                        <div class="clearfix"></div>
+                                </dl>
+                                <!--{/if}-->
+                        </div>
+                        <div class="line_serBottom borShadow mt10 line_search bg_white">
+                                <dl>
+                                        <dt class="fl">
+                                                <p class="color_six">行程天数</p>
+                                        </dt>
+                                        <dd class="fl">
+                                                <ul class="citylist lineserchlist">
+                                                        <!--{foreach item=item key=key from=$linequery.lineday}-->
+                                                        <li <!--{if $key<1}-->class="active"<!--{/if}-->>
+                                                                <a href="javascript:;" data-tmp="days" data-url="<!--{$key}-->"><!--{$item}--></a>
+                                                        </li>
+                                                        <!--{/foreach}-->
+                                                </ul>
+                                                        <div class="clearfix"></div>
+                                        </dd>
+                                        <div class="clearfix"></div>
+                                </dl>
+                                <dl class="mar-0-20">
+                                        <dt class="fl">
+                                                <p class="color_six">出发时间</p>
+                                        </dt>
+                                        <dd class="fl">
+                                                <ul  class="citylist lineserchlist">
+                                                        <li class="active"><a href="javascript:;" data-tmp="linemoon" data-url="0">不限</a></li>
+                                                        <!--{foreach item=item key=key from=$linequery.linemoon}-->
+                                                        <li>
+                                                                <a href="javascript:;" data-tmp="linemoon"  data-url="<!--{$item}-->"><!--{$item|cat:"月"}--></a>
+                                                        </li>
+                                                        <!--{/foreach}-->
+                                                </ul>
+                                                <span class="dateSection ml-20"><input type="text" class="pub_input datepicker" name="gobegin" value="" placeholder="yyyy-mm-dd"/><i class="iconfont color_ccc datepicker">&#xe63a;</i></span>
+                                                <em style="margin:0 10px"> ~ </em>
+                                                <span class="dateSection "><input type="text" class="pub_input datepicker" name="goend" value="" placeholder="yyyy-mm-dd "/><i class="iconfont color_ccc datepicker">&#xe63a;</i></span>
+
+                                        </dd>
+                                        <div class="clearfix"></div>
+                                </dl>
+                                <dl class="mar-0-20">
+                                        <dt class="fl">
+                                                <p class="color_six">价格区间</p>
+                                        </dt>
+                                        <dd class="fl">
+                                                <ul  class="citylist lineserchlist">
+                                                        <!--{foreach item=item key=key from=$linequery.lineprice}-->
+                                                        <li <!--{if $key<1}-->class="active"<!--{/if}--> >
+                                                                <a href="javascript:;" data-tmp="lineprice" data-url="<!--{$key}-->"><!--{$item}--></a>
+                                                        </li>
+                                                        <!--{/foreach}-->
+                                                </ul>
+                                                <span class="border_ddd priceSection ml-20">
+                                                        <input class="pub_input" type="text" name="pbegin" placeholder="￥输入最低价"/> ~
+                                                        <input class="pub_input" type="text" name="pend" placeholder="￥输入最高价"/>
+                                                </span>
+                                        </dd>
+                                        <div class="clearfix"></div>
+                                </dl>
+                                <dl class="mar-0-20">
+                                        <dt class="fl">
+                                                <p class="color_six">接送</p>
+                                        </dt>
+                                        <dd class="fl">
+                                                <ul  class="citylist lineserchlist">
+                                                        <li class="active"><a href="javascript:;" data-tmp="take" data-url="">不限</a></li>
+                                                        <li>
+                                                                <a href="javascript:;"  data-tmp="take" data-url="1">含接送</a>
+                                                        </li>
+                                                        <li>
+                                                                <a href="javascript:;"  data-tmp="take" data-url="2">不含接送</a>
+                                                        </li>
+                                                </ul>
+                                        </dd>
+                                        <div class="clearfix"></div>
+                                </dl>
+                                <dl class="line_search_input">
+                                        <span class="font-s14">线路名称/编号：<input type="text" name="linekeywords" class="pub_input" /></span>
+                                        <!--<span class="ml-20 font-s14">供应商：<input type="text" name="companyname" class="pub_input" /></span>-->
+                                        <input type="submit" name="" id="linesearch" value="搜索" class="btn_small btn_yellow" />
+                                        <input type="submit" name="" id="clearsearch" value="重置" class="btn_small btn_bd_blue" />
+                                        <div class="clearfix"></div>
+                                </dl>
+                        </div>
+                        <div class="lineListTitle mt10">
+                                <ul class="font-s14 lineserchlist">
+                                        <li class="active"><a href="javascript:;" data-tmp="sort" data-sort="1" data-sortdown="0">默认排序 <i class="iconfont font-s12">&#xe63d;</i></a></li>
+                                        <li><a href="javascript:;" data-tmp="sort" data-sort="2" data-sortdown="1">热度排序 <i class="iconfont font-s12">&#xe63d;</i></a></li>
+                                        <li><a href="javascript:;" data-tmp="sort" data-sort="3" data-sortdown="1">最新排序 <i class="iconfont font-s12">&#xe63c;</i></a></li>
+                                        <li><a href="javascript:;" data-tmp="sort" data-sort="4" data-sortdown="1">价格排序 <i class="iconfont font-s12" style="top: -3px;">&#xe636;</i>
+                                                <i class="iconfont font-s12" style="top: 2px;">&#xe646;</i>
+                                        </a></li>
+                                </ul>
+                                <a href="javascript:;"  target="_blank" class="fr color_six font-s14 exportlist  <!--{if !$user}-->user-login-pop<!--{/if}-->"><i class="iconfont font-s12">&#xe638;</i> 生成报价单</a>
+                                <div class="clearfix"></div>
+                        </div>
+                        <div class="lineLists mt10 ">
+                                <div class="lineleft fl">
+                                        <div class="linelist linelist_recommend borShadow bg_white"  style="display:none;">
+                                        </div>
+                                        <div class="all-line-road linelist borShadow bg_white">
+                                        </div>
+                                        <div id="page">
+                                                <div class="page pagination-v2">
+
+                                                </div>
+                                        </div>
+                                </div>
+                                <div class="linehotlist fr">
+                                        <div class="fixed  borShadow pd-0-15 bg_white">
+                                        <h5 class="color_ff780b font-s14">
+                                                <i class="iconfont font-s20">&#xe606;</i>热销排行
+                                                <a href="/lines.html<!--{if $params.l>0 && $params.l<4}-->?l=<!--{$params.l}--><!--{/if}-->" class="color_nine font-s12 fr" target="_blank">更多</a>
+                                        </h5>
+                                        <dl class="line-top-content">
+                                        </dl>
+                                        </div>
+                                </div>
+                                <div class="clearfix"></div>
+                        </div>
+                </div>
+	</div>
+
+	<!--{include file="newinc/footer.html"}-->
+	<div class="collect-pop">
+		<div class="set-collect-wrap" id="set-collect">
+			<table>
+				<tbody>
+				<tr>
+					<td class="vt">备注：</td>
+					<td><textarea></textarea></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="vbtn">
+						<input type="button" value="确认" class="btn-primary btn-font-white btn-border-primary btn-sure" />
+						<input type="button" value="关闭" class="btn-white btn-border-gray btn-close" />
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!--{if $params.l==2}-->
+	<!--{include file="newinc/line/around.html"}-->
+	<!--{else}-->
+	<!--{include file="newinc/line/domestic.html"}-->
+	<!--{/if}-->
+<script class="tmpl-linecategory" type="text/x-jquery-tmpl">
+    {{each(i,list) detail}}
+    {{if i<1}}
+            <dt>
+                    <span class="hottag"></span>
+                    <a href="details.html?dateid=${dateid}"  title="${title}" target="_blank" class="ill_img"><img src="{{if photo}}<!--{$imghost}-->${photo}{{else}}<!--{$staticUrl}--><!--{$defaultlogo.line}-->{{/if}}"/></a>
+                    <a class="ill_text" href="details.html?dateid=${dateid}" title="${title}" target="_blank">${title}</a>
+                <h5 class="color_nine">热度${personorder} <span class="fr color_ff892a">￥<span class="font-s18">${adultpricemarket}</span><span class="color_nine">起</span></span></h5>
+            </dt>
+    {{else}}
+            <dd>
+                    <span class="hottag"></span>
+                    <a href="details.html?dateid=${dateid}" title="${title}" target="_blank" class="ill_img fl"><img width="50px" height="50px" src="{{if photo}}<!--{$imghost}-->${photo}{{else}}<!--{$staticUrl}--><!--{$defaultlogo.line}-->{{/if}}"/></a>
+                    <a class="ill_text" href="details.html?dateid=${dateid}" title="${title}" target="_blank">${title}</a>
+                    <p class="color_nine"><span class="color_ff892a">￥${adultpricemarket}</span>起</p>
+            </dd>
+    {{/if}}
+    {{/each}}
+</script>
+<!--{include file="newinc/footer.js.html"}-->
+<script src="<!--{$staticUrl}-->js/base.js" type="text/javascript"></script>
+<script src="<!--{$staticUrl}-->js/date-picker/datepicker.js"></script>
+<script src="<!--{$staticUrl}-->js/date-picker/jquery.calendar.v2.js"></script>
+<script src="<!--{$staticUrl}-->js/newpage.js"></script>
+<link href="<!--{$staticUrl}-->js/date-picker/datepicker.min.css" rel="stylesheet">
+<link href="<!--{$staticUrl}-->js/date-picker/datepicker.calendar.css" rel="stylesheet">
+<script type="text/javascript">
+        var IMGURL = "<!--{$staticUrl}-->"
+        var params = <!--{$search|default:'[]'}-->;
+        $(function(){
+                line.base.loadPagination(1);
+                line.base.loadHotline();
+                $(".datepicker").dateselect();
+                if(params.keywords!=''){
+                        $("input[name='keywords']").attr('value',params.keywords);
+                }
+        });
+        $(".lineserchlist").find("li").bind('click',function(){
+            $(this).addClass("active").siblings().removeClass("active");
+            var tmp = $(this).find("a").data('tmp');
+            if(tmp == 'departure'){
+                params.departure = $(this).find("a").data('url');
+            }
+            if(tmp == 'destination'){
+                params.destination = $(this).find("a").data('url');
+            }
+            if(tmp == 'companyid'){
+                params.companyid = $(this).find("a").data('url');
+            }
+            if(tmp == 'days'){
+                params.days = $(this).find("a").data('url');
+            }
+            if(tmp == 'linemoon'){
+                params.linemoon = $(this).find("a").data('url');
+            }
+            if(tmp == 'lineprice'){
+                params.lineprice = $(this).find("a").data('url');
+            }
+            if(tmp == 'take'){
+                params.take = $(this).find("a").data('url');
+            }
+            if(tmp == 'sort'){
+                params.sort = $(this).find("a").data('sort');
+                params.sortdown = $(this).find("a").data('sortdown');
+                if(params.sort==4){
+                        if(params.sortdown==1){
+                                $(this).find("a").data('sortdown',0);
+                        }else{
+                                $(this).find("a").data('sortdown',1);
+                        }
+                }
+            }
+            //console.log(params)
+            line.base.loadPagination(1);
+        });
+
+        //点击搜索
+        $("#linesearch").bind('click',function(){
+            params.pbegin = $("input[name='pbegin']").val()
+            params.pend = $("input[name='pend']").val()
+            params.gobegin = $("input[name='gobegin']").val()//出发时间开始
+            params.goend = $("input[name='goend']").val()//出发时间结束
+            params.linekeywords = $("input[name='linekeywords']").val() //线路编号
+            params.companyname = $("input[name='companyname']").val()  //供应商
+
+            //出发时间结束
+            //console.log(params)
+            line.base.loadPagination(1);
+        });
+        //点击搜索
+        $("#clearsearch").bind('click',function(){
+                params.departure = '';
+                params.destination = '';
+                params.companyid = <!--{$smarty.get.companyid}-->;
+                params.days = '';
+                params.linemoon = '';
+                params.lineprice = '';
+                params.take = '';
+                params.sort = '';
+                params.sortdown = '';
+                params.pbegin = '';
+                params.pend = '';
+                params.gobegin = '';
+                params.goend = '';
+                params.linekeywords = '';
+                params.keywords = '';
+                params.companyname = '';
+
+                $(".lineserchlist li.active").removeClass("active");
+
+                $("input[name='pbegin']").attr('value','');
+                $("input[name='pend']").attr('value','');
+                $("input[name='gobegin']").attr('value','');
+                $("input[name='goend']").attr('value','');
+                $("input[name='linekeywords']").attr('value','');
+                $("input[name='companyname']").attr('value','');
+                //出发时间结束
+                //console.log(params)
+                line.base.loadPagination(1);
+        });
+
+        $(".exportlist").bind('click',function(){
+            if($(this).hasClass("user-login-pop"))return;
+            window.location.href = "/lines.exportline.html?"+$.param(params);
+        });
+        //收藏商家
+        $(".action-favourite-company").click(function(){
+            var id = $(this).data('id'),title=$(this).attr("data-title") || "";
+            $.post("company.ajaxFavouriteCompany.html", {id:id,title:title}, function (result) {
+               if(result==200){
+                    layer.msg("收藏成功",2,1);
+                }else{
+                   layer.msg(result,2,13);
+                } 
+            }, "text");  
+        });
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<div class="o-header">
+    <div class="o-head-mid">
+        <!--订单状态 -->
+        <div class="o-progress ">
+            <div class="o-pglist on">
+                <strong>1.提交订单</strong>
+                <div class="o-pggraph">
+                    <p class="o-ml-10"></p>
+                    <span class="o-left-circle"></span>
+                </div>
+            </div>
+            <div class="o-pglist <!--{if $aorder}-->on<!--{/if}-->">
+                <strong>2.完善订单</strong>
+                <p class="o-pggraph-ws on"></p>
+            </div>
+            <div class="o-pglist <!--{if $aorder.state==1}-->on<!--{/if}-->">
+                <strong>3.商家确认</strong>
+                <p class="o-pggraph-ws on"></p>
+            </div>
+            <div class="o-pglist <!--{if $aorder.state==1}-->on<!--{/if}-->">
+                <strong>4.支付订单</strong>
+                <p class="o-pggraph-ws "></p>
+            </div>
+            <div class="o-pglist  <!--{if $aorder.ispay==1}-->on<!--{/if}-->">
+                <strong>5.预定完成</strong>
+                <div class="o-pggraph">
+                    <p class="o-mr-10"></p>
+                    <span class="o-right-circle"></span>
+                </div>
+            </div>
+        </div>
+        <a href="<!--{$uc}-->"><img src="<!--{if  $platform == 'tripb2b'}--><!--{$skinPath}-->images/order_logo.png<!--{else}--><!--{$skinPath}-->images/order-ht-log.jpg<!--{/if}-->" alt=""></a>
+        <!-- end -->
+    </div>
+</div>

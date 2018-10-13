@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>驰誉旅游网 - 中国旅游云平台 400-9003-996 http://www.tripb2b.com</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="<!--{$skinUrl}-->fontindex/iconfont.css" rel="stylesheet" />
+    <link href="<!--{$staticUrl}-->css/resetv1.css" rel="stylesheet"/>
+    <link href="<!--{$staticUrl}-->css/stylev1.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="index-header">
+    <div class="container clearfix">
+        <div class="logo"><img src="<!--{$staticUrl}-->images/tripb2b.png" /></div>
+        <div class="tit">提供线上、线下的全方位一站式服务。</div>
+        <div class="reg-link"><a href="registers.html?choose=wholesaler" class="blue-btn">供应商入驻</a><a href="/groupclub.html" class="orange-btn">分销商注册</a></div>
+    </div>
+</div>
+
+<div class="container loginheight">
+    <div class="login">
+        <div class="loginlg">
+            <form class="frmlogin" method="post">
+                <ul>
+                    <li class="text"><i class="iconfont">&#xe65c;</i>
+                        <input class="fill-input" type="text" placeholder="请输入用户名" errormsg="请填写用户名/邮箱/手机号" name="username" value="<!--{$rememberme['username']}-->">
+                    </li>
+                    <li class="text"><i class="iconfont">&#xe65d;</i>
+                        <input class="fill-input"  type="password"  placeholder="请输入密码" errormsg="请填写密码"  name="passwd"  value="<!--{$rememberme['password']}-->">
+                    </li>
+                    <li class="checkbox color-gray">
+                        <label for="re-pwd"><input type="checkbox" name="rememberPass" <!--{if $rememberme['rememberme']}-->checked<!--{/if}-->>记住密码</label>
+                        <input type="hidden" id="service" name="service" user-defined="返回调用地址" value="<!--{$weburl}-->passport.html?refer=<!--{$callback}-->">
+                        <input type="hidden" id="path" user-defined="passport地址" value="<!--{$passportlogin}-->remoteLogin">
+                        <input type="hidden" id="loginUrl" name="loginUrl" user-defined="?地址" value="<!--{$weburl}-->passport.html?refer=<!--{$callback}-->"/>
+                        <a href="resetpassword.html" class="forget">忘记密码？</a>
+                    </li>
+                    <li class="sub">
+                        <input type="button" class="submit loginin" value="立即登录">
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+
+</div>
+<div class="index-banner">
+    <ul>
+        <li><img src="<!--{$staticUrl}-->images/banner/banner5.jpg" /></li>
+        <li><img src="<!--{$staticUrl}-->images/banner/banner6.jpg" /></li>
+    </ul>
+</div>
+<div class="centerintro index-center">
+    <ul>
+        <li><i class="iconfont">&#xe62a;</i><h3>安全<p>人工审核、放心交易</p></h3></li>
+        <li><i class="iconfont">&#xe627;</i><h3>服务<p>人工审核、放心交易</p></h3></li>
+        <li><i class="iconfont">&#xe62b;</i><h3>规模<p>人工审核、放心交易</p></h3></li>
+        <li class="last">驰誉旅游是中立的第三方平台</li>
+    </ul>
+</div>
+
+<div class="clearfix"></div>
+
+<div id="copyright">
+    <div class="containermain">
+        <div style="width: 1200px">
+            <div class="copyright">
+                <div class="center">
+                    <span class="mr40">Copyright © 2008-2017 tripb2b.com, All Rights Reserved.</span>
+                    沪ICP备17022850号-1 沪公网安备 31010402000945号
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="<!--{$staticUrl}-->js/jquery-1.8.3.min.js"></script>
+<script src="<!--{$staticUrl}-->js/layer.min.js" type="text/javascript"></script>
+<script src="<!--{$staticUrl}-->js/YEXfocus.js"></script>
+<script>
+    $('.index-banner').YEXfocus({ direction:'left' });
+    $(document).on("click", ".loginin", function () {
+        var form = $(this).closest('form');
+        var username = form.find("input[name='username']").val();
+        var password = form.find("input[name='passwd']").val();
+        var rememberMe = form.find("input[name=rememberPass]").prop('checked');
+        if (!username || !password) {
+            layer.msg('用户名、密码不能为空！', 3);
+            return;
+        }
+
+        username = encodeURIComponent($.trim(username));
+        password = encodeURIComponent($.trim(password));
+        var data = { username: username, passwd: password, rememberme: rememberMe };
+        $.post("index.ajaxlogin.html", data, function (res) {
+            if (res.code != 200) {
+                layer.msg(res.message, 3);
+            } else {
+                var path = $("#path").val();
+                var loginUrl = $("#loginUrl").val();
+                var code = $("#service").val();
+
+                username = encodeURIComponent(username);
+                loginUrl = encodeURIComponent(loginUrl);
+                code = encodeURIComponent(code);
+                var url = path + "?submit=true&username=" + username + "&password=" + password + '&rememberMe=' + rememberMe + "&service=" + code + "&loginUrl=" + loginUrl;
+                window.location.href = url;
+            }
+        }, 'json');
+    });
+</script>
+</body>
+
+</html>

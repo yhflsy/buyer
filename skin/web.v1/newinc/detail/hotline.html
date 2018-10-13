@@ -1,0 +1,32 @@
+<script class="tmpl-hotline" type="text/x-jquery-tmpl">
+{{each(i,list) detail}}
+{{if i<1}}
+<div class="r-head">
+    <h3><i class="iconfont">&#xe606;</i>热销排行</h3>
+    <a href="details.html?dateid=${dateid}">
+    <div class="r-img">
+        <span class="rankingtop">top<br>1</span>
+        <img src="{{if photo}}<!--{$imghost}-->${photo}{{else}}<!--{$staticUrl}--><!--{$defaultlogo.line}-->{{/if}}" />
+    </div>
+    <h4 class="one-txt-cut" title="${title}">${title}</h4>
+    <p>热度${personorder} <span class="fr"><b class="red-light mr-5">￥${adultpricemarket}</b><small class="color999">起</small></span></p>
+    </a>
+</div>
+{{/if}}
+{{/each}}
+<ul>
+    {{each(i,list) detail}}
+    {{if i>0}}
+    <li title="${title}">
+        <a href="details.html?dateid=${dateid}">
+            <span class="r-num {{if i<3}}active{{/if}}">
+                ${i+1}
+            </span>
+            <h3 class="one-txt-cut">${title}</h3>
+            <p class="red-light">￥<b class="mr-5">${adultpricemarket}</b><small class="color999">起</small></p>
+        </a>
+    </li>
+    {{/if}}
+   {{/each}}
+</ul>
+</script>

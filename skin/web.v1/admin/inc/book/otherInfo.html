@@ -1,0 +1,164 @@
+<!-- 接送服务 -->
+<!--{if ($other.takes && !in_array($aorder.state,[1,2,4]) ) || $aorder.takeid }-->
+<p class="o-gm-tit">接送服务</p>
+<table class="o-table-shuttle o-table-unselected" cellpadding="0" cellspacing="0" <!--{if $other.takeinfo.id}-->style="display: none;"<!--{/if}-->>
+    <tr>
+        <th>接送</th>
+    </tr>
+    <tr>
+        <td><a class="o-fst-choss" href="javascript:void(0);" >选择接送</a></td>
+    </tr>
+</table>
+<table class="o-table-shuttle o-table-selected " cellpadding="0" cellspacing="0" <!--{if $other.takeinfo.id}-->style="display: table;"<!--{/if}-->>
+    <tr>
+        <th>区域</th>
+        <th>站点</th>
+        <th>价格</th>
+    </tr>
+    <tr>
+        <td class="o-td-starplace">
+            <div class="o-dl-area">
+                <em>接送</em>
+                <p class="o-dd-area o-dd-start" title="<!--{$other.takeinfo.setoff.0}-->-<!--{$other.takeinfo.setoff.1}-->-<!--{$other.takeinfo.setoff.2}-->">
+                    <span><!--{$other.takeinfo.setoff.0}-->-<!--{$other.takeinfo.setoff.1}--></span>
+                    <span class="o-color-gray" ><!--{$other.takeinfo.setoff.2}--></span>
+                </p>
+                <!--{if $aorder.taketype==2}-->
+                <div class="o-ts-single-give"><span>单送</span></div>
+                <div class="o-ts-single-meet"><span>单接</span></div>
+                <div class="o-ts-double"><span>送接</span></div>
+                <!--{elseif $aorder.taketype==1}-->
+                <div class="o-ts-single-meet"><span>单接</span></div>
+                <div class="o-ts-single-give"><span>单送</span></div>
+                <div class="o-ts-double"><span>送接</span></div>
+                <!--{else}-->
+                <div class="o-ts-double"><span>送接</span></div>
+                <div class="o-ts-single-meet"><span>单接</span></div>
+                <div class="o-ts-single-give"><span>单送</span></div>
+                <!--{/if}-->
+            </div>
+        </td>
+        <td class="o-td-stopplace">
+            <p class="o-dd-area o-dd-stop" title="<!--{$other.takeinfo.dest.0}-->-<!--{$other.takeinfo.dest.1}-->-<!--{$other.takeinfo.dest.2}-->">
+                <span ><!--{$other.takeinfo.dest.0}-->-<!--{$other.takeinfo.dest.1}--></span>
+                <span class="o-color-gray" ><!--{$other.takeinfo.dest.2}--></span>
+            </p>
+        </td>
+        <td class="o-td-last">
+            <span class="o-jss-price">￥<em class="o-color-red"><!--{$other.takeinfo.price}--></em><i>/</i>人</span>
+            <!--{if !in_array($aorder.state,[1,2,4])}--><div class="o-price-edit"><a class="o-a-edit" href="javascript:void(0);">修改</a><span><a class="o-a-red" href="javascript:void(0);">不含接送</a></span></div><!--{/if}-->
+        </td>
+        <input type="hidden"  value="<!--{if $other.takeinfo.id}--><!--{$other.takeinfo.id}-->,<!--{$other.takeinfo.tag}-->,<!--{$other.takeinfo.price}--><!--{/if}-->" name="taketitle"  />
+        <input type="hidden"  value="<!--{$other.takeinfo.tianchi}-->" name="tianchi"  />
+        <input type="hidden"  value="<!--{if $aorder.id}--><!--{$other.takeinfo.price}--><!--{/if}-->" name="takeprice"  />
+        <input type="hidden"  value="<!--{if $other.takeinfo.id}--><!--{$other.takeinfo.id}-->,<!--{$other.takeinfo.tag}--><!--{/if}-->" name="takeidtag"  />
+        <input type="hidden"  value="<!--{if $other.takeinfo}--><!--{$other.takeinfo.amt}--><!--{/if}-->" name="takeAmt"  />
+    </tr>
+</table>
+
+<!--{/if}-->
+<!-- 接送服务 -->
+<!-- 保险产品 -->
+<!--{$catein = Kohana::$config->load('common.premiumtype')}-->
+<!--{if (in_array($aorder.state,[1,2,4]) && is_array($insuranceInfo)) || is_array($insuranceInfo)  && $aorder.category !=1}-->
+<p class="o-gm-tit">赠送保险</p>
+    <table class="o-table-style" cellpadding="0" cellspacing="0">
+        <tr>
+            <th>险种</th>
+            <th>名称</th>
+            <th>原价</th>
+            <th>积分</th>
+            <th>小计</th>
+        </tr>
+        <tr>
+            <td>
+                <span class="o-br-dotted"><!--{$catein[$insuranceInfo.category]}--></span>
+            </td>
+            <td>
+                <span class="o-br-dotted"><!--{$insuranceInfo.groupName}--></span>
+            </td>
+            <td>
+                <span class="o-br-dotted">￥<!--{$insuranceInfo.productPrice}--></span>
+            </td>
+            <td>
+                <span class="o-br-dotted">0</span>
+            </td>
+            <td>
+                <b class="o-color-red">￥0</b>
+            </td>
+        </tr>
+    </table>
+<!--{else}-->
+<!--{if $checkInsurance && $freeInsurance && !in_array($aorder.state,[1,2,4]) && !$insuranceInfo}-->
+<p class="o-gm-tit">赠送保险</p>
+<table class="o-table-style " cellpadding="0" cellspacing="0">
+    <tr>
+        <th>选择</th>
+        <th>险种</th>
+        <th>名称</th>
+        <th>原价</th>
+        <th>积分</th>
+        <th>小计</th>
+    </tr>
+    <!--{foreach $freeInsurance as $k => $v}-->
+    <tr>
+        <td><span class="o-br-dotted"><!--{if ($aline.adultprice > $v.premium)}--><label class="o-ck-box"><input type="checkbox" value="<!--{$v.id}-->" name="checkinsurance" class="o-ckb"/></label><!--{/if}--></span></td>
+        <td><span class="o-br-dotted"><!--{$catein[$v.insuranceProductCategory]}--></span></td>
+        <td><span class="o-br-dotted"><!--{$v.groupName}--><!--{if ($aline.adultprice < $v.premium)}-->（当前线路单价小于赠送保险价格，不享受免费赠送）<!--{/if}--></span></td>
+        <td><span class="o-br-dotted">￥<!--{$v.premium}--></span></td>
+        <td><span class="o-br-dotted">0</span></td>
+        <td><span >￥0</span></td>
+    </tr>
+    <!--{/foreach}-->
+</table>
+<!--{/if}-->
+<!--{/if}-->
+<!-- 保险产品 -->
+
+<!-- 其他明细 暂时 meiyou -->
+<!--{if $aorder.promotionprice+$aorder.buyeradjustprice+$aorder.selleradjustprice}-->
+<div class="o_orderPrice">
+    <h2>
+        <span class="dib"></span>
+        <i>其他明细</i>
+    </h2>
+    <div class="jieSong otherDetail">
+        <ul>
+            <!--{foreach $pricelist.list as $key => $value}-->
+            <!--{if $value.category==8}-->
+                <li><!--{if $value.detail}--><!--{$value.detail}--><!--{else}-->调价<!--{/if}-->￥<!--{$value.price}-->*<!--{$value.num}--></li>
+            <!--{/if}-->
+            <!--{/foreach}-->
+        </ul>
+    </div>
+</div>
+<!--{/if}-->
+<!-- 其他明细 -->
+
+<!-- 活动参与 -->
+<!--{if ($aline.hongbaoprice > 0 && !in_array($aorder.state,[1,2,4])) || $aorder.hongbaoids}-->
+<p class="o-gm-tit">活动参与</p>
+<div class="o-join-activity">
+    <p class="o-p-redbag">
+        <!--{if !in_array($aorder.state,[1,2,4])}-->
+        <a href="javascript:void(0);">选择红包</a>
+        备注：此线路最高可抵扣金额为：
+        <i class="maxMon"><!--{floatval($aline.hongbaoprice)|default:0}--></i>元
+        <!--{elseif $aorder.state ==1  && $aorder.hongbaoids}-->
+        此线路已使用￥<!--{$aorder.hongbaoprice}-->红包
+        <!--{/if}-->
+    </p>
+    <p class="o-p-deductible">
+        红包抵扣金额：
+        <span>-￥
+            <em class="realMon"><!--{if $aorder.hongbaoprice}--><!--{floatval($aorder.hongbaoprice)}--><!--{else}-->0<!--{/if}--></em>
+        </span>
+    </p>
+    <input type="hidden" value="<!--{$aorder.hongbaoids}-->" id="hongbaoids" name="hongbaoids"/>
+    <input type="hidden" value="<!--{$aorder.hongbaoprice|default:0}-->" id="hongbaoprice" name="hongbaoprice"/>
+</div>
+<!--{else}-->
+        <input type="hidden" value="0" id="hongbaoids" name="hongbaoids"/>
+        <input type="hidden" value="0" id="hongbaoprice"  name="hongbaoprice"/>
+<!--{/if}-->
+<!-- 活动参与 -->

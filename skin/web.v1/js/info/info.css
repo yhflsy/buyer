@@ -1,0 +1,40 @@
+/** 
+ 
+ @Name: info's style
+ @Date: 2015.09.21
+ @Author: Getaj 
+**/
+@charset "utf-8";
+* { margin: 0px; padding: 0px; }
+/*================================基本信息==============================*/
+body, td, th, samp, dfn { font-family:Arial,"Microsoft yahei" ; font-size: 12px; line-height: 1.6em; color: #333; }
+body { margin: 0; background: #fff; -webkit-text-size-adjust: none; }
+ul, ol, dl, li, dt, dd, h1, h2, h3, h4, h5, h6, pre, form, body, p, html, blockquote, fieldset, div, textarea, address { margin: 0; padding: 0; font-size: 12px; color: #333; }
+ul, ol, dl, li, dt, dd { list-style: none; }
+em, i, dfn, address { font-style: normal; }
+img { border: none; }
+*html{background-image:url(about:blank); background-attachment:fixed;}
+
+.zpbox_shade, .zpbox_layer{position:fixed; _position:absolute;}
+.zpbox_shade{top:0; left:0; width:100%; height:100%; _height:expression(document.body.offsetHeight+"px"); background:#000; opacity:.5; filter:alpha(opacity=50);}
+/** common **/
+.zpbox_info{ position:fixed; left:50%; top:50%; background:#fff;}
+.zpbox_title{ height:40px; border-bottom:solid 2px #e2e2e2; overflow:hidden; line-height:40px;}
+.zpbox_title em{ float:left; padding:0 15px; font-size:14px; color:#333;}
+.zpbox_title .zpbox_close{ float:right; width:35px; height:35px; margin-top:2px; overflow:hidden; background-image:url(bg.jpg);background-position:0 0; cursor:pointer;}
+.zpbox_title .zpbox_close:hover{background-position:-35px 0;}
+.zpbox_body{ padding-top:50px; height:auto; overflow:hidden; padding-bottom:20px;}
+.zpbox_body h3{ height:90px; line-height:38px; overflow:-hidden; padding-right:10px; font-size:20px; color:#333; font-weight:normal;}
+.zpbox_body p{color:#666666; padding-right:20px; line-height:24px;}
+.zpbox_bicon{ float:left; margin-left:60px; overflow:hidden; width:90px; height:90px; overflow:hidden;background-image:url(bg.jpg);margin-right:20px;}
+.zpbox_bicon_0{background-position:0 -210px;}
+.zpbox_bicon_1{background-position:-90px -210px;}
+.zpbox_bicon_2{background-position:-180px -210px;}
+
+.zpbox_footer{ padding-bottom:20px; height:auto; overflow:hidden; text-align:center;}
+.zpbox_footer a{ display: inline-block; width:auto; padding:0 25px; border:solid 1px #bdddf3; background:#f7fbfd; color:#0069b7; text-align:center; line-height:35px; cursor:pointer; margin:0 15px; text-decoration:none;}
+.zpbox_footer .zpbox_yes{ border:solid 1px #0069b7; background:#0069b7; color:#fff;}
+
+
+
+

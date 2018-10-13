@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>基本信息-数据保护</title>
+    <link href="<!--{$skinUrl}-->favicon.ico" type="image/x-icon" rel=icon>
+    <link type="image/x-icon" href="<!--{$skinUrl}-->favicon.ico" rel="shortcut icon">
+    <link rel="stylesheet" type="text/css" href="<!--{$staticUrl}-->js/layui/css/layui.css" />
+    <link rel="stylesheet" type="text/css" href="<!--{$skinUrl}-->font/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="<!--{$staticUrl}-->css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="<!--{$staticUrl}-->css/common2.css" />
+    <link rel="stylesheet" type="text/css" href="<!--{$staticUrl}-->css/css2.css" />
+</head>
+<body class="personal protect">
+<!--顶部-->
+<!--{include file="newinc/header.html"}-->
+<!--内容部分-->
+<div id="warpper" class="vasta-order ">
+    <div class="containermain order-list">
+        <!--左侧-->
+        <!--{include file="newinc/right.html"}-->
+        <!--end-->
+        <!--右侧-->
+        <div class="order-list-right e-contract">
+            <div class="e-top">数据保护</div>
+            <form method="post" class='checkform'>
+            <div class="box">
+                <ul>
+                    <li>
+                        <span class="side">
+                        	订单数据保护
+                    	</span>
+                        <div class="main">
+                        	保护成人门市价
+                        	<input type="text" class="sm" id="price" name='price' value="<!--{(int)$protect.price}-->" datatype="int" errormsg="请输入金额" size="10">
+                            金额
+                            以下的订单
+                            <a class="sure" href="javascript:;">确定</a>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="hidden" name="isstop" value="0"/>
+                        <span class="side">保护状态</span>
+                        <div class="main err">
+                        <!--{if $protect && !$protect.isstop}-->
+                            已开启保护
+                            <a class="cencel" href="javascript:;">取消</a>
+                        <!--{else}-->
+                            未开启保护
+                        <!--{/if}-->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            </form>
+        </div>
+        <!--end-->
+    </div>
+</div>
+<!--内容部分结束-->
+<!--底部-->
+<!--{include file="newinc/footer.html"}-->
+<!--{include file="newinc/footer.js.html"}-->
+<!--{include file='newinc/access.html'}-->
+<!--底部end-->
+<script src="<!--{$staticUrl}-->js/layui/layui.js"></script>
+<script src="<!--{$staticUrl}-->js/olist.js"></script>
+<script src="<!--{$staticUrl}-->js/validform_v5.3.2_min.js"></script>
+<script>
+    //验证输入框不能为空
+    $('.checkform').Validform({
+        tiptype: 4
+    });
+layui.use(['jquery','layer'], function(){
+    var $ = layui.$ //重点处
+  ,layer = layui.layer;
+    
+    $(".sure").click(function(){
+        var int = /^[1-9]\d*$/;
+        var Price = $("#id").val();
+        if(!int.test(Price)){
+            layer.msg('填写大于零的整数');return false;
+        }
+        $.post('protect.html',$("form").serialize(),function(data){
+            if(data.code==200){
+                layer.msg('修改成功',{icon:1,time: 2000},function(){
+                    window.location.reload();
+                });
+            }else{
+                layer.msg(data.message,{icon:2,time: 2000});
+            }
+        },'json');
+    });
+    //取消
+   $(".cencel").click(function () {
+        layer.confirm('确定要取消保护吗？',function(index){
+            var price = $("#price").val();
+            $.post("protect.ajaxProtectstop.html",{price:price,isstop:1},function(data){
+                if(data.code == '200'){
+                    layer.msg('取消成功！',{icon:1,time: 2000},function(){
+                        window.location.reload();
+                    });
+                }else{
+                    layer.msg(data.message,{icon:2,time: 2000});
+                }
+            },"json");
+        });
+    });
+});
+</script>
+</body>
+</html>

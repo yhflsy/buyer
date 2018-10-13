@@ -1,0 +1,284 @@
+<!--{* 顶栏 开始*}-->
+<div class="top-box" id="topheader">
+	<div class="containermain clearfix">
+		<div class="top-left">
+			<!--{if $user}-->
+			<div class="client-picture-wrap fl">
+				<a href="javascript:;" class="top-item">
+					<!--{if $user.memberinfo.photopath}-->
+					<img class="picture" src="<!--{$imghost}--><!--{$user.memberinfo.photopath|replace:'.':'_25x25.'}-->"/>
+					<!--{else}-->
+					<img class="picture" style="width: 25px; height: 25px;" src="<!--{$staticUrl}-->images/defaultheader.jpg"/>
+					<!--{/if}-->
+					<span>您好,<!--{$user.memberinfo.realname}-->(<!--{if $user.companyinfo.isseller}-->卖<!--{else}-->买<!--{/if}-->)</span>
+				</a>
+				<div class="client-info drop-down-info">
+					<div class="headimg">
+						<!--{if $user.memberinfo.photopath}-->
+						<img src="<!--{$imghost}--><!--{$user.memberinfo.photopath|replace:'.':'_60x60.'}-->"/>
+						<!--{else}-->
+						<img style="width: 60px; height: 60px;" src="<!--{$staticUrl}-->images/defaultheader.jpg"/>
+						<!--{/if}-->
+						<span class="client-name"><em class="f18"><!--{$user.memberinfo.realname}--></em><br/>
+						<i><!--{$user.memberinfo.username}--></i><a href="/index.exit.html" class="client-exit">退出</a></span>
+
+					</div>
+				</div>
+			</div>
+			<a href="http://<!--{$webhost['index'][$platform]}-->/index.exit.html" >退出</a>
+			<!--{/if}-->
+		</div>
+
+		<div class="top-right">
+			<!--{if $platform == 'tripb2b'}-->
+			<a  data-step="7" data-intro="切换馨·欢途，馨·驰誉网站" href="http://<!--{$webhost['index']['happytoo']}-->/?plattime=<!--{$plattime}-->" class="fl green mr20">馨·欢途</a>
+			<!--{else}-->
+			<a  data-step="8" data-intro="切换馨·欢途，馨·驰誉网站" href="http://<!--{$webhost['index']['tripb2b']}-->/?plattime=<!--{$plattime}-->" class="fl green mr20">馨·驰誉</a>
+			<!--{/if}-->
+			<!--{if $user}-->
+			<span class="fl verticaline">|</span>
+			<!--{/if}-->
+			<ul class="fl top-infobar">
+				<!--{if $user}-->
+				<!--{if !$user.companyinfo.isseller}-->
+				<li>
+					<span class="top-item drop-down top-client-msg <!--{if !$user}-->user-login-pop <!--{/if}-->">我的订单<em class="num"><!--{$orderInfo.total|default:0}--></em></span>
+					<div class="ordertop drop-down-info">
+						<dl>
+							<dd>
+								<a target="_blank" href="<!--{$buyerdomain}-->orderlist.html?state=3">名单不全<b class="fr">(<!--{$orderInfo.incompleteorder|default:0}-->)</b></a>
+							</dd>
+							<dd>
+								<a target="_blank" href="<!--{$buyerdomain}-->orderlist.html?state=0">待确认<b class="fr">(<!--{$orderInfo.unconfirmedorder|default:0}-->)</b></a>
+							</dd>
+							<dd>
+								<a target="_blank" href="<!--{$buyerdomain}-->orderlist.html?state=1">待支付<b class="fr">(<!--{$orderInfo.dpayorder|default:0}-->)</b></a>
+							</dd>
+							<dd>
+								<a target="_blank" href="<!--{$buyerdomain}-->orderlist.html?ispay=7">退款中<b class="fr">(<!--{$orderInfo.refundorder|default:0}-->)</b></a>
+							</dd>
+						</dl>
+					</div>
+				</li>
+				<!--{/if}-->
+				<!--{/if}-->
+				<li>
+					<span class="fl verticaline">|</span>
+					<span class="fl">
+                                            <!--/<i class="iconfont licon font-s12">&#xe625;</i><a href="{if $platform == 'tripb2b'}http://app.tripb2b.com/{else}http://app.happytoo.cn/{/if}" target="_blank">手机馨途</a>/-->
+                                        </span>
+				</li>
+				<li>
+				<span class="top-item drop-down"><i class="iconfont font-s16 color-six">&#xe626;</i></span>
+				<div class=" drop-down-info">
+						<img src="<!--{$staticUrl}-->images/ewm.jpg"/>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!--{* 顶栏 结束*}-->
+<!--{* 搜索栏 开始*}-->
+<div id="header" class="bg_white">
+	<div class="containermain">
+		<h2 class="logo fl">
+			<!--注释掉日期2018-2-6晓明->
+			<!--<a href="/" title="馨途网 - 中国旅游云平台 www.tripb2b.com">-->
+				<!--&lt;!&ndash;<img src="&lt;!&ndash;{$staticUrl}&ndash;&gt;images/&lt;!&ndash;{$platform}&ndash;&gt;.png"/>&ndash;&gt;-->
+				<!--&lt;!&ndash;<img src="&lt;!&ndash;{$staticUrl}&ndash;&gt;images/&lt;!&ndash;{$platform}&ndash;&gt;_1224.gif"/>&ndash;&gt;-->
+				<!--<img src="&lt;!&ndash;{$staticUrl}&ndash;&gt;images/newyear/logo-nyear-ht.gif"/>-->
+			<!--</a>-->
+			<!--新增切换平台-->
+			<!--{if $platform == 'tripb2b'}-->
+			<a href="http://<!--{$webhost['index'][$platform]}-->" title="馨途网 - 中国旅游云平台 www.tripb2b.com">
+				<img class="pos_rel mt10" src="<!--{$staticUrl}-->images/tripb2b.png"/>
+			</a>
+			<!--{else}-->
+			<a href="http://<!--{$webhost['index'][$platform]}-->" title="馨途网 - 中国旅游云平台 www.happytoo.cn">
+				<img class="pos_rel mt10" src="<!--{$staticUrl}-->images/happytoo.png"/>
+			</a>
+			<!--{/if}-->
+		</h2>
+		<div class="siteschange fl">
+			<span class="sitename selectcity-box">
+				<i class="iconfont color3cc3ea">&#xe608;</i>
+				<!--{$sites[$siteid]['siteName']}--> <i class="iconfont font-s12">&#xe629;</i>
+			</span>
+		</div>
+		<div id="search" class="search fr" data-step="1" data-intro="此处搜索<br/>线路和供应商">
+			<ul class="search-type">
+				<li class="active" data-val="1">线路产品</li>
+				<li data-val="2">供应商</li>
+			</ul>
+			<div class="clearfix"></div>
+			<form method="post" name="formsearch" class="searchform">
+				<input placeholder="请填写线路关键字" type="text" class="search-text" name="keywords" value="">
+				<a class="submit-search">搜 索</a>
+			</form>
+			<div class="searchtoo bg_white">
+				<p>最近搜过</p>
+				<!--{foreach $history as $k=>$v}-->
+				<!--{if $k < 10}-->
+				<a href="http://<!--{$webhost['index'][$platform]}-->/lines.html?kwtp=1&keywords=<!--{$v}-->"><!--{$v}--></a>
+				<!--{/if}-->
+				<!--{/foreach}-->
+			</div>
+		</div>
+	</div>
+</div>
+<!--{* 搜索栏 结束*}-->
+<!--{* 导航栏 开始*}-->
+<div id="nav" class=" bg_17b2df">
+	<div class="containermain">
+		<div class="fl posrel" >
+			<span class="menuclass">
+				<i class="iconfont fl">&#xe607;</i>
+				<span class="fl">旅游产品分类</span>
+				<i class="iconfont fr font-s12">&#xe629;</i>
+			</span>
+			<div class="home_line_list boxshadow">
+				<dl>
+					<dt>
+						<span class="linebor"></span>
+					<h4>
+						<i class="iconfont">&#xe60a;</i>
+						<a href="http://<!--{$webhost['index'][$platform]}-->/lines.html?l=1&linecategory=1" data-type="20">国内长线</a>
+					</h4>
+					<i class="iconfont">&#xe62a;</i>
+					<div class="clearfix"></div>
+					</dt>
+					<dd>
+						<!--新增部分2018-4-26-->
+						<ul>
+							<!--{foreach $catalogs.domestic.items as $item}-->
+							<li>
+								<div>
+									<h3><!--{$item.title}--></h3>
+									<div>
+										<!--{foreach $item.list as $v}-->
+										<a target="_blank" href="http://<!--{$webhost['index'][$platform]}-->/lines.html?l=1&linecategory=1&destid=<!--{$v.id}-->&dest=<!--{$v.title}-->"><!--{$v.title}-->专线</a>
+										<!--{/foreach}-->
+									</div>
+								</div>
+							</li>
+							<!--{/foreach}-->
+						</ul>
+						<!--新增部分2018-4-26 end-->
+					</dd>
+				</dl>
+				<dl>
+					<dt>
+						<span class="linebor"></span>
+					<h4>
+						<i class="iconfont">&#xe617;</i>
+						<a href="http://<!--{$webhost['index'][$platform]}-->/lines.html?l=2&linecategory=0" data-type="21">周边短线</a>
+					</h4>
+					<i class="iconfont">&#xe62a;</i>
+					<div class="clearfix"></div>
+					</dt>
+					<dd>
+						<!--新增部分2018-4-26-->
+						<ul>
+							<!--{foreach $catalogs.shortline.items as $item}-->
+							<li>
+								<div>
+									<h3><!--{$item.title}--></h3>
+									<div>
+										<!--{foreach $item.list as $v}-->
+										<a target="_blank" href="http://<!--{$webhost['index'][$platform]}-->/lines.html?l=2&linecategory=0&destid=<!--{$v.id}-->&dest=<!--{$v.title}-->"><!--{$v.title}-->专线</a>
+										<!--{/foreach}-->
+									</div>
+								</div>
+							</li>
+							<!--{/foreach}-->
+						</ul>
+						<!--新增部分2018-4-26 end-->
+					</dd>
+				</dl>
+				<dl>
+					<dt>
+						<span class="linebor"></span>
+					<h4>
+						<i class="iconfont">&#xe609;</i>
+						<a href="http://<!--{$webhost['index'][$platform]}-->/lines.html?l=3&linecategory=2" data-type="22">出境线路</a>
+					</h4>
+					<i class="iconfont">&#xe62a;</i>
+					<div class="clearfix"></div>
+					</dt>
+					<dd>
+						<!--新增部分2018-4-26-->
+						<ul>
+							<!--{foreach $catalogs.abroad.items as $item}-->
+							<li>
+								<div>
+									<h3><!--{$item.title}--></h3>
+									<div>
+										<!--{foreach $item.list as $v}-->
+										<a target="_blank" href="http://<!--{$webhost['index'][$platform]}-->/lines.html?l=3&linecategory=2&destid=<!--{$v.id}-->&dest=<!--{$v.title}-->"><!--{$v.title}-->专线</a>
+										<!--{/foreach}-->
+									</div>
+								</div>
+							</li>
+							<!--{/foreach}-->
+						</ul>
+						<!--新增部分2018-4-26 end-->
+					</dd>
+				</dl>
+				<!--<dl>-->
+					<!--<dt>-->
+					<!--<h4>-->
+						<!--<i class="iconfont">&#xe608;</i>-->
+						<!--<a href="http://&lt;!&ndash;{$webhost['index']['tripb2b']}&ndash;&gt;/ground.localtour.html" class="&lt;!&ndash;{if !$user}&ndash;&gt;user-login-pop &lt;!&ndash;{/if}&ndash;&gt;" data-type="23">当地游</a>-->
+					<!--</h4>-->
+					<!--<div class="clearfix"></div>-->
+					<!--</dt>-->
+				<!--</dl>-->
+				<dl>
+					<dt>
+					<h4>
+						<i class="iconfont">&#xe60b;</i>
+						<a href="http://<!--{$webhost['index'][$platform]}-->/lines.html?l=5&utraffic=8" data-type="24">邮轮</a>
+					</h4>
+					<div class="clearfix"></div>
+					</dt>
+				</dl>
+				<dl>
+					<dt>
+					<h4>
+						<i class="iconfont">&#xe60d;</i>
+						<a href="http://<!--{$webhost['index'][$platform]}-->/lines.html?l=4&linecategory=4" data-type="25">自由行</a>
+					</h4>
+					<div class="clearfix"></div>
+					</dt>
+				</dl>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<ul class="fl nav">
+			<li>
+				<a data-cur="lines.html?l=1" href="http://<!--{$webhost['index'][$platform]}-->/lines.html?l=1" class="click-line" data-id="0">国内游</a>
+			</li>
+			<li>
+				<a data-cur="lines.html?l=2" href="http://<!--{$webhost['index'][$platform]}-->/lines.html?l=2" class="click-line" data-id="0">周边游</a>
+			</li>
+			<li>
+				<a data-cur="lines.html?l=3" href="http://<!--{$webhost['index'][$platform]}-->/lines.html?l=3" class="click-line" data-id="0">出境线</a>
+			</li>
+			<li>
+				<a data-cur="orderlist.html" href="<!--{$uc}-->?siteid=<!--{$siteid}-->">订单中心</a>
+			</li>
+			<li>
+				<a data-cur="finance.html" href="<!--{$buyerdomain}-->finance.html">财务中心</a>
+			</li>
+			<li>
+				<a data-cur="/company.html" href="<!--{$buyerdomain}-->company.html">账户设置</a>
+			</li>
+			<li class="fr">
+				<a target="_blank" href="http://<!--{$shop}-->" class="usercenter"><i class="iconfont">&#xe615;</i> 收客通</a>
+			</li>
+		</ul>
+	</div>
+
+</div>
+<!--{* 导航栏 结束*}-->

@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>游客名单</title>
+		<script src="<!--{$skinPath}-->js/jquery-1.8.3.min.js"></script>
+		<style type="text/css">
+			* { font-size:14px; margin:0; padding:0; border:0; list-style:none; line-height:1.6; font-family:'宋体'; }
+			body { margin:0; padding-bottom:30px; background:#eee; }
+			a { color:#308fd4 }
+			a:hover { color:#333 }
+			.c, .c45 { display:block; height:0px; clear:both; margin:0; padding:0; border:0; overflow:hidden; background:none !important; }
+			.line_print_box { width:100%; height:30px; line-height:30px; position:fixed;top:0;left:0; border-bottom:1px solid #fde5a3; background:#fffeea; text-align:center; }
+			.line_print_box a { padding:0 10px; }
+			.content { width:750px; margin:20px auto 0; padding:20px 30px;background:#fff; }
+			.content h1 { font-size:24px; }
+			.content h2 { margin-bottom:10px; font-size:18px; text-align:center; font-weight:normal; }
+			.content h3 { padding-bottom:5px; font-size:16px; color:#308fd4 }
+			.content table { margin-bottom:10px; border:1px solid #333; border-top:none; border-collapse:collapse;  }
+			.content th { text-align:left; background:#eee;  vertical-align:middle;}
+			.content td h2 { margin:5px 0; font-weight:bold; }
+			.content table thead { height:0; overflow:hidden; }
+			.content table thead th, .content table thead td { height:0; padding:0; margin:0; border:0; overflow:hidden; }
+			.content td, .content th { line-height:1.4; border:1px solid #333; vertical-align:top; }
+			.content b { color: #f69053; }
+			.content strong { font-size:9pt; color:#ed5a5a; }
+			.top { margin-bottom:10px; }
+			.top .img { float:left; width:200px; height:80px; overflow:hidden; }
+			.top .img img { width:200px; }
+			.top h1 { float:right; width:600px; margin:10px 0; text-align:right; }
+			.heji {line-height:14pt; margin-bottom:10px; text-align:center; }
+			.air10 { height:10px; overflow:hidden; }
+			.footer th { background:none; }
+		</style>
+	</head>
+
+	<body style="font-family:'宋体', Arial; font-size:9pt; line-height:1.6em;">
+		<div class="line_print_box">
+			<a href="javascript:void(0);" onclick="javascript:window.print();
+					return false;" style="color:#f30; font-weight:bold;">打印本页</a>
+			<a href=""  style="color:#f30; font-weight:bold;" id="downword">导出word</a>
+			<a href="javascript:void(0);" onclick="javascript:window.close();">关闭窗口</a>
+		</div>
+		<div class="content">
+			<h2 style="text-align:center;">客人名单表</h2>
+			<table  cellpadding="0" cellspacing="0" border="0" width="750" align="center">
+				<tr>
+					<td colspan="6" style="padding:5pt 5pt; font-size:9pt; font-weight:bold;text-align:center"><!--{$linedetail.title}--></td>
+				</tr>
+				<tr>
+					<th style="padding:3pt 5pt; width:80pt; font-size:10pt;">出发交通</th>
+					<td style="padding:3pt 5pt; width:1000pt; font-size:10pt;"><!--{$linedetail.gotraffic}--></td>
+				</tr>
+				<tr>
+					<th style="padding:3pt 5pt; width:80pt; font-size:10pt;">返程交通</th>
+					<td style="padding:3pt 5pt; width:1000pt; font-size:10pt;"><!--{$linedetail.backtraffic}--></td>
+				</tr>
+			</table>
+			<br />
+			<table cellpadding="0" cellspacing="0" border="0" width="750" align="center">
+				<tr>
+					<th style="padding:3pt 5pt; width:40pt; font-size:10pt;">编号</th>
+					<th style="padding:3pt 5pt; width:55pt; font-size:10pt;">姓名</th>
+					<th style="padding:3pt 5pt; width:10pt; font-size:10pt;">性别</th>
+					<th style="padding:3pt 5pt; width:100pt; font-size:10pt;">证件号</th>
+					<th style="padding:3pt 5pt; width:55pt; font-size:10pt;">联系电话</th>
+				</tr>
+				<!--{section loop=$customs name=ext}-->
+				<tr>
+					<td style="padding:3pt 5pt; width:40pt; font-size:10pt;"><!--{$customs[ext].id}--></td>
+					<td style="padding:3pt 5pt; width:55pt; font-size:10pt;"><!--{$customs[ext].title}--></td>
+					<td style="padding:3pt 5pt; width:10pt; font-size:10pt;"><!--{if $customs[ext].gender == 1}-->男<!--{elseif $customs[ext].gender == 2}-->女<!--{else}-->-<!--{/if}--></td>
+					<td style="padding:3pt 5pt; width:100pt; font-size:10pt;"><!--{if $customs[ext].idcard}--><!--{$customs[ext].idcard}--><!--{else}-->-<!--{/if}--></td>
+					<td style="padding:3pt 5pt; width:55pt; font-size:10pt;"><!--{if $customs[ext].mobile}--><!--{$customs[ext].mobile}--><!--{else}-->-<!--{/if}--></td>
+				</tr>
+				<!--{/section}-->
+		<tr>
+			<td colspan="5" style="padding:3pt 5pt; font-size:10pt;" >操作人：<span class="usertitle"><!--{if $usersession.memberinfo.realname}--><!--{$usersession.memberinfo.realname}--><!--{/if}--></span> 打印日期： <!--{$smarty.now|date_format:'%Y-%m-%d %H:%M:%S'}--></td>
+		</tr>
+			</table>
+		</div>
+		<script>
+			var send_email_box = '<ul class = "send_email_box" style = "list-style-type:none; width: 300px; height: 76px; position: fixed; _position:absolute; left:50%; top:32px; margin-left:-160px;text-align: left; border: 1px solid #aaa; background: white;padding:5px 0 0 10px;" > <li> <b> 邮箱地址：</b><em style="display:none;">请填写正确的邮箱！</em></li>\n\
+							<li><input type="text" id="email" name="email" size="20" style="border:1px solid #999;"/><input type="hidden" id="title" value="<!--{$linedetail.title}-->"/></li><li><input class="submit2" type="button" value="发 送" /></li></ul>';
+
+			$(function() {
+				var url = location.href + '&isdown=1&usertitle=<!--{$usersession.memberinfo.realname}-->';
+				$('#downword').attr("href", url);
+				//发送邮件
+				$('.send_email').click(function() {
+					if ($('.send_email_box').length <= 0) {
+						$("body").append(send_email_box);
+					}
+				});
+
+				$(document).click(function(e) {
+					if ($(e.target).closest(".send_email_box").size() == 0 && $(e.target).closest('.send_email').size() == 0) {
+						$('.send_email_box').remove();
+					}
+				});
+				
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>用户注册 - 馨途旅游网 - 中国旅游云平台 400-900-3996 http://www.tripb2b.com</title>
+    <!--{include file="newinc/header.js.html"}-->
+    <link rel="stylesheet" type="text/css" href="<!--{$staticUrl}-->css/groupclub.css" />
+    <link rel="stylesheet" type="text/css" href="<!--{$staticUrl}-->css/stylev1.css" />
+</head>
+<body>
+<div class="index-header">
+    <div class="container clearfix">
+        <div class="logo"><img src="<!--{$staticUrl}-->images/tripb2b.png" /></div>
+        <div class="tit">提供线上、线下的全方位一站式服务。</div>
+        <div class="reg-link"><a href="registers.html?choose=wholesaler" class="blue-btn">供应商入驻</a><a href="/groupclub.html" class="orange-btn">分销商注册</a></div>
+    </div>
+</div>
+    <div class="g bg-white">
+        <div class="register">
+            <dl>
+                <dd class="active">验证手机号</dd>
+                <dd>填写注册资料</dd>
+                <dd>提交审核</dd>
+            </dl>
+            <div class="step">
+                <span class="step1 active">1</span>
+                <span class="line"></span>
+                <span class="step2">2</span>
+                <span class="line"></span>
+                <span class="step3">3</span>
+            </div>
+        </div>
+        <div class="l-content" >
+            <form action="" id="one-form" method="post" enctype="multipart/form-data">
+                <dl>
+                    <dt><strong>*</strong>&nbsp;手机号码：</dt>
+                    <dd><input type="text" id="phone" class="mobile infos" placeholder="可用于登录和找回密码"   value=""  name="mobile" datatype="m" nullmsg="请输入手机号码"  ></dd>
+                    <div class="num-pop"></div>
+                </dl>
+                <dl class="div-phone">
+                    <dt><strong>*</strong>&nbsp;验证码：&nbsp;&nbsp;&nbsp;</dt>
+                    <dd>
+                        <input type="text" placeholder="输入短信验证码" value="" name="vCode" id ="vCode" nullmsg="请输入验证码" datatype="*,verifycode" errormsg="验证码不正确" class="mobile yanzheng verifycode">
+                        <button type="button" class="mobile send send1" >获取短信验证码</button><span class="Validform_checktip"></span>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt><strong>*</strong>&nbsp;资质信息：</dt>
+                    <dd class="jigou-type">
+                        <label> <input type="radio" name ="isTravel" id ="isTravel" value="1"/> 企业资质</label>
+                        <label class="margin-left35px"><input type="radio" style="margin-left:6px" name ="isTravel" id ="isTravelf" value="2"/>个人名片</label>
+                    </dd>
+                </dl>
+                <div class="next"><button>下一步</button></div>
+            </form>
+        </div>
+    </div>
+<div id="validcodediv">
+    <div>
+        <table>
+              <tr>
+                    <td><input type="text" name="validcode" placeholder="输入右侧字符" sucmsg="" style="float: left">
+                        <img src="groupclub.getvalidatecode.html" id="getvalidatecode" title="看不清，点击换一张"  style="float: left;margin-top:4px">
+                        <button id="validbutton">发送验证码</button>
+                    </td>
+                </tr>
+        </table>
+    </div>
+</div>
+
+<!--{include file="newinc/footer.html"}-->
+<!--{include file="newinc/footer.js.html"}-->
+<link rel="stylesheet" type="text/css" href="<!--{$staticUrl}-->js/date-picker/datepicker.min.css" />
+<link rel="stylesheet" type="text/css" href="<!--{$staticUrl}-->js/date-picker/datepicker.calendar.css" />
+<script src="<!--{$staticUrl}-->js/validform_v5.3.2_min.js"></script>
+<script src="<!--{$staticUrl}-->js/date-picker/datepicker.js"></script>
+<script src="<!--{$staticUrl}-->js/base.js"></script>
+<!--{include file="newinc/upload.html"}-->
+<script src="<!--{Common::staticUrl()}-->region.js"></script>
+<script>$.fn.region.defaults.script = "<!--{Common::staticUrl()}-->area.js?<!--{date('Y-m-d')}-->";</script>
+<script>
+    $(function(){
+        groupclub.init();
+        groupclub.setValidform();
+        groupclub.testMobile();
+        groupclub.sendQrcode();
+    });
+    var groupclub = groupclub || {};
+    groupclub = {
+        mob_isReg:false,
+        verifycodes:"",
+        //表单初始化
+        init:function(){
+            $("input[type='radio']").click(function(){
+                    $(this).addClass("active").siblings().removeClass("active");
+            })
+        },
+        setValidform:function(){
+            $('#one-form').Validform({
+                tiptype:3,
+                postonce:true,
+                datatype:{
+                    'verifycode':function (gets,obj,curform,regxp) {
+                        if(gets != groupclub.verifycodes){
+                            return "验证码输入错误";
+                        }
+                        return true;
+                    }
+                },
+                beforeSubmit:function(curform){
+                    if(!groupclub.mob_isReg){
+                         var bc=$("#phone").siblings(".Validform_checktip");
+                         bc.removeClass("Validform_right").addClass("Validform_wrong").html("请填写正确信息");
+                         return false;
+                    }
+                    var isTravel = $("input[name='isTravel']:checked").val();
+                    if(!isTravel){
+                        layer.msg("请选择机构类型",2,8);return false;
+                    }
+                }
+            });
+        },
+        //验证手机号码是否已注册
+        testMobile:function(){
+            $(document).on("input propertychange","#phone",function(){
+                var reg = /^1[3|4|5|7|8]\d{9}$/;
+                var mobile = $(this).val();
+                mobile=$.trim(mobile);
+                var bc=$(this).siblings(".Validform_checktip");
+                var mobile_tips_txt= '<span style= "margin-left: 94px; ">该手机号已被绑定，请更换或<a class="blue" href="<!--{$webs}-->">立即登录</a></span>';
+                if(mobile && reg.test(mobile)){
+                    $.post("groupclub.ajaxCheckMobile.html",{tels:mobile},function(resp){
+                        if(resp.status == "y"){
+                            $(".num-pop").hide().html(mobile_tips_txt);
+                            groupclub.mob_isReg = true;
+                            bc.removeClass("Validform_wrong").addClass("Validform_right").html("");
+                            $("#phone").removeClass("Validform_error");
+                        }else{
+                            $(".num-pop").show().html(mobile_tips_txt);
+                            groupclub.mob_isReg = false;
+                            bc.removeClass("Validform_right").addClass("Validform_wrong").html("请填写正确信息");
+                        }
+                    },'json')
+                }else{
+                    $(".num-pop").hide();
+                    bc.removeClass("Validform_right").addClass("Validform_wrong").html("请填写正确信息");;
+                    groupclub.mob_isReg = false;
+                }
+            })
+        },
+                    
+        //发送短信验证码
+        sendQrcode:function(){
+            $('.send').on('click',function(){
+                if(groupclub.mob_isReg == true){
+                    $("#getvalidatecode").click();
+                    $.layer({
+                        type: 1,
+                        title: " ", //不显示默认标题栏
+                        shade: [0.5, '#000'], //不显示遮罩
+                        shadeClose: false,
+                        area: ['500px', '100px'],
+                        border: [0],
+                        closeBtn: [0, true],
+                        page:{dom: '#validcodediv'}
+                    });
+                     $("#getvalidatecode").click(function(){ 
+                        $(this).attr("src",'groupclub.getvalidatecode.html?' + Math.random());
+                    }); 
+                }else{
+                    layer.msg("请输入有效手机号码",2,8);
+                }
+            });
+            $('#validbutton').on('click',function(){
+                var mobile = $('.mobile').val() || "";
+                var check = $("input[name='validcode']").val() || "";
+                if(check == ''){
+                    layer.msg('请输入 4 位字符',2,8);
+                    return;
+                }
+                $.ajax({
+                    url: "groupclub.sendvcode.html",
+                    data: {mobile:mobile, validatecode:check},
+                    dataType: "json",
+                    success: function (resp) {
+                        $(".num-pop").hide();
+                        if (resp.state == "1") {
+                            layer.msg("发送验证码成功",2,9);
+                            groupclub.verifycodes = resp.verifycode;
+                            groupclub.setDaojishi();
+                            setTimeout(function(){layer.closeAll()},2000)
+                        }else{
+                            $("#getvalidatecode").attr("src",'groupclub.getvalidatecode.html?' + Math.random());
+                            layer.msg(resp.info,2,8);
+                        }
+                        $("input[name='validcode']").val('');
+                    }
+                })
+            });
+        },
+        //设置倒计时
+        setDaojishi:function(){
+            var time = 60;
+            function timeCountDown(){
+                if(time==0){
+                    $('.div-phone button').removeAttr("disabled");
+                    clearInterval(timer);
+                    $('.div-phone button').addClass('send1').removeClass('send0').html("发送验证码");
+                    //sends.checked = 1;
+                    return true;
+                }
+                $('.div-phone button').attr("disabled","disabled");
+                $('.div-phone button').html(time+"秒后再次发送");
+                time--;
+                return false;
+            }
+            $('.div-phone button').addClass('send0').removeClass('send1');
+            timeCountDown();
+            var timer = setInterval(timeCountDown,1000);
+        },
+    }
+</script>
+</body>
+</html>

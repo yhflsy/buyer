@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>馨途旅游网 中国旅游云平台 400-900-3996 http://www.tripb2b.com</title>
+    <!--{include file="newinc/header.js.html"}-->
+</head>
+<body>
+<!--{include file="newinc/header.html"}-->
+<div class="global">
+    <div class="detail clearfix">
+        <div class="curposition">
+            您所在的位置：
+            <a href="/">首页 </a>>
+            <a href="/lines.html?l=<!--{$detail.l}-->"><!--{$linecategory[$detail.linecategory]}--></a>>
+            <a href="/lines.html?l=<!--{$detail.l}-->&dest=<!--{$detail.destplace}-->"><!--{$detail.destplace}-->专线 </a>>
+            <a href="javascript:;" class="active"><!--{$detail.title}--></a>
+        </div>
+        <!--内容部分左侧-->
+        <div class="d-left fl">
+            <!--上部分-->
+            <div class="d-section clearfix">
+                <!--banner和rili部分-->
+                <div class="fl d-banner">
+                    <div class="banner">
+                        <div class="lunbo">
+                            <!--{foreach item=item from=$detail.photolist}-->
+                            <a href="#" class="d1a"><img src="<!--{$imghost}--><!--{$item.photo|replace:'.':'_390x220.'}-->"></a>
+                            <!--{foreachelse}-->
+                            <a href="#" class="d1a"><img src="<!--{$staticUrl}--><!--{$defaultlogo.line}-->"></a>
+                            <!--{/foreach}-->
+                        </div>
+                        <div class="bannerbtns">
+                            <a class="pre" href="javascript:void;"><i class="iconfont">&#xe62c;</i> </a>
+                            <a class="next" href="javascript:void;"> <i class="iconfont">&#xe62b;</i></a>
+                        </div>
+                        <span><!--{$linecategory[$detail.linecategory]}--></span>
+                    </div>
+                    <div class="rili calendar">
+                        <div class="calendar-wrap calendar_custom_v2"></div>
+                    </div>
+                </div>
+                <!--banner和rili部分end-->
+                <div class="fl d-infor">
+                    <h3>
+                        <!--{if $detail.brandtitle }--><span>[<!--{$detail.brandtitle}-->]</span><!--{/if}-->
+                        <!--{$detail.title}--><!--{if $detail.subtitle }-->|<!--{$detail.subtitle}--><!--{/if}-->
+                    </h3>
+                    <div class="activity">
+                        <!--{if $user}-->
+                        <!--{if $detail.discount.subtract>0 || $detail.discount.usecoupon>0 || $detail.discount.returncoupon>0 || $detail.hongbaoprice>0 || $detail.discountamount>0}-->
+                       <span class="act activity-one">
+                           <!--{if $detail.discount.subtract>0 || $detail.discountamount>0}-->付款立减：<em class="mr10"><!--{if $detail.discount.subtract>0&&$detail.discountamount>0}--><!--{$detail.discount.subtract}-->%+<!--{$detail.discountamount}-->元<!--{elseif $detail.discountamount>0}--><!--{$detail.discountamount}-->元<!--{else}--><!--{$detail.discount.subtract}-->%<!--{/if}--></em><!--{/if}-->
+                           <!--{if $detail.discount.subtract > $detail.platformdiscount && $detail.stagepay}-->订单融立减：<em class="mr10"><!--{$detail.discount.subtract - $detail.platformdiscount}-->%</em><!--{/if}-->
+                           <!--{if $detail.discount.usecoupon>0}-->抵：<em class="mr10"><!--{$detail.discount.usecoupon}-->%</em><!--{/if}-->
+                           <!--{if $detail.discount.returncoupon>0}-->返：<em class="mr10"><!--{$detail.discount.returncoupon}-->%</em><!--{/if}-->
+                           <!--{if $detail.hongbaoprice>0}-->红：<em><!--{$detail.hongbaoprice}--></em><!--{/if}-->
+                           <!--{if $detail.integral>0}-->积：<em><!--{$detail.integral}--></em><!--{/if}-->
+                            <div class='activitytips'>
+                                <!--{if $detail.discount.subtract>0 || $detail.discountamount>0}--><p><span>出发前付款立减：</span><!--{if $detail.discount.subtract>0&&$detail.discountamount>0}--><!--{$detail.discount.subtract}-->%+<!--{$detail.discountamount}-->元<!--{elseif $detail.discountamount>0}--><!--{$detail.discountamount}-->元<!--{else}--><!--{$detail.discount.subtract}-->%<!--{/if}--></p><!--{/if}-->
+                                <!--{if $detail.discount.subtract > $detail.platformdiscount && $detail.stagepay}--><p><span>订单融立减：</span><!--{$detail.discount.subtract - $detail.platformdiscount}-->%</p><!--{/if}-->
+                                <!--{if $detail.discount.usecoupon>0}--><p><span>代金券抵扣：</span><!--{$detail.discount.usecoupon}-->%</p><!--{/if}-->
+                                <!--{if $detail.discount.returncoupon>0}--><p><span>支付返券：</span><!--{$detail.discount.returncoupon}-->%</p><!--{/if}-->
+                                <!--{if $detail.hongbaoprice>0}--><p><span>红包抵用：</span><!--{$detail.hongbaoprice}-->元</p><!--{/if}-->
+                                <!--{if $detail.integral>0}--><p><span>积分赠送：</span><!--{$detail.integral}--></p><!--{/if}-->
+                                <span class='up-jiantou'></span>
+                            </div>
+                       </span>
+                        <!--{/if}-->
+                        <!--{/if}-->
+
+                        <!--{if $detail.instantconfirm}-->
+                        <span class="act sure"><i class="iconfont">&#xe667;</i>即时确认
+                             <div class='activitytips'>
+                                    <p><span>即时确认：</span>下单立即确认，无需供应商二次确认</p>
+                                    <span class='up-jiantou'></span>
+                             </div>
+                        </span>
+                        <!--{/if}-->
+                        <!--{if $detail.stagepay}--><span class="act sure"><i class="iconfont">&#xe668;</i>订单融
+                                    <div class='activitytips'>
+                                        <p><span>订单融：</span>缓解资金压力神器，只需预付<!--{$detail.stagepay}-->%团款可享受20/30/60天的免息账期。部分专线还可同时享受立减优惠。</p>
+                                        <p>注意-订单融订单不支持退款！</p>
+                                        <span class='up-jiantou'></span>
+                                    </div>
+                        </span><!--{/if}-->
+                        <!--{if $detail.freeinsurance>0}-->
+                        <span class="act sure1">赠送保险</span>
+                        <!--{/if}-->
+                        <!--{if $detail.discount.activityid}-->
+                        <span class="act sure1"><!--{$detail.discount.activityName}--></span>
+                        <!--{/if}-->
+                        <span class="act sure1 new"><!--{$detail.category}--></span>
+                    </div>
+                    <div class="act mudidi">
+                        <ul>
+                            <li><span>产品编号：</span><!--{$detail.lineid}--></li>
+                            <li><span>出发地：</span><!--{$detail.gocity}--></li>
+                            <li><span>行程天数：</span><!--{$detail.days}-->天</li>
+                            <li><span>目的地：</span><div class="mdd"><!--{$detail.dest}--></div></li>
+                        </ul>
+                    </div>
+                    <!--价格区域-->
+                    <div class="section-priceall">
+                        <div class="header">
+                            出团：&nbsp;
+                            <select class="chutuan" id="go-data">
+                                <option value="">请选择团期</option>
+                            </select>
+                            返程：&nbsp;&nbsp;<span class="fancheng"><!--{date('Y-m-d',$detail.gotime+(($detail.days-1)*60*60*24))}--></span>
+                        </div>
+                        <!--{if $user}--><span class="menshi"><a href="javascript:;" class="checkprice"><i class="iconfont">&#xe66c;</i><span>结算价</span></a></span><!--{/if}-->
+                        <table class="s-table">
+                            <thead>
+                            <th style="width: 145px">价格类型</th>
+                            <th class="pricetitle" style="width: 145px">市场价</th>
+                            <th>人数</th>
+                            </thead>
+                            <tbody id="t-tbody">
+
+                            </tbody>
+                        </table>
+                        <input type="hidden" id="surplus" value="<!--{$detail.surplus}-->" />
+                        <div class="reservations clearfix">
+                            <span class="reservation fl btn-book <!--{if !$user}-->user-login-pop <!--{/if}-->" data-href="<!--{$buyerdomain}-->">立即预订</span>
+                             <span href="javascript:;" class="saoma fl"><i class="icon-youcenav-erweima iconfont"></i>二维码</span>
+                            <div class="links fr">
+                                <a href="javascript:;" class="<!--{if !$user}-->user-login-pop<!--{else}--><!--{if !$user.web.hasbeen}-->line-add-weidian <!--{else}-->exist<!--{/if}--><!--{/if}--> "  data-title="<!--{$detail.title}-->" data-lineid="<!--{$detail.dateid}-->"><!--{if $user.web.hasbeen}--><i class="iconfont">&#xe65d;</i>已上架<!--{else}--><i class="iconfont">&#xe65e;</i>上架微店<!--{/if}--></a>
+                                <a href = "<!--{if $user}--><!--{$buyerdomain}-->print.html?dateid=<!--{$detail.dateid}-->&takeid=<!--{$detail.takeinfo.id}--><!--{else}-->print.html?dateid=<!--{$detail.dateid}-->&takeid=<!--{$detail.takeinfo.id}--><!--{/if}-->" id="downword" target="_blank"><i class="iconfont">&#xe63e;</i>导出行程<span class="line"></span></a>
+                                <!--<a href="javascript:;" class="&lt;!&ndash;{if !$user}&ndash;&gt;user-login-pop&lt;!&ndash;{else}&ndash;&gt;action-favourite-line&lt;!&ndash;{/if}&ndash;&gt;" data-id="&lt;!&ndash;{$detail.dateid}&ndash;&gt;" data-title="&lt;!&ndash;{$detail.title}&ndash;&gt;"><i class="iconfont">&#xe631;</i>收藏</a>-->
+                                <div class="links-share"><img  id="qrshare" src="/common.getQRcode.html?url=<!--{$urlpic}-->" /></div>
+                            </div>
+                        </div>
+                        <!--{if $detail.takelist}-->
+                       <!-- 接送 -->
+                        <table class="o-table-shuttle o-table-unselected" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <th>接送</th>
+                            </tr>
+                            <tr>
+                                <td><a class="o-fst-choss" href="javascript:void(0);">选择接送</a></td>
+                            </tr>
+                        </table>
+                        <table class="o-table-shuttle o-table-selected" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <th>区域</th>
+                                <th>站点</th>
+                                <th>价格</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="o-dl-area">
+                                        <em>接送</em>
+                                        <p class="o-dd-area o-dd-start">
+                                            <span></span>
+                                            <span class="o-color-gray" title=""></span>
+                                        </p>
+                                        <div class="o-ts-double">
+                                            <span>送接</span>
+                                        </div> 
+                                         <div class="o-ts-single-give">
+                                            <span>单送</span>
+                                        </div> 
+                                        <div class="o-ts-single-meet">
+                                            <span>单接</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p class="o-dd-area o-dd-stop">
+                                        <span></span>
+                                        <span class="o-color-gray" title=""></span>
+                                    </p>
+                                </td>
+                                <td>
+                                  <span class="o-jss-price">￥<em class="o-color-red"></em><i>/</i>人</span>
+                                  <div class="o-price-edit"><a class="o-a-edit" href="javascript:void(0);">修改</a><span><a class="o-a-red" href="javascript:void(0);">不含接送</a></span></div>
+                                </td>
+                            </tr>
+                            <input type="hidden"  value="" name="takeid"  id ="takeid"/>
+                            <input type="hidden"  value="" name="takeAmt"  />
+                            <input type="hidden"  value="<!--{$detail.tianchi}-->" name="tianchi"  />
+                        </table>
+                       <!-- /接送 -->
+                        <!--{/if}-->
+                    </div>
+                    <!--价格区域end-->
+                    <!--产品亮点-->
+                    <!--<div class="produce">-->
+                        <!--<h3>产品亮点</h3>-->
+                        <!--&lt;!&ndash;{$detail.detail}&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--产品亮点end-->
+                </div>
+            </div>
+            <!--上部分end-->
+            <!--行程-->
+            <div class="route">
+                <div class="r-header">
+                    <ul>
+                        <li class="active">行程说明<span  class="line"></span></li>
+                        <!--{if $detail.detail}--><li>产品亮点<span  class="line"></span></li><!--{/if}-->
+                        <!--{if $detail.applicationnote}--><li>报名须知<span  class="line"></span></li><!--{/if}-->
+                        <li>相关事项<!--{if $detail.linecategory==2 && $detail.visa}--><span  class="line"></span><!--{/if}--></li>
+                        <!--{if $detail.linecategory==2 && $detail.visa}--><li>签证信息</li><!--{/if}-->
+                    </ul>
+                    <span class="reserve btn-book <!--{if !$user}-->user-login-pop <!--{/if}-->" data-href="<!--{$buyerdomain}-->">立即预订</span>
+                </div>
+                <div class="travel">
+                    <div class="travelItem">
+                        <h4>行程说明</h4>
+                        <!--{if $detail.gotraffic || $detail.backtraffic}-->
+                        <div class="go-back">
+                            <span>往返交通</span>
+                        </div>
+                        <!--{/if}-->
+                        <!--{if $detail.gotraffic}-->
+                        <div class="jiaotong">
+                            <span class="wang">往</span>
+                            <ul>
+                                <li class="clearfix">
+                                    <div class="fl j-name">
+                                        <p><!--{$detail.gotraffic.2}--></p>
+                                    </div>
+                                    <div class="fl j-timestart">
+                                        <h3><!--{$detail.gotraffic.3}-->:<!--{$detail.gotraffic.4}--></h3>
+                                        <p><!--{$detail.gotraffic.0}--></p>
+                                    </div>
+                                    <div class="fl j-arrive"><p class="zhida"><!--{$detail.gotraffic.7}--></p></div>
+                                    <div class="fl j-timeend">
+                                        <h3><!--{$detail.gotraffic.5}-->:<!--{$detail.gotraffic.6}--></h3>
+                                        <p><!--{$detail.gotraffic.1}--></p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--{/if}-->
+                        <!--{if $detail.backtraffic}-->
+                        <div class="jiaotong">
+                            <span class="fan">返</span>
+                            <ul>
+                                <li class="clearfix" style="border:0">
+                                    <div class="fl j-name">
+                                        <p><!--{$detail.backtraffic.2}--></p>
+                                    </div>
+                                    <div class="fl j-timestart">
+                                        <h3><!--{$detail.backtraffic.3}-->:<!--{$detail.backtraffic.4}--></h3>
+                                        <p><!--{$detail.backtraffic.0}--></p>
+                                    </div>
+                                    <div class="fl j-arrive"><p class="zhida"><!--{$detail.backtraffic.7}--></p></div>
+                                    <div class="fl j-timeend">
+                                        <h3><!--{$detail.backtraffic.5}-->:<!--{$detail.backtraffic.6}--></h3>
+                                        <p><!--{$detail.backtraffic.1}--></p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--{/if}-->
+                        <div class="go-back">
+                            <span>行程详情</span>
+                        </div>
+                        <div class="j-tips"><i class="iconfont">&#xe605;</i>以下行程、交通仅供参考，最终确认以出团通知书为准。</div>
+                        <!--行程每一天-->
+                        <div class="daybody">
+                            <div class="dayall">
+                                <ul>
+                                    <!--{foreach item=item  key=key from=$detail.routelist}-->
+                                    <li <!--{if $item.dayindex==1}-->class="active"<!--{/if}-->>第<!--{$item.dayindex}-->天</li>
+                                    <!--{/foreach}-->
+                                </ul>
+                                <span class="day-acitve"></span>
+                            </div>
+                            <!--{foreach item=item  key=key from=$detail.routelist}-->
+                            <div class="daylist">
+                                <div class="dayitem">
+                                    <span class="d-day">D<!--{$item.dayindex}--></span>
+                                    <!--{if $item.dayindex == $detail.days}-->
+                                    <span class="d-footer"></span>
+                                    <!--{/if}-->
+                                    <h3><span>第<!--{$item.dayindex}-->天</span><!--{$item.title}--></h3>
+                                    <div class="didian"></div>
+
+                                    <!--{if $item.structlist}-->
+                                    <!--{foreach item=item2 key=key2 from=$item.structlist}-->
+                                    <p>行程<!--{$key2 + 1}-->:</p>
+                                    <p>游览时间：约<!--{$item2.playhour}-->小时<!--{$item2.playminute}-->分钟</p>
+                                    <p>出发时间：<!--{sprintf("%02d",$item2['begintime'])}-->:<!--{sprintf('%02d',$item2['endtime'])}--></p>
+                                    <p>出发：<!--{$item2.go}-->&nbsp;&nbsp;抵达：<!--{$item2.arrive}--></p>
+                                    <p>交通方式：<!--{$item2.traffic}--></p>
+                                    <p>说明：<!--{nl2br($item2.notes)}--> </p>
+                                    <ul class="day-ul clearfix">
+                                        <!--{foreach item=item3 from=$item2.photolist}-->
+                                        <li class="fl">
+                                            <img src="<!--{$imghost}--><!--{$item3.photo|replace:'.':'_240x160.'}-->" />
+                                        </li>
+                                        <!--{/foreach}-->
+                                    </ul>
+                                    <div class="foods">
+                                        <b data-comma="<!--{$comma1=''}-->"></b><i class="iconfont">&#xe608;</i>景点：
+                                        <!--{foreach $item2.scenerylist as $k=>$v}-->
+                                        <!--{if $v}-->
+                                        <a href="javascript:;" data-popid="<!--{$k}-->" data-poptype="scenery" class="js-popup"><font color="#3cc3ea"><!--{$comma}--><!--{$v}--></font></a>
+                                        <b data-comma="<!--{$comma='，'}-->"></b>
+                                        <!--{/if}-->
+                                        <!--{/foreach}-->
+                                        <b data-comma="<!--{$comma1=''}-->"></b><i class="iconfont">&#xe65b;</i>酒店：
+                                        <!--{foreach $item2.hotellist as $k=>$v}-->
+                                        <!--{if $v}-->
+                                        <a href="javascript:;" data-popid="<!--{$k}-->" data-poptype="hotel" class="js-popup"><font color="#3cc3ea"><!--{$comma}--><!--{$v}--></font></a>
+                                        <b data-comma="<!--{$comma1='，'}-->"></b>
+                                        <!--{/if}-->
+                                        <!--{/foreach}-->
+                                    </div>
+                                    <!--{/foreach}-->
+                                    <!--{else}-->
+                                    <p><!--{$item.detail}--></p>
+                                    <ul class="day-ul clearfix">
+                                        <!--{foreach item=item1 from=$item.photolist}-->
+                                        <li class="fl">
+                                            <img src="<!--{$imghost}--><!--{$item1.photo|replace:'.':'_240x160.'}-->" />
+                                        </li>
+                                        <!--{/foreach}-->
+                                    </ul>
+                                    <!--{/if}-->
+                                    <div class="foods">
+                                        <i class="iconfont">&#xe65c;</i>三餐：<!--{if $item.breakfast}-->早:<!--{$item.breakfastnote}--><!--{/if}--><!--{if $item.lunch}-->中:<!--{$item.lunchnote}--><!--{/if}--><!--{if $item.supper}-->晚:<!--{$item.suppernote}--><!--{/if}-->
+                                        <i class="iconfont mL40">&#xe65b;</i>酒店：<!--{$item.hotel}-->
+                                    </div>
+                                </div>
+                            </div>
+                            <!--{/foreach}-->
+                        </div>
+                    </div>
+                    <!--行程每一天end-->
+                    <!--{if $detail.detail}-->
+                    <div class="travelItem">
+                        <h4>产品亮点</h4>
+                        <div class="moneyitem">
+                            <span>产品亮点</span>
+                        </div>
+                        <div class="infor-des">
+                            <!--{$detail.detail}-->
+                        </div>
+                    </div>
+                    <!--{/if}-->
+                    <!--{if $detail.applicationnote}-->
+                    <div class="travelItem">
+                        <h4>报名须知</h4>
+                        <div class="moneyitem">
+                            <span>报名须知</span>
+                        </div>
+                        <div class="infor-des">
+                            <!--{$detail.applicationnote}-->
+                        </div>
+                    </div>
+                    <!--{/if}-->
+                    <div class="travelItem">
+                        <h4>相关事项</h4>
+                        <!--{if $detail.linecategory!=2 || $detail.erpid}-->
+                        <!--{if $detail.include}-->
+                        <div class="moneyitem">
+                            <span>包含项目</span>
+                        </div>
+                        <div class="infor-des">
+                            <!--{$detail.include}-->
+                        </div>
+                        <!--{/if}-->
+                        <!--{if $detail.exclude}-->
+                        <div class="moneyitem">
+                            <span>不含项目</span>
+                        </div>
+                        <div class="infor-des">
+                            <!--{$detail.exclude}-->
+                        </div>
+                        <!--{/if}-->
+                        <!--{else}-->
+                        <!--{if $detail.feelist.include}-->
+                        <div class="moneyitem">
+                            <span>费用包含</span>
+                        </div>
+                        <div class="infor-des">
+                            <!--{foreach $detail.feelist.include as $k=>$v}-->
+                            <!--{$k+1}-->.<!--{$v}--> <br/>
+                            <!--{/foreach}-->
+                        </div>
+                        <!--{/if}-->
+                        <!--{if $detail.feelist.noinclude}-->
+                        <div class="moneyitem">
+                            <span>费用不含</span>
+                        </div>
+                        <div class="infor-des">
+                            <!--{foreach $detail.feelist.noinclude as $k=>$v}-->
+                            <!--{$k+1}-->.<!--{$v}--> <br/>
+                            <!--{/foreach}-->
+                        </div>
+                        <!--{/if}-->
+                        <!--&lt;!&ndash;{if $detail.feelist.selfnotes}&ndash;&gt;-->
+                        <!--<div class="moneyitem">-->
+                            <!--<span>自费项目</span>-->
+                        <!--</div>-->
+                        <!--<div class="infor-des">-->
+                            <!--&lt;!&ndash;{foreach $detail.feelist.selfnotes as $k=>$v}&ndash;&gt;-->
+                            <!--&lt;!&ndash;{$k+1}&ndash;&gt;.&lt;!&ndash;{$v}&ndash;&gt; <br/>-->
+                            <!--&lt;!&ndash;{/foreach}&ndash;&gt;-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;{/if}&ndash;&gt;-->
+                        <!--{/if}-->
+
+                        <!--{if $detail.child}-->
+                        <div class="moneyitem">
+                            <span>儿童安排</span>
+                        </div>
+                        <div class="infor-des">
+                            <!--{$detail.child}-->
+                        </div>
+                        <!--{/if}-->
+                        <!--{if $detail.shopping}-->
+                        <div class="moneyitem">
+                            <span>购物安排</span>
+                        </div>
+                        <div class="infor-des">
+                            <!--{$detail.shopping}-->
+                        </div>
+                        <!--{/if}-->
+                        <!--{if $detail.selffinance}-->
+                        <div class="moneyitem">
+                            <span>可选项目</span>
+                        </div>
+                        <div class="infor-des">
+                            <!--{$detail.selffinance}-->
+                        </div>
+                        <!--{/if}-->
+                        <!--{if $detail.attention}-->
+                        <div class="moneyitem">
+                            <span>注意事项</span>
+                        </div>
+                        <div class="infor-des">
+                            <!--{$detail.attention}-->
+                        </div>
+                        <!--{/if}-->
+                        <!--{if $detail.other}-->
+                        <div class="moneyitem">
+                            <span>其他事项</span>
+                        </div>
+                        <div class="infor-des">
+                            <!--{$detail.other}-->
+                        </div>
+                        <!--{/if}-->
+                        <!--{if $detail.reminder}-->
+                        <div class="moneyitem">
+                            <span>温馨提示</span>
+                        </div>
+                        <div class="infor-des">
+                            <!--{$detail.reminder}-->
+                        </div>
+                        <!--{/if}-->
+                        <!--{if $detail.content}-->
+                        <div class="moneyitem">
+                            <span>旅游法相关信息</span>
+                        </div>
+                        <div class="infor-des">
+                            <!--{$detail.content}-->
+                        </div>
+                        <!--{/if}-->
+                        <!--{if $detail.groupnote}-->
+                        <div class="moneyitem">
+                            <span>成团说明</span>
+                        </div>
+                        <div class="infor-des">
+                            <!--{$detail.groupnote}-->
+                        </div>
+                        <!--{/if}-->
+                        <!--{if $detail.planenote}-->
+                        <div class="moneyitem">
+                            <span>航班变动说明</span>
+                        </div>
+                        <div class="infor-des">
+                            <!--{$detail.planenote}-->
+                        </div>
+                        <!--{/if}-->
+                        <!--{if $detail.ordernote}-->
+                        <div class="moneyitem">
+                            <span>预定说明</span>
+                        </div>
+                        <div class="infor-des">
+                            <!--{$detail.ordernote}-->
+                        </div>
+                        <!--{/if}-->
+                        <!--{if $detail.breakrule}-->
+                        <div class="moneyitem">
+                            <span>违约条款</span>
+                        </div>
+                        <div class="infor-des">
+                            <!--{$detail.breakrule}-->
+                        </div>
+                        <!--{/if}-->
+                    </div>
+                    <!--{if $detail.linecategory==2 && $detail.visa}-->
+                    <div class="travelItem">
+                        <h4>签证信息</h4>
+                        <div class="moneyitem">
+                            <span>签证信息</span>
+                        </div>
+                        <div class="infor-des">
+                            <!--{if $detail.visa.isshow==1}-->
+                            <p>本产品需要邮寄签证材料至指定地址:<!--{$detail.visa.contact.0.addr}-->,&nbsp;联系人:<!--{$detail.visa.contact.0.name}-->,&nbsp;联系电话:<!--{$detail.visa.contact.0.tel}--></p>
+                            <!--{else}-->
+                            <p>需通过快递邮寄签证材料至指定地址</p>
+                            <!--{/if}-->
+                            <p>签证材料下载:&nbsp;&nbsp;&nbsp;<!--{foreach $detail.visa.files as $v}--><a target="_blank" href="<!--{$imghost}--><!--{$v.url}-->" style="color: #1e80c6;"><!--{$v.name}--></a>&nbsp;&nbsp;<!--{/foreach}--></p>
+                            <!--{if !empty($detail.visa.info)}--><p><!--{$detail.visa.info}--></p><!--{/if}-->
+                        </div>
+                        <div class="moneyitem">
+                            <span>签证材料截止时间</span>
+                        </div>
+                        <div class="infor-des">
+                            <!--{if $detail.visa.beforedays}--><p>收取材料截止到出发前的第<!--{$detail.visa.beforedays}-->天晚上的23：59分.</p><!--{/if}-->
+                            <!--{if !empty($detail.visa.notes)}--><p><!--{$detail.visa.notes}--></p><!--{/if}-->
+                        </div>
+                    </div>
+                    <!--{/if}-->
+                </div>
+            </div>
+            <!--行程end-->
+        </div>
+        <!--内容部分左侧end-->
+        <!--内容部分右侧-->
+        <div class="d-right fl">
+            <div class="hotcompney" style="display: none;"></div>
+            <div class="contacts" style="display: none;"></div>
+            <div class="ranking" style="display: none;"></div>
+        </div>
+        <!--内容部分右侧 end-->
+
+        <!-- 弹窗背景/ -->
+        <div class="o-black-bg"></div>
+        <!-- 修改接送弹框 -->
+        <div class="o-box-area">
+            <div class="o-box-tit">
+                <em></em>选择接送
+            </div>
+            <div class="o-table-parent">
+                <table class="o-shuttle-table" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th width="80">序号</th>
+                        <th>区域</th>
+                        <th>站点</th>
+                        <th width="80">价格</th>
+                        <th>类型</th>
+                    </tr>
+                    <!--{if $detail.tianchi!=1}-->
+                    <!--{foreach $detail.takelist as $key => $value}-->
+                    <tr data-take="<!--{$value.id}-->" >
+                        <td>
+                            <label class="o-ck-box ">
+                                <input class="o-ckb" type="checkbox" name="ckbox">
+                            </label>
+                            <em><!--{$key+1}--></em>
+                         </td>
+                        <td> <p class="o-p-area" title="<!--{$value.setoff.0}-->-<!--{$value.setoff.1}-->-<!--{$value.setoff.2}-->"><span><!--{$value.setoff.0}-->-<!--{$value.setoff.1}--></span> - <i><!--{$value.setoff.2}--></i></p> </td>
+                        <td> <p class="o-p-site" title="<!--{$value.dest.0}-->-<!--{$value.dest.1}-->-<!--{$value.dest.2}-->"><span><!--{$value.dest.0}-->-<!--{$value.dest.1}--></span> - <i> <!--{$value.dest.2}--></i></p> </td>
+                        <td>￥<span class="o-sprice"><!--{$value.goprice+$value.backprice}--></span>/人</td>
+                        <td><!--{if $value.tag==1}--><span class="o-sp-danjie">单接</span><!--{elseif $value.tag==2}--><span class="o-sp-dansong">单送</span><!--{else}--><span class="o-sp-jiesong">接送</span><!--{/if}--></td>
+                    </tr>
+                    <!--{/foreach}-->
+                    <!--{else}-->
+                    <!--{foreach $detail.takelist as $key => $value}-->
+                    <tr data-take="<!--{$value.productId}-->" data-amt="<!--{$value.amt}-->" >
+                        <td>
+                            <label class="o-ck-box ">
+                                <input class="o-ckb" type="checkbox" name="ckbox">
+                            </label>
+                            <em><!--{$key+1}--></em>
+                         </td>
+                        <td title="<!--{$value.product.townName}-->-<!--{$value.product.locationAddress}-->"> <p class="o-p-area"><span><!--{$value.product.townName}--></span> - <i><!--{$value.product.locationAddress}--></i></p> </td>
+                        <td title="<!--{$value.product.stationName}-->"> <p class="o-p-site"><span><!--{$value.product.stationName}--></span></p> </td>
+                        <td>￥<span class="o-sprice"><!--{$value.amtArr.0}--></span>/人</td>
+                        <td><!--{if $value.tag==1}--><span class="o-sp-danjie">单接</span><!--{elseif $value.tag==2}--><span class="o-sp-dansong">单送</span><!--{else}--><span class="o-sp-jiesong">接送</span><!--{/if}--></td>
+                    </tr>
+                    <!--{/foreach}-->
+                    <!--{/if}-->
+                </table>
+            </div>
+            <div class="o-chose-qus"><a href="javascript:void(0);">确认选择</a></div>
+        </div>
+        <!-- /修改接送弹框 -->
+    </div>
+</div>
+<!--{include file="newinc/footer.html"}-->
+<!--{include file="newinc/footer.js.html"}-->
+<!--{include file="newinc/weidian.html"}-->
+<!--{include file="newinc/detail/company.html"}-->
+<!--{include file="newinc/detail/contacts.html"}-->
+<!--{include file="newinc/detail/hotline.html"}-->
+<!--{include file="newinc/detail/price.html"}-->
+<!--{include file="newinc/detail/jingdian.html"}-->
+<link rel="stylesheet" href="<!--{$staticUrl}-->js/date-picker/datepicker.min.css" />
+<link rel="stylesheet" href="<!--{$staticUrl}-->js/date-picker/datepicker.calendar.css" />
+<script src="<!--{$staticUrl}-->js/date-picker/datepicker.js"></script>
+<script src="<!--{$staticUrl}-->js/date-picker/jquery.calendar.v2.js"></script>
+<script src="<!--{$staticUrl}-->js/jquery.nicescroll.js"></script>
+<script src="<!--{$staticUrl}-->js/details.js"></script>
+<script>
+    function take(){
+        if($("input[name='tianchi']").val()>0){
+            var amt= $("input[name='takeAmt']").val();
+            var adultnum=$(".adultnum").val()||0;
+            var childrennum=$(".childrennum").val()||0;
+            var num=parseInt(adultnum)+parseInt(childrennum);
+            if(num>=1){
+                num = num-1;
+            }
+            if(num>=9){
+                num = 9;
+            }
+            var amtArr = amt.split(",");
+            $('.o-jss-price em').text(amtArr[num]);
+        }
+    }
+    
+    function qieHuanAmt(){
+        if($("input[name='tianchi']").val()>0){
+            var amt= $("input[name='takeAmt']").val();
+            var amtArr = amt.split(",")
+            $('.o-jss-price em').text(amtArr[0]);
+        }
+    }
+    
+    $(function(){
+        var js = 0;
+        var dateid = "<!--{$detail.dateid}-->";
+        var gotime = "<!--{date('Y-m-d',$detail.gotime)}-->";
+        detailsjs.base.loadcalendar(gotime,dateid,js);
+        detailsjs.base.lunbo();
+        <!--{if $user}-->
+        var cid = "<!--{$detail.companyid}-->";
+        detailsjs.base.loadCompany(cid);
+        detailsjs.base.favouriteLine();
+        <!--{/if}-->
+        detailsjs.base.loadHotline();
+
+        $(".calendar").on('click','a',function(){
+            var dateid=$(this).closest("td").attr("detial_id");
+            $(".calendar").find("td").removeClass("dateselect");
+            $(this).closest("td").addClass("dateselect");
+            detailsjs.base.loaddDydetail(dateid,js);
+            $('#go-data').val(dateid);
+
+            var takeid = $('#takeid').val();
+            var lsurl = $(".links-share").find('img').attr('src');
+            lsurl = lsurl.replace(/%26dateid%3D.*/, '');
+            lsurl = lsurl+'%26dateid%3D'+dateid;
+            if(takeid){
+                lsurl = lsurl+'%26r%3D'+takeid;
+            }
+            lsurl = lsurl+'%26client%3Dpc';
+            $(".links-share").find('img').attr('src',lsurl);
+
+            var url = $('#downword').attr("href");
+            url = url.replace(/&dateid=.*/, '');
+            url = url+'&dateid='+dateid;
+            if(takeid){
+                url = url+'&takeid='+takeid;
+            }
+            $('#downword').attr("href", url);
+            qieHuanAmt()
+            return false;
+        });
+        //内容区标题部分hover提示
+        $(".activity").find("span").hover(function(){
+            $(this).find(".activitytips").show();
+        },function(){
+            $(this).find(".activitytips").hide();
+        })
+
+        //出团选择
+        $("#go-data").change(function(){
+            var dateid = $(this).val();
+            detailsjs.base.loaddDydetail(dateid,js);
+            $('#go-data').val(dateid);
+            var takeid = $('#takeid').val();
+            var lsurl = $(".links-share").find('img').attr('src');
+            lsurl = lsurl.replace(/%26dateid%3D.*/, '');
+            lsurl = lsurl+'%26dateid%3D'+dateid;
+            if(takeid){
+                lsurl = lsurl+'%26r%3D'+takeid;
+            }
+            lsurl = lsurl+'%26client%3Dpc';
+            $(".links-share").find('img').attr('src',lsurl);
+
+            var url = $('#downword').attr("href");
+            url = url.replace(/&dateid=.*/, '');
+            url = url+'&dateid='+dateid;
+            if(takeid){
+                url = url+'&takeid='+takeid;
+            }
+            $('#downword').attr("href", url);
+            qieHuanAmt()
+        });
+
+        //切换价格
+        $(".checkprice").click(function(){
+            if(js>0){
+                js = 0;
+                $(".pricetitle").html('市场价');
+                $(this).find('span').html('结算价');
+            }else {
+                js = 1;
+                $(".pricetitle").html('结算价');
+                $(this).find('span').html('市场价');
+            }
+            var id = $('#go-data').val();
+            if(id==''){
+                id = dateid;
+            }
+            detailsjs.base.loadcalendar(gotime,id,js);
+            if(js>0){
+                $(".ui-datepicker-title").find('b').html('结算价');
+            }else {
+                $(".ui-datepicker-title").find('b').html('市场价');
+            }
+            detailsjs.base.loaddDydetail(id,js);
+        });
+
+
+        //出游人价格计算
+        //加
+        $("#t-tbody").on("click",".add-num",function(){
+            var inputValueadd=$(this).siblings("input").val();
+            var adultnum=$(".adultnum").val()||0;
+            var childrennum=$(".childrennum").val()||0;
+            var totalslus=parseInt(adultnum)+parseInt(childrennum);
+            inputValueadd++;
+            var surplus =  $("#surplus").val();
+            if(totalslus<surplus){
+                $(this).siblings("input").val(inputValueadd);
+//                var $adultSingle=$(this).hasClass("adult-add");
+//                if($adultSingle){
+//                    var singlenumber=Math.ceil(inputValueadd/2);
+//                    $(".singleroom").val(singlenumber);
+//                    $(".singleroom-num").text(singlenumber*2-inputValueadd);//单房差数
+//                }
+
+            }else{
+                $(this).parent().siblings(".no-more").show();
+            }
+            
+            take();
+        });
+        //减
+        $("#t-tbody").on("click",".reduce-num",function(){
+            var inputValuereduce=$(this).siblings("input").val();
+            var adultnum=$(".adultnum").val();
+            var childrennum=$(".childrennum").val()||0;
+            var totalslus=parseInt(adultnum)+parseInt(childrennum);
+            inputValuereduce--;
+            if(inputValuereduce>=0){
+                $(this).siblings("input").val(inputValuereduce);
+                $(".no-more").hide();
+//                var $adultSingle=$(this).hasClass("adult-reduce");
+//                if($adultSingle){
+//                    var singlenumber=Math.ceil(inputValuereduce/2);
+//                    $(".singleroom").val(singlenumber);
+//                    $(".singleroom-num").text(singlenumber*2-(adultnum-1));//单房差数
+//                }
+            }
+            take();
+        });
+        //儿童单独加
+        $("#t-tbody").on("click",".baby-add",function(){
+            var inputValueadd=$(this).siblings("input").val();
+            inputValueadd++;
+            $(this).siblings("input").val(inputValueadd);
+        });
+        //儿童单独减
+        $("#t-tbody").on("click",".baby-reduce",function(){
+            var inputValuereduce=$(this).siblings("input").val();
+            inputValuereduce--;
+            if(inputValuereduce>=0){
+                $(this).siblings("input").val(inputValuereduce);
+            }
+        });
+        //房间数计算
+        /*最小房间数 成人数（单数加1）/2
+           最大房间数 成人数=房间数
+           单房差  房间数*2-成人数
+         */
+        //单房差单独加
+        $("#t-tbody").on("click",".single-add",function(){
+            var $singleitem=$(this).siblings("input").val();
+            var $adultnum=$(".adultnum").val()||0;
+            var $childrennum=$(".childrennum").val()||0;
+            var $babynum=$(".babynum").val()||0;
+            var $num = parseInt($adultnum)+parseInt($childrennum)+parseInt($babynum);
+            $singleitem++;
+            if($singleitem<$num||$singleitem==$num){
+                $(this).siblings("input").val($singleitem);
+                $(".room-tips").hide();
+            }else{
+                $(".room-tips").text("已达到本产品最多预定上限哦！");
+                // $(".room-tips").show();
+                $(".room-tips").css({
+                    "display":"block",
+                    "left":"35px",
+                    "top":"-55px"
+                });
+                setTimeout(function(){
+                    $(".room-tips").hide()
+                },3000);
+            }
+        });
+        //单房差单独减
+        $("#t-tbody").on("click",".single-reduce",function(){
+            var $singleitem3=$(this).siblings("input").val();
+            $singleitem3--;
+            if($singleitem3>0||$singleitem3==0){
+                $(".room-tips").hide();
+                $(this).siblings("input").val($singleitem3);
+            }
+
+        });
+        //行程部分滚动固定
+        var rHeaderTop=$(".r-header").offset().top;
+        $(window).scroll(function(){
+            var scrollTop=$(window).scrollTop();
+            if(scrollTop>rHeaderTop){
+                $(".r-header").css({
+                    "position":"fixed",
+                    "width":"930px",
+                    "top":"0",
+                    "z-index":"99"
+                });
+                $(".reserve ").show();
+            }else{
+                $(".r-header").css({
+                    "position":"relative"
+                });
+                $(".reserve ").hide();
+            }
+        });
+        //行程切换
+        $(".r-header").find("li").click(function(){
+            var _index=$(this).index();
+            var travelItemTop=$(".travelItem").eq(_index).offset().top-100;
+            $(this).addClass("active").siblings().removeClass("active");
+            $("html,body").scrollTop(travelItemTop);
+        });
+        //行程说明悬浮左侧
+        var $dayall=$(".dayall").offset().top-60;
+        var rHeaderHeight=$(".r-header").height();
+        var dayH=$(".dayall").height()||0;
+        var dayLast=rHeaderHeight+dayH+50;//左侧天数浮动的总高度
+       setTimeout(function () {
+           var travelItemtop=$(".travel").find(".travelItem").eq(1).offset().top;
+           $(window).scroll(function(){
+               var scrollTop=$(window).scrollTop();
+               var clientY=travelItemtop-scrollTop;//元素到浏览器顶部距离
+               if(scrollTop<$dayall){
+                   $(".dayall").css({
+                       "position":"absolute",
+                       "left":"-20px",
+                       "top":"5px",
+                       "margin-left":"0px"
+                   })
+               }
+               if(scrollTop>$dayall&&clientY>dayLast){
+                   $(".dayall").css({
+                       "position":"fixed",
+                       "top":"60px",
+                       "left":"auto",
+                       "z-index":"99",
+                       "margin-left":"-20px"
+                   });
+               }
+               if(clientY<dayLast){
+                   $(".dayall").css({
+                       "position":"absolute",
+                       "left":"-20px",
+                       "top":"auto",
+                       "margin-left":"0px"
+                   })
+               }
+
+           });
+       },500);
+        //扫码分享
+        $(".saoma").hover(function(){
+            $(".links-share").show();
+        },function(){
+            $(".links-share").hide();
+        });
+        //行程说明悬浮左侧的天数切换
+        var dayall=$(".dayall");
+        dayall.find("li.active").css({'border':'0'});
+        dayall.find("li.active").next().css({'border':'0'});
+        dayall.find("li").click(function () {
+            var liIndex=$(this).index();
+            var dayList=$(".daybody").find(".daylist").eq(liIndex ).offset().top-165;
+            $(this).addClass("active").siblings().removeClass("active");
+            dayall.find("li").css({'border-top':'1px dotted #bbb'});
+            dayall.find("li.active").css({'border':'0'});
+            dayall.find("li.active").next().css({'border':'0'});
+            // $(".day-acitve").animate({"top":liIndex*31+"px"},200);
+            $(window).scrollTop(dayList);
+        });
+        //行程里面的详情弹窗
+        /* 默认景点字段 */
+        var spotData={
+            "nametitle":"景点名称",
+            "addresstitle":"地址",
+            "begintitle":"开放时间",
+            "destitle":"景点简介",
+            "spottitle":"景区特色",
+            "traffictitle":"交通信息"
+        };
+        /* 默认酒店字段 */
+        var hotelData={
+            "nametitle":"酒店名称",
+            "addresstitle":"地址",
+            "contactitle":"联系方式",
+            "destitle":"酒店描述",
+        }
+        $(".js-popup").click(function(){
+            var popid=$(this).data("popid");
+            var poptype=$(this).data("poptype");
+            var poptext=$(this).text();
+            $.ajax({
+                type: "GET",
+                url: "details.ajaxPopUp.html",
+                data: {popid:popid,poptype:poptype},
+                dataType: "json",
+                success: function(res){
+                    var data={};
+                    if(poptype=="scenery"){
+                        data=$.extend(spotData,res||{});
+                    }else if(poptype=="hotel"){
+                        data=$.extend(hotelData,res||{});
+                    }
+                    $(".tmpl-jingdian").tmpl(data).appendTo("body");
+                    dialogFunc();
+                    $(".dialog-wrap").show();
+                },
+                error:function(){
+                    console.log("error")
+                }
+            });
+        });
+        //弹窗函数
+        function dialogFunc(){
+            $(".close").click(function(){
+                $(".dialog-wrap").remove();
+                $("#ascrail2001").remove()
+            });
+            $('.dialogdays').niceScroll({
+                cursorcolor: "#ddd",//#CC0071 光标颜色
+                cursoropacitymax: 1, //改变不透明度非常光标处于活动状态（scrollabar“可见”状态），范围从1到0
+                touchbehavior: false, //使光标拖动滚动像在台式电脑触摸设备
+                cursorwidth: "6px", //像素光标的宽度
+                cursorborder: "0", // 	游标边框css定义
+                cursorborderradius: "5px",//以像素为光标边界半径
+                autohidemode: false //是否隐藏滚动条
+            });
+            $('.jianjie').niceScroll({
+                cursorcolor: "#ddd",//#CC0071 光标颜色
+                cursoropacitymax: 1, //改变不透明度非常光标处于活动状态（scrollabar“可见”状态），范围从1到0
+                touchbehavior: false, //使光标拖动滚动像在台式电脑触摸设备
+                cursorwidth: "6px", //像素光标的宽度
+                cursorborder: "0", // 	游标边框css定义
+                cursorborderradius: "5px",//以像素为光标边界半径
+                autohidemode: false //是否隐藏滚动条
+            });
+            //计算ul长度
+            var listLilength=$(".js-list").find("li").length;
+            $(".js-list").css({"width":listLilength*60+100+"px"});
+            //无缝滚动
+            var n=-1;
+            $(".view-pic-prev").click(function(){
+                n++;
+                if(n<listLilength){
+                    var curSrc=$(".js-list").find("li").eq(n).find("img").attr("src");
+                    $(".js-list").css({"left":-n*60+"px"});
+                    $(".view-popup-pic-box").find(".view-img").attr("src",curSrc);
+                }else{
+                    n=listLilength
+                }
+            });
+            $(".view-pic-next").click(function(){
+                n--;
+                if(n>-1){
+                    var curSrc=$(".js-list").find("li").eq(n).find("img").attr("src");
+                    $(".js-list").css({"left":-n*60+"px"});
+                    $(".view-popup-pic-box").find(".view-img").attr("src",curSrc);
+                }else{
+                    n=-1
+                }
+            });
+            //小图片点击更换大图
+            $(".js-list").find("li").click(function(){
+                var $curSrc=$(this).find("img").attr("src");
+                $(".view-popup-pic-box").find(".view-img").attr("src",$curSrc);
+
+            })
+        }
+
+        //预定
+        $('.btn-book:not(.user-login-pop)').click(function(){
+            var val = $('#go-data').val();
+            var takeid = $('#takeid').val()||0;
+            var adultnum=$(".adultnum").val()||0;
+            var childrennum=$(".childrennum").val()||0;
+            var babynum=$(".babynum").val()||0;
+            var singleroom=$(".singleroom").val()||0;
+            var href = $(this).data('href')+"book.html?id="+val+'&adult='+adultnum+'&child='+childrennum+'&baby='+babynum+'&singleSum='+singleroom+'&takeid='+takeid;
+            if(val==''){
+                layer.msg('请选择日期！')
+                return false;
+            }else {
+                window.location = href;
+            }
+            //产品说这个提示不要了
+            // layer.confirm('您选择的出团日期是'+$('#go-data option:selected').text(),function(){
+            //     window.location = href;
+            // },function(){
+            //     return false;
+            // });
+        });
+        //每天的图片3的倍数margin为0
+        $(".daybody").find(".day-ul").each(function(inx){
+            $(this).find("li").each(function(index){
+                if((index+1)%3==0){
+                    $(this).css({"margin-right":"0"});
+                }
+            });
+        });
+    })
+</script>
+<script>
+    $(function(){
+        $('input.o-ckb').each(function(index, el) {
+            $(this).click(function(event) {
+                if($(this).parents('table').hasClass('o-shuttle-table')){
+                    $('.o-shuttle-table').find('tr').removeClass('o-tr-val');
+                    $(this).parents('tr').addClass('o-tr-val');
+                }
+               if($(this).is(':checked')){
+                    $('input.o-ckb').prop('checked',false);
+                    $('input.o-ckb').parent('label').removeClass('on');
+                    $(this).prop('checked',true);
+                    $(this).parent('label').addClass('on');
+                }else{
+                    $(this).parent('label').removeClass('on');
+                    $(this).parents('tr').removeClass('o-tr-val');
+                }
+            });
+        });
+            //表格样式
+       if($('.o-table-shuttle').find('div').hasClass('o-price-edit')){
+           $('.o-table-shuttle th:last-child').css({
+               'text-align':'left',
+               'padding-left':'3%'
+           })
+           $('.o-table-shuttle td:last-child').css({
+               'width':'35%',
+               'padding-left':'3%'
+           })
+       }else{
+           $('.o-table-shuttle th:last-child').css({
+               'text-align':'left',
+               'padding-left':'10%'
+           })
+           $('.o-table-shuttle td:last-child').css({
+               'width':'12%',
+               'padding-right':'10%',
+               'padding-left':'10%'
+           })
+       }
+       //点击选择接送
+       $('.o-fst-choss').on('click', function(event) {
+           $('.o-black-bg').show();
+           $('.o-box-area').css({top: ($(window).height() - $('.o-box-area').outerHeight()) / 2 + $(document).scrollTop()}).show();
+       });
+       //点击修改，显示弹窗
+       $('.o-price-edit').on('click', 'a.o-a-edit', function(event) {
+           $('.o-black-bg').show();
+           $('.o-box-area').css({top: ($(window).height() - $('.o-box-area').outerHeight()) / 2 + $(document).scrollTop()}).show();
+       });
+       $('.o-price-edit').on('click', 'a.o-a-red', function(event) {
+            $('.o-table-unselected').show();
+            $('.o-table-selected').hide();
+            var url = $('#downword').attr("href");
+            $("input[name='takeid']").val('');
+            url = url.replace(/&takeid=.*/, '');
+            $('#downword').attr("href", url);
+            $('.o-shuttle-table').find('tr').removeClass('o-tr-val');
+            $('input.o-ckb').prop('checked',false);
+            $('input.o-ckb').parent('label').removeClass('on');
+       });
+       $('.o-dl-area').find('div:first()').show();
+
+       //点击确认选择按钮，获取区域信息并关闭弹窗
+       $('.o-chose-qus').on('click', 'a', function(event) {
+           $(this).addClass('on').siblings('dd').removeClass('on');
+            var takeid = $('.o-tr-val').data('take');//提交参数
+            var o_city_region = $('.o-tr-val').find('.o-p-area span').text();//区域城市
+            var o_area_region = $('.o-tr-val').find('.o-p-area i').text();//区域区县
+            var o_city_site = $('.o-tr-val').find('.o-p-site span').text();//站点城市
+            var o_area_site = $('.o-tr-val').find('.o-p-site i').text();//站点机场
+            var o_set_price = parseInt($('.o-tr-val').find('.o-sprice').text());//价格
+            $("input[name='takeid']").val(takeid)
+            var url = $('#downword').attr("href");
+            url = url.replace(/&takeid=.*/, '');
+            url = url+'&takeid='+takeid;
+            $('#downword').attr("href", url);
+            var lsurl = $(".links-share").find('img').attr('src');
+            if(takeid){
+               lsurl = lsurl+'%26r%3D'+takeid;
+            }
+           lsurl = lsurl+'%26client%3Dpc';
+           $(".links-share").find('img').attr('src',lsurl);
+
+            $('.o-dd-start span').eq(0).empty().append(o_city_region);
+            $('.o-dd-start span').eq(1).empty().append(o_area_region);
+            $('.o-dd-start span').eq(1).empty().append(o_area_region).attr('title',o_area_region);
+            $('.o-dd-stop span').eq(0).empty().append(o_city_site);
+            $('.o-dd-stop span').eq(1).empty().append(o_area_site);
+            $('.o-dd-stop span').eq(1).empty().append(o_area_site).attr('title',o_area_site);
+            $('.o-jss-price').find('em').empty().text(o_set_price);
+            if($("input[name='tianchi']").val()>0){
+                var amt = $('.o-tr-val').data('amt');
+                $("input[name='takeAmt']").val(amt);
+                var adultnum=$(".adultnum").val()||0;
+                var childrennum=$(".childrennum").val()||0;
+                var num=parseInt(adultnum)+parseInt(childrennum);
+                if(num>=1){
+                    num = num-1;
+                }
+                if(num>=9){
+                    num = 9;
+                }
+                var amtArr = amt.split(",");
+                $('.o-jss-price').find('em').empty().text(amtArr[num]);
+            }
+           //判断接送状态
+           $('.o-dl-area').children('div').hide();
+           if($('.o-tr-val').find('span').hasClass('o-sp-jiesong')){
+               $('.o-ts-double').show();
+           }else if($('.o-tr-val').find('span').hasClass('o-sp-dansong')){
+               $('.o-ts-single-give').show();
+           }else if($('.o-tr-val').find('span').hasClass('o-sp-danjie')){
+               $('.o-ts-single-meet').show();
+           }
+           $('.o-box-area').hide();
+           $('.o-black-bg').hide();
+           //判断有无选中
+           if($('.o-ck-box').hasClass('on')){
+               $('.o-table-unselected').hide();
+               $('.o-table-selected').show();
+           }else{
+               $('.o-table-unselected').show();
+               $('.o-table-selected').hide();
+           }
+       });
+       //点击X关闭
+       $('.o-box-tit').on('click', 'em', function(event) {//off
+           $('.o-black-bg').hide();
+           $('.o-box-area').hide();
+       });
+    $('input.o-ckb').each(function(index, el) {
+        $(this).click(function(event) {
+           if($(this).is(':checked')){
+                $('input.o-ckb').prop('checked',false);
+                $('input.o-ckb').parent('label').removeClass('on');
+                $(this).prop('checked',true);
+                $(this).parent('label').addClass('on');
+            }else{
+              $(this).parent('label').removeClass('on');
+            }
+        });
+    });
+       
+    })
+</script>
+</body>
+</html>

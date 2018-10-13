@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{{ title }}</title>
+		<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+		<style type="text/css">
+				body      { padding-top: 70px; margin-bottom: 15px; }
+				.tab-pane { padding-top: 10px; }
+				.mt0      { margin-top: 0px; }
+				.footer   { font-size: 12px; color: #666; }
+				.label    { display: inline-block; min-width: 65px; padding: 0.3em 0.6em 0.3em; }
+				.string   { color: green; }
+				.number   { color: darkorange; }
+				.boolean  { color: blue; }
+				.null     { color: magenta; }
+				.key      { color: red; }
+				.popover  { max-width: 400px; max-height: 400px; overflow-y: auto;}
+				.hidden   { display: none}
+				.inline-desc { font-size:12px; color:#666; margin-left: 10px;}
+		</style>
+</head>
+<body>
+<!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+				<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#">{{ title }}</a>
+				</div>
+				<div class="navbar-collapse collapse">
+						<form class="navbar-form navbar-right">
+								<div class="form-group">
+										调试<input type="checkbox" id="debug-mode">
+								</div>
+						</form>
+				</div><!--/.nav-collapse -->
+		</div>
+</div>
+
+<div class="container">
+		<div class="row">
+				<div class="col-md-12 hidden">
+						<input id="apiUrl" type="text" class="form-control input-sm" placeholder="/">
+				</div>
+		</div>
+
+		<div class="panel-group" id="accordion">
+				{{ content }}
+		</div>
+		<hr>
+
+		<div class="row mt0 footer">
+				<div class="col-md-6" align="left">
+						最后更新：{{ date }}
+				</div>
+		</div>
+
+</div> <!-- /container -->
+
+<script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+		function syntaxHighlight(json) {
+				if (typeof json != 'string') {
+						json = JSON.stringify(json, undefined, 2);
+				}
+				json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+				return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
+						var cls = 'number';
+						if (/^"/.test(match)) {
+								if (/:$/.test(match)) {
+										cls = 'key';
+								} else {
+										cls = 'string';
+								}
+						} else if (/true|false/.test(match)) {
+								cls = 'boolean';
+						} else if (/null/.test(match)) {
+								cls = 'null';
+						}
+						return '<span class="' + cls + '">' + match + '</span>';
+				});
+		}
+
+		function prepareStr(str) {
+				try {
+						return syntaxHighlight(JSON.stringify(JSON.parse(str.replace(/'/g, '"')), null, 2));
+				} catch (e) {
+						return str;
+				}
+		}
+
+		$.fn.serializeObject = function()
+		{
+				var o = {};
+				var a = this.serializeArray();
+				$.each(a, function() {
+						if(!this.value) {
+								return;
+						}
+						if (o[this.name] !== undefined) {
+								if (!o[this.name].push) {
+										o[this.name] = [o[this.name]];
+								}
+								o[this.name].push(this.value || '');
+						} else {
+								o[this.name] = this.value || '';
+						}
+				});
+				return o;
+		};
+
+		$(document).ready(function() {
+				$('#php-apidoctab a').click(function(e) {
+						e.preventDefault()
+						$(this).tab('show')
+				});
+
+				$('.tooltipP').tooltip({
+						placement: 'bottom'
+				});
+
+				$('code[id^=response]').hide();
+
+				$.each($('pre[id^=sample_response],pre[id^=sample_post_body]'), function() {
+						if ($(this).html() == 'NA') {
+								return;
+						}
+						var str = prepareStr($(this).html());
+						$(this).html(str);
+				});
+
+				$("[data-toggle=popover]").popover({placement:'right'});
+
+				$('[data-toggle=popover]').on('shown.bs.popover', function() {
+						var $sample = $(this).parent().find(".popover-content"),
+								str = $(this).data('content');
+						if (typeof str == "undefined" || str === "") {
+								return;
+						}
+						var str = prepareStr(str);
+						$sample.html('<pre>' + str + '</pre>');
+				});
+
+				$('body').on('click', '.send', function(e) {
+						e.preventDefault();
+						var form = $(this).closest('form');
+						//added /g to get all the matched params instead of only first
+						var matchedParamsInRoute = $(form).attr('action').match(/[^{]+(?=\})/g);
+						var theId = $(this).attr('rel');
+						//keep a copy of action attribute in order to modify the copy
+						//instead of the initial attribute
+						var url = $(form).attr('action');
+
+						//get form serialized data in order to remove matchedParams
+						var serializedData = $(form).serializeObject();
+
+						var index, key, value;
+
+						if(matchedParamsInRoute) {
+								for (index = 0; index < matchedParamsInRoute.length; ++index) {
+										try {
+												key = matchedParamsInRoute[index];
+												value = serializedData[key];
+												if (typeof value == "undefined") value ="";
+												url = url.replace("{" + key + "}", value);
+												delete serializedData[key];
+										} catch (err) {
+												console.log(err);
+										}
+								}
+						}
+
+						var st_headers = {};
+
+						$("#sandbox" + theId + " .headers input[type=text]").each(function() {
+								val = $(this).val();
+								if(val.length > 0) {
+										st_headers[$(this).prop('name')] = val;
+								}
+						});
+
+						var bodyData = {};
+						if (serializedData["__body"]) {
+								try {
+										bodyData = JSON.parse(serializedData["__body"]);
+								} catch (e) {
+										alert("Body should be JSON.");
+										console.error(serializedData["__body"]);
+								}
+								delete serializedData["__body"];
+						}
+
+						st_headers['X-HTTP-Method-Override'] = $(form).attr('method').toUpperCase();
+
+						$.ajax({
+								url: $('#apiUrl').val() + url,
+								data: $.extend({}, serializedData, bodyData),
+								type: 'POST',
+								dataType: 'json',
+								headers: st_headers,
+								success: function(data, textStatus, xhr) {
+										if (typeof data === 'object') {
+												if (! $("#debug-mode").prop("checked")) {
+														if (data['header']) delete data['header'];
+														if (data['debug']) delete data['debug'];
+												}
+												var str = JSON.stringify(data, null, 2);
+												$('#response' + theId).html(syntaxHighlight(str));
+										} else {
+												$('#response' + theId).html(data || '');
+										}
+										$('#response_headers' + theId).html('HTTP ' + xhr.status + ' ' + xhr.statusText + '<br/><br/>' + xhr.getAllResponseHeaders().replace(/(Server|X-Powered-By):.*?[\r\n]+/g, ""));
+										$('#response' + theId).show();
+								},
+								error: function(xhr, textStatus, error) {
+										var str = JSON.stringify($.parseJSON(xhr.responseText), null, 2);
+										$('#response_headers' + theId).html('HTTP ' + xhr.status + ' ' + xhr.statusText + '<br/><br/>' + xhr.getAllResponseHeaders().replace(/(Server|X-Powered-By):.*?[\r\n]+/g, ""));
+										$('#response' + theId).html(syntaxHighlight(str));
+										$('#response' + theId).show();
+
+								}
+						});
+						return false;
+				});
+		});
+
+		$(function(){
+			$(".remove-parent-if-empty").each(function(){
+				if ($.trim($(this).text()) == "") {
+						$(this).parent().remove();
+				}
+			});
+		});
+</script>
+</body>
+</html>

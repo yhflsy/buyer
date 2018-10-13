@@ -1,0 +1,11 @@
+<script class="tmpl-contacts" type="text/x-jquery-tmpl">
+ <ul>
+    {{each list}}
+    <li>
+        <p><span>联系人：</span> ${contactname}</p>
+        <p><span>手机：</span> ${mobile}</p>
+        {{if qq}}<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=${qq}&site=qq&menu=yes"><i class="iconfont">&#xe61c;</i>QQ咨询</a>{{/if}}
+    </li>
+	{{/each}}
+</ul>
+</script>
